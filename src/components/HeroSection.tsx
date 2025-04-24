@@ -1,13 +1,26 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
 
 const HeroSection = () => {
+  const revenueData = [
+    { month: 'Jan', revenue: 25 },
+    { month: 'Feb', revenue: 35 },
+    { month: 'Mar', revenue: 30 },
+    { month: 'Apr', revenue: 45 },
+    { month: 'May', revenue: 40 },
+    { month: 'Jun', revenue: 55 },
+    { month: 'Jul', revenue: 65 },
+  ];
+
   return (
     <section className="pt-32 pb-20 md:pt-44 md:pb-32 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col md:flex-row items-center">
-          <div className="md:w-1/2 mb-10 md:mb-0">
+        <div className="flex flex-col md:flex-row items-center gap-12">
+          {/* Left Column - Content */}
+          <div className="md:w-1/2">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Maximize Your <span className="text-gradient">Ad Revenue</span> With Expert Solutions
             </h1>
@@ -27,51 +40,62 @@ const HeroSection = () => {
               </Link>
             </div>
           </div>
+
+          {/* Right Column - Analytics Display */}
           <div className="md:w-1/2">
-            <div className="relative">
-              <img
-                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
-                alt="Analytics Dashboard"
-                className="rounded-lg shadow-xl"
-              />
-              <div className="bg-white rounded-lg shadow-xl p-6 md:p-8 relative z-10 animate-float">
-                <div className="flex items-center justify-between mb-8">
-                  <div className="flex items-center">
-                    <div className="w-12 h-12 rounded-full bg-brand-orange flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                      </svg>
-                    </div>
-                    <div className="ml-4">
-                      <h3 className="font-bold text-xl">Revenue Growth</h3>
-                      <p className="text-gray-500">Monthly Performance</p>
-                    </div>
+            <div className="relative bg-white rounded-xl shadow-xl p-6 md:p-8">
+              {/* Analytics Header */}
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center">
+                  <div className="w-12 h-12 rounded-full bg-brand-orange flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
                   </div>
-                  <div className="text-right">
-                    <span className="text-green-500 text-lg font-semibold">+42%</span>
+                  <div className="ml-4">
+                    <h3 className="font-bold text-xl">Revenue Growth</h3>
+                    <p className="text-gray-500">Monthly Performance</p>
                   </div>
                 </div>
-                <div className="h-48 mb-4">
-                  <div className="flex h-full items-end">
-                    <div className="w-1/7 h-20 bg-gray-200 rounded-t-lg mx-1"></div>
-                    <div className="w-1/7 h-32 bg-gray-300 rounded-t-lg mx-1"></div>
-                    <div className="w-1/7 h-24 bg-gray-200 rounded-t-lg mx-1"></div>
-                    <div className="w-1/7 h-36 bg-gray-300 rounded-t-lg mx-1"></div>
-                    <div className="w-1/7 h-28 bg-gray-200 rounded-t-lg mx-1"></div>
-                    <div className="w-1/7 h-40 bg-brand-orange rounded-t-lg mx-1"></div>
-                    <div className="w-1/7 h-48 bg-brand-orange-light rounded-t-lg mx-1"></div>
-                  </div>
-                </div>
-                <div className="flex justify-between text-xs text-gray-500">
-                  <span>Jan</span>
-                  <span>Feb</span>
-                  <span>Mar</span>
-                  <span>Apr</span>
-                  <span>May</span>
-                  <span>Jun</span>
-                  <span>Jul</span>
+                <div className="text-right">
+                  <span className="text-green-500 text-lg font-semibold">+42%</span>
                 </div>
               </div>
+
+              {/* Chart Area */}
+              <div className="h-64 mb-4">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={revenueData}>
+                    <XAxis 
+                      dataKey="month" 
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fill: '#6B7280', fontSize: 12 }}
+                    />
+                    <YAxis 
+                      hide={true}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'white',
+                        border: '1px solid #E5E7EB',
+                        borderRadius: '0.5rem',
+                        padding: '0.5rem'
+                      }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="revenue" 
+                      stroke="#FF6347"
+                      strokeWidth={3}
+                      dot={{ fill: '#FF6347', strokeWidth: 2 }}
+                      activeDot={{ r: 6, fill: '#FF6347' }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+              
+              {/* Decorative Elements */}
               <div className="absolute -bottom-4 -right-4 w-72 h-72 bg-brand-orange/10 rounded-full -z-10"></div>
               <div className="absolute -top-4 -left-4 w-40 h-40 bg-blue-100 rounded-full -z-10"></div>
             </div>
