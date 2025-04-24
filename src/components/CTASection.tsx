@@ -13,6 +13,15 @@ const CTASection = () => {
         <div className="absolute top-1/2 left-1/4 w-24 h-24 rounded-full bg-green-500"></div>
       </div>
       
+      {/* Background Image Overlay */}
+      <div className="absolute inset-0 bg-black opacity-50">
+        <img 
+          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop" 
+          alt="Background" 
+          className="w-full h-full object-cover mix-blend-overlay opacity-30"
+        />
+      </div>
+      
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
@@ -28,7 +37,7 @@ const CTASection = () => {
               </Button>
             </Link>
             <Link to="/contact">
-              <Button variant="secondary" className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-6 text-lg">
+              <Button variant="outline" className="bg-white text-gray-900 hover:bg-gray-200 border-white px-8 py-6 text-lg font-medium">
                 Schedule a Demo
               </Button>
             </Link>
