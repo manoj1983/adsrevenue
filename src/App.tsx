@@ -10,6 +10,7 @@ import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
+import BackToTop from "./components/BackToTop";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <BackToTop />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
