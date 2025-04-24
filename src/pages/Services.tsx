@@ -1,0 +1,185 @@
+
+import React from 'react';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import ServicesSection from '@/components/ServicesSection';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import CTASection from '@/components/CTASection';
+import { Card, CardContent } from '@/components/ui/card';
+
+const ServiceDetail = ({ title, description, features }: { title: string; description: string; features: string[] }) => (
+  <Card className="border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300">
+    <CardContent className="p-8">
+      <h3 className="text-2xl font-bold mb-4">{title}</h3>
+      <p className="text-gray-600 mb-6">{description}</p>
+      <ul className="space-y-2">
+        {features.map((feature, index) => (
+          <li key={index} className="flex items-center">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              className="h-5 w-5 text-brand-orange mr-3" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <span className="text-gray-600">{feature}</span>
+          </li>
+        ))}
+      </ul>
+    </CardContent>
+  </Card>
+);
+
+const Services = () => {
+  const detailedServices = [
+    {
+      title: "Ad Revenue Optimization",
+      description: "We help publishers maximize their earnings with advanced ad optimization techniques tailored to specific audience and content characteristics.",
+      features: [
+        "Ad placement optimization",
+        "A/B testing for maximum performance",
+        "Advanced targeting strategies",
+        "Revenue stream diversification",
+        "Mobile-specific optimization"
+      ]
+    },
+    {
+      title: "Performance Analytics",
+      description: "Gain deep insights into your advertising performance with our comprehensive analytics and reporting tools.",
+      features: [
+        "Real-time performance dashboards",
+        "Custom reporting solutions",
+        "Revenue attribution analysis",
+        "Competitor benchmarking",
+        "Trend identification and forecasting"
+      ]
+    },
+    {
+      title: "Monetization Strategy",
+      description: "Develop a customized monetization strategy that balances user experience with maximum revenue potential.",
+      features: [
+        "Full site monetization audit",
+        "Revenue opportunity identification",
+        "Strategy development and implementation",
+        "User experience optimization",
+        "Ongoing strategy refinement"
+      ]
+    }
+  ];
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-grow pt-20">
+        <div className="bg-gray-50 py-20">
+          <div className="container mx-auto px-4 md:px-6">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>
+            <p className="text-lg text-gray-600">
+              Comprehensive advertising optimization solutions to help you maximize revenue and grow your business.
+            </p>
+          </div>
+        </div>
+        
+        <ServicesSection />
+        
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">How We Can Help You</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Our comprehensive services are designed to help you navigate the complex digital advertising landscape and maximize your revenue potential.
+              </p>
+            </div>
+            
+            <div className="space-y-12">
+              {detailedServices.map((service, index) => (
+                <ServiceDetail
+                  key={index}
+                  title={service.title}
+                  description={service.description}
+                  features={service.features}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+        
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-4">Our Process</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                We follow a structured approach to help you achieve maximum results from your advertising efforts.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="bg-white p-6 rounded-lg shadow-sm text-center relative">
+                <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                  1
+                </div>
+                <h3 className="text-xl font-bold mb-3">Discovery</h3>
+                <p className="text-gray-600">
+                  We analyze your current setup, audience, and content to identify opportunities.
+                </p>
+                <div className="hidden lg:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#FF6347" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+              
+              <div className="bg-white p-6 rounded-lg shadow-sm text-center relative">
+                <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                  2
+                </div>
+                <h3 className="text-xl font-bold mb-3">Strategy</h3>
+                <p className="text-gray-600">
+                  We develop a tailored optimization plan based on our findings and your goals.
+                </p>
+                <div className="hidden lg:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#FF6347" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+              
+              <div className="bg-white p-6 rounded-lg shadow-sm text-center relative">
+                <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                  3
+                </div>
+                <h3 className="text-xl font-bold mb-3">Implementation</h3>
+                <p className="text-gray-600">
+                  We execute the strategy with precision, optimizing all aspects of your ad setup.
+                </p>
+                <div className="hidden lg:block absolute -right-4 top-1/2 transform -translate-y-1/2 z-10">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#FF6347" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+              
+              <div className="bg-white p-6 rounded-lg shadow-sm text-center">
+                <div className="w-12 h-12 rounded-full bg-brand-orange text-white flex items-center justify-center text-xl font-bold mx-auto mb-4">
+                  4
+                </div>
+                <h3 className="text-xl font-bold mb-3">Optimization</h3>
+                <p className="text-gray-600">
+                  We continuously monitor performance and refine our approach for ongoing improvement.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <TestimonialsSection />
+        <CTASection />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+export default Services;
