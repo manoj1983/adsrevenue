@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
@@ -10,11 +9,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <img 
-              src="/lovable-uploads/b4c7ee97-2259-42bf-b426-81aa9d18ada6.png" 
-              alt="Ads Revenue Logo" 
-              className="h-12 mb-4"
-            />
+            <div className="bg-white inline-block p-2 rounded-lg mb-4">
+              <img 
+                src="/lovable-uploads/b4c7ee97-2259-42bf-b426-81aa9d18ada6.png" 
+                alt="Ads Revenue Logo" 
+                className="h-12"
+              />
+            </div>
             <p className="mb-4 text-gray-300">
               Maximize your advertising revenue with our innovative solutions and expert guidance.
             </p>

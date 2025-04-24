@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -43,18 +42,17 @@ const Header = () => {
             />
           </Link>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-gray-800 hover:text-brand-orange font-medium">Home</Link>
             <Link to="/about" className="text-gray-800 hover:text-brand-orange font-medium">About</Link>
             <Link to="/services" className="text-gray-800 hover:text-brand-orange font-medium">Services</Link>
-            <Link to="/contact" className="text-gray-800 hover:text-brand-orange font-medium">Contact</Link>
-            <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white">
-              Get Started
-            </Button>
+            <Link to="/contact">
+              <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white">
+                Get Started
+              </Button>
+            </Link>
           </nav>
 
-          {/* Mobile Menu Button */}
           <button 
             className="md:hidden text-gray-800"
             onClick={toggleMenu}
@@ -64,7 +62,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white shadow-lg animate-fade-in">
           <div className="container mx-auto px-4 py-4">
@@ -92,17 +89,14 @@ const Header = () => {
               </Link>
               <Link 
                 to="/contact" 
-                className="text-gray-800 hover:text-brand-orange font-medium py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Contact
+                <Button 
+                  className="bg-brand-orange hover:bg-brand-orange-dark text-white w-full"
+                >
+                  Get Started
+                </Button>
               </Link>
-              <Button 
-                className="bg-brand-orange hover:bg-brand-orange-dark text-white w-full"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Get Started
-              </Button>
             </nav>
           </div>
         </div>

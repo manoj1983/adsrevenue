@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   return (
@@ -15,16 +15,25 @@ const HeroSection = () => {
               Take your advertising income to the next level with our innovative optimization strategies and expert guidance. We help publishers unlock their true monetization potential.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white px-8 py-6 text-lg">
-                Get Started
-              </Button>
-              <Button variant="outline" className="border-brand-orange text-brand-orange hover:bg-brand-orange/10 px-8 py-6 text-lg">
-                Learn More
-              </Button>
+              <Link to="/contact">
+                <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white px-8 py-6 text-lg">
+                  Get Started
+                </Button>
+              </Link>
+              <Link to="/services">
+                <Button variant="outline" className="border-brand-orange text-brand-orange hover:bg-brand-orange/10 px-8 py-6 text-lg">
+                  Learn More
+                </Button>
+              </Link>
             </div>
           </div>
           <div className="md:w-1/2">
             <div className="relative">
+              <img
+                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
+                alt="Analytics Dashboard"
+                className="rounded-lg shadow-xl"
+              />
               <div className="bg-white rounded-lg shadow-xl p-6 md:p-8 relative z-10 animate-float">
                 <div className="flex items-center justify-between mb-8">
                   <div className="flex items-center">

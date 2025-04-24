@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const CTASection = () => {
   return (
@@ -21,12 +22,16 @@ const CTASection = () => {
             Join hundreds of satisfied clients who have transformed their advertising strategy and increased their revenue with our expert solutions.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white px-8 py-6 text-lg">
-              Get Started Now
-            </Button>
-            <Button variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
-              Schedule a Demo
-            </Button>
+            <Link to="/contact">
+              <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white px-8 py-6 text-lg">
+                Get Started Now
+              </Button>
+            </Link>
+            <Link to="/contact">
+              <Button variant="secondary" className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-6 text-lg">
+                Schedule a Demo
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
