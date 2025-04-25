@@ -47,6 +47,7 @@ const Header = () => {
             <Link to="/" className="text-gray-800 hover:text-brand-orange font-medium">Home</Link>
             <Link to="/about" className="text-gray-800 hover:text-brand-orange font-medium">About</Link>
             <Link to="/services" className="text-gray-800 hover:text-brand-orange font-medium">Services</Link>
+            <Link to="/blog" className="text-gray-800 hover:text-brand-orange font-medium">Blog</Link>
             <Link to="/contact" className="text-gray-800 hover:text-brand-orange font-medium">Contact</Link>
             <Link to="/contact">
               <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white">
@@ -88,6 +89,13 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Services
+              </Link>
+              <Link 
+                to="/blog" 
+                className="text-gray-800 hover:text-brand-orange font-medium py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Blog
               </Link>
               <Link 
                 to="/contact" 
