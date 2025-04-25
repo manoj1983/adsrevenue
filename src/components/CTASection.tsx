@@ -16,8 +16,8 @@ const CTASection = () => {
       {/* Background Image Overlay */}
       <div className="absolute inset-0 bg-black opacity-50">
         <img 
-          src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop" 
-          alt="Background" 
+          src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
+          alt="Digital Marketing Background" 
           className="w-full h-full object-cover mix-blend-overlay opacity-30"
         />
       </div>

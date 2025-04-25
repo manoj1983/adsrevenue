@@ -13,7 +13,7 @@ import CTASection from '@/components/CTASection';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col animate-fade-in">
       <Header />
       <main className="flex-grow">
         <HeroSection />
