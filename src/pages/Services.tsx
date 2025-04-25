@@ -5,6 +5,7 @@ import ServicesSection from '@/components/ServicesSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import CTASection from '@/components/CTASection';
 import { Card, CardContent } from '@/components/ui/card';
+import { MessageCircle } from 'lucide-react';
 
 const ServiceDetail = ({ title, description, features }: { title: string; description: string; features: string[] }) => (
   <Card className="border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300">
@@ -34,42 +35,53 @@ const ServiceDetail = ({ title, description, features }: { title: string; descri
 const Services = () => {
   const detailedServices = [
     {
-      title: "Ad Revenue Optimization",
-      description: "We help publishers maximize their earnings with advanced ad optimization techniques tailored to specific audience and content characteristics.",
+      title: "Search Engine Optimization (SEO)",
+      description: "Comprehensive SEO services to improve your website's visibility and rankings in search engines.",
       features: [
-        "Ad placement optimization",
-        "A/B testing for maximum performance",
-        "Advanced targeting strategies",
-        "Revenue stream diversification",
-        "Mobile-specific optimization"
+        "On-page SEO optimization",
+        "Off-page SEO strategies",
+        "Technical SEO improvements",
+        "Local SEO optimization",
+        "Keyword research and optimization"
       ]
     },
     {
-      title: "Performance Analytics",
-      description: "Gain deep insights into your advertising performance with our comprehensive analytics and reporting tools.",
+      title: "Google Ads Management",
+      description: "Strategic Google Ads campaigns to drive targeted traffic and maximize ROI.",
       features: [
-        "Real-time performance dashboards",
-        "Custom reporting solutions",
-        "Revenue attribution analysis",
-        "Competitor benchmarking",
-        "Trend identification and forecasting"
+        "Campaign setup and optimization",
+        "Keyword research and selection",
+        "Ad copy creation and testing",
+        "Performance tracking and reporting",
+        "Budget optimization"
       ]
     },
     {
-      title: "Monetization Strategy",
-      description: "Develop a customized monetization strategy that balances user experience with maximum revenue potential.",
+      title: "Meta Ads & Social Media",
+      description: "Expert social media marketing and Meta (Facebook & Instagram) advertising services.",
       features: [
-        "Full site monetization audit",
-        "Revenue opportunity identification",
-        "Strategy development and implementation",
-        "User experience optimization",
-        "Ongoing strategy refinement"
+        "Meta Ads campaign management",
+        "Social media strategy development",
+        "Content creation and curation",
+        "Audience targeting and engagement",
+        "Performance analytics"
+      ]
+    },
+    {
+      title: "Analytics & Tracking",
+      description: "Comprehensive analytics setup and monitoring to track your digital marketing success.",
+      features: [
+        "Google Analytics implementation",
+        "Conversion tracking setup",
+        "Custom dashboard creation",
+        "Regular performance reporting",
+        "Data-driven optimization"
       ]
     }
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col relative">
       <Header />
       <main className="flex-grow pt-20 animate-fade-in">
         <div className="bg-gray-50 py-20">
@@ -201,6 +213,18 @@ const Services = () => {
         <TestimonialsSection />
         <CTASection />
       </main>
+      
+      {/* WhatsApp Floating Button */}
+      <a
+        href="https://wa.me/919555442836"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-8 right-8 z-50 bg-green-500 p-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 animate-float group"
+        aria-label="Chat on WhatsApp"
+      >
+        <MessageCircle className="w-6 h-6 text-white group-hover:rotate-12 transition-transform duration-300" />
+      </a>
+
       <Footer />
     </div>
   );

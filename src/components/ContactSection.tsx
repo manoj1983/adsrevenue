@@ -4,12 +4,37 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Mail, Phone, Navigation } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { useToast } from '@/hooks/use-toast';
+
+interface ContactFormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
 
 const ContactSection = () => {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Here you would handle form submission
-    console.log('Form submitted');
+  const { toast } = useToast();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>();
+
+  const onSubmit = async (data: ContactFormData) => {
+    try {
+      console.log('Form submitted:', data);
+      // Here we would send the data to a backend service
+      // For now, we'll just show a success message
+      toast({
+        title: "Success!",
+        description: "Thank you for your message. We'll get back to you soon!",
+      });
+      reset();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -26,7 +51,7 @@ const ContactSection = () => {
           {/* Contact Form */}
           <div className="bg-white p-8 rounded-lg shadow-lg">
             <h3 className="text-2xl font-bold mb-6">Send Us a Message</h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label htmlFor="name" className="block text-gray-700 font-medium">
@@ -34,9 +59,12 @@ const ContactSection = () => {
                   </label>
                   <Input
                     id="name"
-                    placeholder="John Doe"
-                    required
+                    {...register('name', { required: 'Name is required' })}
+                    className={errors.name ? 'border-red-500' : ''}
                   />
+                  {errors.name && (
+                    <p className="text-red-500 text-sm">{errors.name.message}</p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="email" className="block text-gray-700 font-medium">
@@ -45,9 +73,18 @@ const ContactSection = () => {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="john@example.com"
-                    required
+                    {...register('email', {
+                      required: 'Email is required',
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: 'Invalid email address'
+                      }
+                    })}
+                    className={errors.email ? 'border-red-500' : ''}
                   />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm">{errors.email.message}</p>
+                  )}
                 </div>
               </div>
 
@@ -57,9 +94,12 @@ const ContactSection = () => {
                 </label>
                 <Input
                   id="subject"
-                  placeholder="How can we help you?"
-                  required
+                  {...register('subject', { required: 'Subject is required' })}
+                  className={errors.subject ? 'border-red-500' : ''}
                 />
+                {errors.subject && (
+                  <p className="text-red-500 text-sm">{errors.subject.message}</p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -68,10 +108,13 @@ const ContactSection = () => {
                 </label>
                 <Textarea
                   id="message"
-                  placeholder="Please provide details about your inquiry..."
+                  {...register('message', { required: 'Message is required' })}
+                  className={errors.message ? 'border-red-500' : ''}
                   rows={5}
-                  required
                 />
+                {errors.message && (
+                  <p className="text-red-500 text-sm">{errors.message.message}</p>
+                )}
               </div>
 
               <Button type="submit" className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white">
