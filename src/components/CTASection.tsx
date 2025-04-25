@@ -16,28 +16,28 @@ const CTASection = () => {
       {/* Background Image Overlay */}
       <div className="absolute inset-0 bg-black opacity-50">
         <img 
-          src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
+          src="https://images.unsplash.com/photo-1498050108023-c5249f4df085"
           alt="Digital Marketing Background" 
           className="w-full h-full object-cover mix-blend-overlay opacity-30"
         />
       </div>
       
       <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+        <div className="max-w-3xl mx-auto text-center animate-fade-in">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 animate-fade-in [animation-delay:200ms]">
             Ready to Maximize Your Ad Revenue?
           </h2>
-          <p className="text-lg text-gray-300 mb-8">
+          <p className="text-lg text-gray-300 mb-8 animate-fade-in [animation-delay:300ms]">
             Join hundreds of satisfied clients who have transformed their advertising strategy and increased their revenue with our expert solutions.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link to="/contact">
-              <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white px-8 py-6 text-lg">
+              <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white px-8 py-6 text-lg animate-scale-in [animation-delay:400ms]">
                 Get Started Now
               </Button>
             </Link>
             <Link to="/contact">
-              <Button variant="outline" className="bg-white text-gray-900 hover:bg-gray-200 border-white px-8 py-6 text-lg font-medium">
+              <Button variant="outline" className="bg-white text-gray-900 hover:bg-gray-200 border-white px-8 py-6 text-lg font-medium animate-scale-in [animation-delay:500ms]">
                 Schedule a Demo
               </Button>
             </Link>

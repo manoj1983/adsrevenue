@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -8,11 +7,11 @@ const Contact = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow pt-20">
+      <main className="flex-grow pt-20 animate-fade-in">
         <div className="bg-gray-50 py-20">
           <div className="container mx-auto px-4 md:px-6">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
-            <p className="text-lg text-gray-600">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in [animation-delay:200ms]">Contact Us</h1>
+            <p className="text-lg text-gray-600 animate-fade-in [animation-delay:300ms]">
               We'd love to hear from you. Reach out to our team with any questions or inquiries.
             </p>
           </div>
@@ -22,7 +21,7 @@ const Contact = () => {
         
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-12">
+            <div className="text-center mb-12 animate-fade-in [animation-delay:400ms]">
               <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 Find answers to the most common questions about our services and how we can help you.
@@ -30,31 +29,17 @@ const Contact = () => {
             </div>
             
             <div className="max-w-3xl mx-auto space-y-6">
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-xl font-bold mb-2">How quickly can I expect to see results?</h3>
-                <p className="text-gray-600">
+              <div className="bg-gray-50 p-6 rounded-lg animate-fade-in [animation-delay:500ms] relative overflow-hidden">
+                <div className="absolute inset-0 opacity-5">
+                  <img 
+                    src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b"
+                    alt="Digital Marketing Background"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h3 className="text-xl font-bold mb-2 relative z-10">How quickly can I expect to see results?</h3>
+                <p className="text-gray-600 relative z-10">
                   While some improvements can be seen within days, significant revenue increases typically become apparent within 4-6 weeks as our optimization strategies take full effect and gather sufficient data for refinement.
-                </p>
-              </div>
-              
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-xl font-bold mb-2">Do you work with websites of all sizes?</h3>
-                <p className="text-gray-600">
-                  Yes, we work with publishers of all sizes, from small blogs to large media networks. Our strategies are tailored to your specific needs and traffic levels.
-                </p>
-              </div>
-              
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-xl font-bold mb-2">What information do you need to get started?</h3>
-                <p className="text-gray-600">
-                  To begin, we typically need access to your analytics platforms, current ad setup information, and an understanding of your goals. Our team will guide you through the exact requirements during our initial consultation.
-                </p>
-              </div>
-              
-              <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-xl font-bold mb-2">How do you charge for your services?</h3>
-                <p className="text-gray-600">
-                  We offer flexible pricing models including fixed monthly fees, performance-based pricing, or a hybrid approach. We'll recommend the best option based on your specific needs during your consultation.
                 </p>
               </div>
             </div>

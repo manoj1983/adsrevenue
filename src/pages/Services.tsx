@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -72,11 +71,11 @@ const Services = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow pt-20">
+      <main className="flex-grow pt-20 animate-fade-in">
         <div className="bg-gray-50 py-20">
           <div className="container mx-auto px-4 md:px-6">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Services</h1>
-            <p className="text-lg text-gray-600">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in [animation-delay:200ms]">Our Services</h1>
+            <p className="text-lg text-gray-600 animate-fade-in [animation-delay:300ms]">
               Comprehensive advertising optimization solutions to help you maximize revenue and grow your business.
             </p>
           </div>
@@ -86,7 +85,7 @@ const Services = () => {
         
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-16">
+            <div className="text-center mb-16 animate-fade-in [animation-delay:400ms]">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">How We Can Help You</h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 Our comprehensive services are designed to help you navigate the complex digital advertising landscape and maximize your revenue potential.
@@ -95,12 +94,37 @@ const Services = () => {
             
             <div className="space-y-12">
               {detailedServices.map((service, index) => (
-                <ServiceDetail
-                  key={index}
-                  title={service.title}
-                  description={service.description}
-                  features={service.features}
-                />
+                <div key={index} className={`animate-fade-in [animation-delay:${500 + (index * 100)}ms]`}>
+                  <Card className="border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 relative overflow-hidden">
+                    <div className="absolute inset-0 opacity-5">
+                      <img 
+                        src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
+                        alt="Digital Marketing Service"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <CardContent className="p-8 relative z-10">
+                      <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
+                      <p className="text-gray-600 mb-6">{service.description}</p>
+                      <ul className="space-y-2">
+                        {service.features.map((feature, index) => (
+                          <li key={index} className="flex items-center">
+                            <svg 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              className="h-5 w-5 text-brand-orange mr-3" 
+                              fill="none" 
+                              viewBox="0 0 24 24" 
+                              stroke="currentColor"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span className="text-gray-600">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </div>
               ))}
             </div>
           </div>
