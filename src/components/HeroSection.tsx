@@ -20,7 +20,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row items-center gap-12">
           {/* Left Column - Content */}
-          <div className="md:w-1/2 animate-fade-in">
+          <div className="md:w-1/2 animate-fade-in transition-all duration-500 ease-out">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Maximize Your <span className="text-gradient">Ad Revenue</span> With Expert Solutions
             </h1>
@@ -29,12 +29,12 @@ const HeroSection = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact">
-                <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white px-8 py-6 text-lg animate-scale-in">
+                <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white px-8 py-6 text-lg animate-scale-in transition-transform duration-300 hover:scale-105">
                   Get Started
                 </Button>
               </Link>
               <Link to="/services">
-                <Button variant="outline" className="border-brand-orange text-brand-orange hover:bg-brand-orange/10 px-8 py-6 text-lg animate-scale-in">
+                <Button variant="outline" className="border-brand-orange text-brand-orange hover:bg-brand-orange/10 px-8 py-6 text-lg animate-scale-in transition-transform duration-300 hover:scale-105 [animation-delay:100ms]">
                   Learn More
                 </Button>
               </Link>
@@ -42,8 +42,8 @@ const HeroSection = () => {
           </div>
 
           {/* Right Column - Analytics Display */}
-          <div className="md:w-1/2 animate-fade-in [animation-delay:200ms]">
-            <div className="relative bg-white rounded-xl shadow-xl p-6 md:p-8">
+          <div className="md:w-1/2 animate-fade-in [animation-delay:200ms] transition-all duration-500 ease-out">
+            <div className="relative bg-white rounded-xl shadow-xl p-6 md:p-8 transform transition-transform duration-500 hover:translate-y-[-5px]">
               {/* Analytics Header */}
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center">
@@ -90,6 +90,7 @@ const HeroSection = () => {
                       strokeWidth={3}
                       dot={{ fill: '#FF6347', strokeWidth: 2 }}
                       activeDot={{ r: 6, fill: '#FF6347' }}
+                      animationDuration={1500}
                     />
                   </LineChart>
                 </ResponsiveContainer>
@@ -105,7 +106,7 @@ const HeroSection = () => {
               </div>
               
               {/* Decorative Elements */}
-              <div className="absolute -bottom-4 -right-4 w-72 h-72 bg-brand-orange/10 rounded-full -z-10"></div>
+              <div className="absolute -bottom-4 -right-4 w-72 h-72 bg-brand-orange/10 rounded-full -z-10 animate-pulse"></div>
               <div className="absolute -top-4 -left-4 w-40 h-40 bg-blue-100 rounded-full -z-10"></div>
             </div>
           </div>
