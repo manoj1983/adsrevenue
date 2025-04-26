@@ -27,7 +27,7 @@ const About = () => {
               <div className="animate-fade-in [animation-delay:400ms]">
                 <h2 className="text-3xl font-bold mb-6">Our Story</h2>
                 <p className="text-lg text-gray-600 mb-6">
-                  Ads Revenue was founded in 2018 with a simple mission: to help publishers maximize their advertising 
+                  Ads Revenue was founded in 2025 with a simple mission: to help publishers maximize their advertising 
                   revenue through innovative strategies and cutting-edge technology.
                 </p>
                 <p className="text-lg text-gray-600 mb-6">

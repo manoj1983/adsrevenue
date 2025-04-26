@@ -219,10 +219,13 @@ const Services = () => {
         href="https://wa.me/919555442836"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-8 right-8 z-50 bg-green-500 p-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 animate-float group"
+        className="fixed top-1/2 transform -translate-y-1/2 right-8 z-50 bg-green-500 p-4 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300"
         aria-label="Chat on WhatsApp"
       >
-        <MessageCircle className="w-6 h-6 text-white group-hover:rotate-12 transition-transform duration-300" />
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-white">
+          <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
+          <path d="M9 10a0.5.0.5 0 0 0 1 0V9a0.5.0.5 0 0 0-1 0v1zm0 0a5 5 0 0 0 5 5" />
+        </svg>
       </a>
 
       <Footer />

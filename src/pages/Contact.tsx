@@ -30,16 +30,30 @@ const Contact = () => {
             
             <div className="max-w-3xl mx-auto space-y-6">
               <div className="bg-gray-50 p-6 rounded-lg animate-fade-in [animation-delay:500ms] relative overflow-hidden">
-                <div className="absolute inset-0 opacity-5">
-                  <img 
-                    src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b"
-                    alt="Digital Marketing Background"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
                 <h3 className="text-xl font-bold mb-2 relative z-10">How quickly can I expect to see results?</h3>
                 <p className="text-gray-600 relative z-10">
-                  While some improvements can be seen within days, significant revenue increases typically become apparent within 4-6 weeks as our optimization strategies take full effect and gather sufficient data for refinement.
+                  While some improvements can be seen within days, significant revenue increases typically become apparent within 4-6 weeks as our optimization strategies take full effect.
+                </p>
+              </div>
+              
+              <div className="bg-gray-50 p-6 rounded-lg animate-fade-in [animation-delay:600ms] relative overflow-hidden">
+                <h3 className="text-xl font-bold mb-2 relative z-10">What services do you offer?</h3>
+                <p className="text-gray-600 relative z-10">
+                  We offer comprehensive digital marketing services including SEO (On-page, Off-page, Technical, Local), Google Ads, Meta Ads, Social Media Marketing, Content Marketing, Email Marketing, and Analytics Setup.
+                </p>
+              </div>
+              
+              <div className="bg-gray-50 p-6 rounded-lg animate-fade-in [animation-delay:700ms] relative overflow-hidden">
+                <h3 className="text-xl font-bold mb-2 relative z-10">Do you provide reports and analytics?</h3>
+                <p className="text-gray-600 relative z-10">
+                  Yes, we provide detailed monthly reports with comprehensive analytics and insights about your campaigns' performance and ROI.
+                </p>
+              </div>
+              
+              <div className="bg-gray-50 p-6 rounded-lg animate-fade-in [animation-delay:800ms] relative overflow-hidden">
+                <h3 className="text-xl font-bold mb-2 relative z-10">What makes your service different?</h3>
+                <p className="text-gray-600 relative z-10">
+                  Our approach combines cutting-edge technology with personalized strategies, ensuring maximum ROI for each client's unique needs and goals.
                 </p>
               </div>
             </div>

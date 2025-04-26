@@ -51,11 +51,12 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Our Services</h3>
             <ul className="space-y-2">
-              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Ad Optimization</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Revenue Strategies</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Performance Analytics</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Monetization Solutions</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Consultation Services</Link></li>
+              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">SEO Services</Link></li>
+              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Google Ads</Link></li>
+              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Meta Ads</Link></li>
+              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Social Media Marketing</Link></li>
+              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Content Marketing</Link></li>
+              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Email Marketing</Link></li>
             </ul>
           </div>
 
@@ -65,7 +66,7 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-start">
                 <Phone className="mr-3 text-brand-orange mt-1" size={18} />
-                <span className="text-gray-300">+91 9555442836</span>
+                <a href="tel:+919555442836" className="text-gray-300 hover:text-brand-orange">+91 9555442836</a>
               </div>
               <div className="flex items-start">
                 <Mail className="mr-3 text-brand-orange mt-1" size={18} />

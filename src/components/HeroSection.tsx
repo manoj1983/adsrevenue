@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -20,21 +19,21 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row items-center gap-12">
           {/* Left Column - Content */}
-          <div className="md:w-1/2 animate-fade-in transition-all duration-500 ease-out">
+          <div className="md:w-1/2 opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Maximize Your <span className="text-gradient">Ad Revenue</span> With Expert Solutions
             </h1>
             <p className="text-lg text-gray-600 mb-8 md:pr-12">
-              Take your advertising income to the next level with our innovative optimization strategies and expert guidance. We help publishers unlock their true monetization potential.
+              Take your advertising income to the next level with our innovative optimization strategies and expert guidance.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact">
-                <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white px-8 py-6 text-lg animate-scale-in transition-transform duration-300 hover:scale-105">
+                <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white px-8 py-6 text-lg opacity-0 animate-[fade-in_0.6s_ease-out_0.6s_forwards] transition-transform duration-300 hover:scale-105">
                   Get Started
                 </Button>
               </Link>
               <Link to="/services">
-                <Button variant="outline" className="border-brand-orange text-brand-orange hover:bg-brand-orange/10 px-8 py-6 text-lg animate-scale-in transition-transform duration-300 hover:scale-105 [animation-delay:100ms]">
+                <Button variant="outline" className="border-brand-orange text-brand-orange hover:bg-brand-orange/10 px-8 py-6 text-lg opacity-0 animate-[fade-in_0.6s_ease-out_0.8s_forwards] transition-transform duration-300 hover:scale-105">
                   Learn More
                 </Button>
               </Link>
@@ -42,7 +41,7 @@ const HeroSection = () => {
           </div>
 
           {/* Right Column - Analytics Display */}
-          <div className="md:w-1/2 animate-fade-in [animation-delay:200ms] transition-all duration-500 ease-out">
+          <div className="md:w-1/2 opacity-0 animate-[fade-in_0.6s_ease-out_1s_forwards]">
             <div className="relative bg-white rounded-xl shadow-xl p-6 md:p-8 transform transition-transform duration-500 hover:translate-y-[-5px]">
               {/* Analytics Header */}
               <div className="flex items-center justify-between mb-8">
