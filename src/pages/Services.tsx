@@ -83,7 +83,7 @@ const Services = () => {
   return (
     <div className="min-h-screen flex flex-col relative">
       <Header />
-      <main className="flex-grow pt-20 animate-fade-in">
+      <main className="flex-grow pt-20">
         <div className="bg-gray-50 py-20">
           <div className="container mx-auto px-4 md:px-6">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in [animation-delay:200ms]">Our Services</h1>
@@ -93,11 +93,13 @@ const Services = () => {
           </div>
         </div>
         
-        <ServicesSection />
+        <div className="animate-fade-in [animation-delay:400ms]">
+          <ServicesSection />
+        </div>
         
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-16 animate-fade-in [animation-delay:400ms]">
+            <div className="text-center mb-16 animate-fade-in [animation-delay:500ms]">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">How We Can Help You</h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 Our comprehensive services are designed to help you navigate the complex digital advertising landscape and maximize your revenue potential.
@@ -106,7 +108,7 @@ const Services = () => {
             
             <div className="space-y-12">
               {detailedServices.map((service, index) => (
-                <div key={index} className={`animate-fade-in [animation-delay:${500 + (index * 100)}ms]`}>
+                <div key={index} className={`animate-fade-in [animation-delay:${600 + (index * 100)}ms]`}>
                   <Card className="border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 relative overflow-hidden">
                     <div className="absolute inset-0 opacity-5">
                       <img 
@@ -144,7 +146,7 @@ const Services = () => {
         
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-12">
+            <div className="text-center mb-12 animate-fade-in [animation-delay:1000ms]">
               <h2 className="text-3xl font-bold mb-4">Our Process</h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                 We follow a structured approach to help you achieve maximum results from your advertising efforts.
@@ -210,24 +212,14 @@ const Services = () => {
           </div>
         </section>
         
-        <TestimonialsSection />
-        <CTASection />
+        <div className="animate-fade-in [animation-delay:1100ms]">
+          <TestimonialsSection />
+        </div>
+        <div className="animate-fade-in [animation-delay:1200ms]">
+          <CTASection />
+        </div>
       </main>
       
-      {/* WhatsApp Floating Button */}
-      <a
-        href="https://wa.me/919555442836"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed top-1/2 transform -translate-y-1/2 right-8 z-50 bg-green-500 p-4 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300"
-        aria-label="Chat on WhatsApp"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-white">
-          <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
-          <path d="M9 10a0.5.0.5 0 0 0 1 0V9a0.5.0.5 0 0 0-1 0v1zm0 0a5 5 0 0 0 5 5" />
-        </svg>
-      </a>
-
       <Footer />
     </div>
   );

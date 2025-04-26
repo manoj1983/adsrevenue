@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -9,7 +10,7 @@ const About = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow pt-20 animate-fade-in">
+      <main className="flex-grow pt-20">
         <div className="bg-gray-50 py-20">
           <div className="container mx-auto px-4 md:px-6">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in [animation-delay:200ms]">About Us</h1>
@@ -19,7 +20,9 @@ const About = () => {
           </div>
         </div>
         
-        <AboutSection />
+        <div className="animate-fade-in [animation-delay:300ms]">
+          <AboutSection />
+        </div>
         
         <div className="py-16 bg-white">
           <div className="container mx-auto px-4 md:px-6">
@@ -99,8 +102,12 @@ const About = () => {
           </div>
         </div>
         
-        <TestimonialsSection />
-        <CTASection />
+        <div className="animate-fade-in [animation-delay:600ms]">
+          <TestimonialsSection />
+        </div>
+        <div className="animate-fade-in [animation-delay:700ms]">
+          <CTASection />
+        </div>
       </main>
       <Footer />
     </div>

@@ -152,6 +152,25 @@ const blogPosts = {
         <li>Emotionally resonant</li>
       </ul>
 
+      <h2 class="text-2xl font-bold mt-8 mb-4">4. Optimizing Ad Placement</h2>
+      <p class="mb-4">Consider where your ads will be shown across Meta's platforms:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Facebook News Feed</li>
+        <li>Instagram Feed and Stories</li>
+        <li>Facebook Marketplace</li>
+        <li>Meta Audience Network</li>
+      </ul>
+      <p class="mb-4">Different placements may require different ad formats and messaging strategies.</p>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">5. Testing and Iteration</h2>
+      <p class="mb-4">Continuous optimization is key to Meta Ads success:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>A/B test different ad elements</li>
+        <li>Monitor performance metrics</li>
+        <li>Adjust budget allocation</li>
+        <li>Refresh creative regularly</li>
+      </ul>
+
       <p class="text-lg mt-8">By implementing these strategies consistently and monitoring your results, you can create Meta Ads that drive engagement and conversions.</p>
     `,
     image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7",
@@ -194,6 +213,24 @@ const blogPosts = {
         <li>Live shopping events</li>
         <li>Product catalogs</li>
         <li>Social proof integration</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">4. Community-Building Focus</h2>
+      <p class="mb-4">Build engaged communities through:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Groups and forums</li>
+        <li>Interactive features</li>
+        <li>Exclusive content</li>
+        <li>Virtual events and meetups</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">5. Integrated Multi-Platform Strategy</h2>
+      <p class="mb-4">Create a cohesive presence across:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Traditional platforms (Facebook, Instagram, Twitter)</li>
+        <li>Rising platforms (TikTok, Clubhouse)</li>
+        <li>Niche communities</li>
+        <li>Professional networks</li>
       </ul>
 
       <p class="text-lg mt-8">By embracing these strategies and staying adaptable, brands can build stronger connections with their audiences and drive better results from their social media efforts.</p>
@@ -240,6 +277,24 @@ const blogPosts = {
         <li>Content syndication</li>
       </ul>
 
+      <h2 class="text-2xl font-bold mt-8 mb-4">4. Measuring Content Performance</h2>
+      <p class="mb-4">Track success with metrics like:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Engagement rates</li>
+        <li>Time on page</li>
+        <li>Conversion attribution</li>
+        <li>Brand sentiment</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">5. Content Optimization</h2>
+      <p class="mb-4">Continuously improve with:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>SEO refinement</li>
+        <li>Format experimentation</li>
+        <li>Content repurposing</li>
+        <li>Audience feedback integration</li>
+      </ul>
+
       <p class="text-lg mt-8">By implementing a comprehensive content marketing strategy, brands can build lasting relationships with their audience and drive sustainable growth.</p>
     `,
     image: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5",
@@ -249,6 +304,193 @@ const blogPosts = {
     authorImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200",
     tags: ["Content Marketing", "Strategy", "Copywriting"],
     relatedPosts: [4, 6, 7]
+  },
+  "6": {
+    id: 6,
+    title: "Email Marketing Campaigns That Convert",
+    excerpt: "Learn how to create email marketing campaigns that nurture leads and convert them into loyal customers.",
+    content: `
+      <p class="text-lg mb-4">Email marketing remains one of the most effective digital marketing channels, offering exceptional ROI when executed properly. Creating campaigns that convert requires strategic planning and execution.</p>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">1. Building Quality Email Lists</h2>
+      <p class="mb-4">The foundation of successful email marketing is a high-quality email list. Focus on:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Ethical list-building techniques</li>
+        <li>Double opt-in confirmation</li>
+        <li>Segmentation from the beginning</li>
+        <li>Regular list maintenance</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">2. Creating Compelling Email Content</h2>
+      <p class="mb-4">Your email content should be:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Relevant to recipient interests</li>
+        <li>Personalized beyond just name insertion</li>
+        <li>Mobile-friendly and scannable</li>
+        <li>Focused on benefits not features</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">3. Optimizing Subject Lines</h2>
+      <p class="mb-4">Subject lines determine open rates. Best practices include:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Keeping it concise (30-50 characters)</li>
+        <li>Creating curiosity or urgency</li>
+        <li>A/B testing different approaches</li>
+        <li>Avoiding spam trigger words</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">4. Implementing Automated Sequences</h2>
+      <p class="mb-4">Leverage automation for:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Welcome series for new subscribers</li>
+        <li>Abandoned cart recovery</li>
+        <li>Post-purchase follow-ups</li>
+        <li>Re-engagement campaigns</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">5. Analyzing and Optimizing Performance</h2>
+      <p class="mb-4">Continuously improve with metrics like:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Open and click-through rates</li>
+        <li>Conversion tracking</li>
+        <li>List growth and churn rates</li>
+        <li>Revenue attribution</li>
+      </ul>
+
+      <p class="text-lg mt-8">By implementing these strategies, you can create email marketing campaigns that not only engage your audience but also drive meaningful conversions and build long-term customer relationships.</p>
+    `,
+    image: "https://images.unsplash.com/photo-1596526131083-e8c633c948d2",
+    category: "Email Marketing",
+    date: "Mar 29, 2025",
+    author: "David Lee",
+    authorImage: "https://images.unsplash.com/photo-1500648767791-0a1dd7228f2d?w=200",
+    tags: ["Email Marketing", "Conversions", "Automation"],
+    relatedPosts: [5, 7, 8]
+  },
+  "7": {
+    id: 7,
+    title: "Understanding Google Analytics 4 for Better Insights",
+    excerpt: "Master the new Google Analytics 4 platform to gather deeper insights about your website visitors and their behavior.",
+    content: `
+      <p class="text-lg mb-4">Google Analytics 4 (GA4) represents a significant shift in how we track and analyze website and app performance. Understanding its features and capabilities is crucial for deriving actionable insights.</p>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">1. Event-Based Tracking</h2>
+      <p class="mb-4">Unlike Universal Analytics, GA4 uses an event-based model where every interaction is tracked as an event:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Automatic events tracked by default</li>
+        <li>Custom events for business-specific actions</li>
+        <li>Enhanced measurement for common events</li>
+        <li>Simplified implementation process</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">2. Cross-Platform Tracking</h2>
+      <p class="mb-4">GA4 excels at tracking user journeys across multiple platforms:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Unified web and app reporting</li>
+        <li>User-centric measurement</li>
+        <li>Cross-device tracking capabilities</li>
+        <li>Platform-specific insights</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">3. AI-Powered Insights</h2>
+      <p class="mb-4">Machine learning helps uncover valuable patterns:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Predictive metrics (churn probability, purchase likelihood)</li>
+        <li>Automatic anomaly detection</li>
+        <li>Audience insights</li>
+        <li>Smart forecasting</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">4. Enhanced Reporting</h2>
+      <p class="mb-4">GA4's reporting capabilities include:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Funnel analysis</li>
+        <li>Path exploration</li>
+        <li>User lifetime metrics</li>
+        <li>Customizable reporting interface</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">5. Privacy-Centric Approach</h2>
+      <p class="mb-4">GA4 is designed for a cookieless future:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Reduced reliance on cookies</li>
+        <li>Data modeling to fill measurement gaps</li>
+        <li>Enhanced data controls</li>
+        <li>Future-proof analytics</li>
+      </ul>
+
+      <p class="text-lg mt-8">By mastering Google Analytics 4, marketers and analysts can gain deeper insights into user behavior, make more informed decisions, and prepare for a future where traditional tracking methods will become increasingly limited.</p>
+    `,
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
+    category: "Analytics",
+    date: "Mar 26, 2025",
+    author: "Alex Morgan",
+    authorImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200",
+    tags: ["Google Analytics", "Data", "Insights"],
+    relatedPosts: [2, 5, 8]
+  },
+  "8": {
+    id: 8,
+    title: "Local SEO Techniques for Small Businesses",
+    excerpt: "Improve your local search presence with these proven local SEO strategies designed for small and medium businesses.",
+    content: `
+      <p class="text-lg mb-4">For small and medium-sized businesses with physical locations, local SEO is essential for connecting with nearby customers who are actively searching for their products or services.</p>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">1. Google Business Profile Optimization</h2>
+      <p class="mb-4">Your Google Business Profile (formerly Google My Business) is the cornerstone of local SEO:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Complete all profile information accurately</li>
+        <li>Add high-quality photos of your business</li>
+        <li>Maintain updated business hours</li>
+        <li>Respond promptly to reviews</li>
+        <li>Post regular updates and offers</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">2. Local Keyword Optimization</h2>
+      <p class="mb-4">Target location-specific search terms:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Research location-based keywords</li>
+        <li>Include city or neighborhood names in key content</li>
+        <li>Create location-specific landing pages</li>
+        <li>Optimize meta titles and descriptions with local terms</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">3. Online Review Management</h2>
+      <p class="mb-4">Reviews impact both rankings and consumer decisions:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Implement a review solicitation strategy</li>
+        <li>Respond to all reviews, positive and negative</li>
+        <li>Address negative feedback constructively</li>
+        <li>Monitor reviews across multiple platforms</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">4. NAP Consistency</h2>
+      <p class="mb-4">Ensure your Name, Address, and Phone number are consistent across the web:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Audit existing business citations</li>
+        <li>Correct inconsistencies</li>
+        <li>Create listings on relevant directories</li>
+        <li>Use schema markup on your website</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">5. Localized Content Strategy</h2>
+      <p class="mb-4">Create content that resonates with your local audience:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Local event coverage and participation</li>
+        <li>Area-specific guides and resources</li>
+        <li>Customer success stories from your community</li>
+        <li>Location-specific FAQ pages</li>
+      </ul>
+
+      <p class="text-lg mt-8">By implementing these local SEO strategies, small businesses can significantly improve their visibility in local search results, drive more foot traffic, and compete effectively against larger competitors in their specific geographic area.</p>
+    `,
+    image: "https://images.unsplash.com/photo-1572021335469-31706a17aaef",
+    category: "Local SEO",
+    date: "Mar 23, 2025",
+    author: "Jennifer Wilson",
+    authorImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200",
+    tags: ["Local SEO", "Small Business", "Google My Business"],
+    relatedPosts: [1, 5, 7]
   }
 };
 
@@ -263,11 +505,11 @@ const BlogPost = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow pt-20 animate-fade-in">
+      <main className="flex-grow pt-20">
         {post ? (
           <>
             {/* Hero Section */}
-            <div className="relative">
+            <div className="relative animate-fade-in [animation-delay:200ms]">
               <div className="h-80 md:h-96 w-full overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60 z-10"></div>
                 <img 
@@ -451,7 +693,9 @@ const BlogPost = () => {
               </div>
             </div>
             
-            <CTASection />
+            <div className="animate-fade-in [animation-delay:500ms]">
+              <CTASection />
+            </div>
           </>
         ) : (
           <div className="container mx-auto px-4 py-20 text-center">

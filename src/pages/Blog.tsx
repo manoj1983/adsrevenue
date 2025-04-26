@@ -99,7 +99,7 @@ const Blog = () => {
       <Header />
       <main className="flex-grow pt-20">
         {/* Hero Section */}
-        <div className="bg-gradient-to-r from-gray-100 to-gray-50 py-16 relative overflow-hidden">
+        <div className="bg-gradient-to-r from-gray-100 to-gray-50 py-16 relative overflow-hidden animate-fade-in [animation-delay:200ms]">
           <div className="absolute inset-0 opacity-10">
             <img 
               src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7"
@@ -108,14 +108,14 @@ const Blog = () => {
             />
           </div>
           <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <div className="max-w-3xl animate-fade-in">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in [animation-delay:100ms]">
+            <div className="max-w-3xl">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in [animation-delay:300ms]">
                 Digital Marketing Blog
               </h1>
-              <p className="text-lg text-gray-600 mb-8 animate-fade-in [animation-delay:200ms]">
+              <p className="text-lg text-gray-600 mb-8 animate-fade-in [animation-delay:400ms]">
                 Insights, strategies, and tips to help you navigate the digital marketing landscape and grow your business.
               </p>
-              <div className="relative animate-fade-in [animation-delay:300ms]">
+              <div className="relative animate-fade-in [animation-delay:500ms]">
                 <Input 
                   type="search" 
                   placeholder="Search articles..." 
@@ -128,9 +128,9 @@ const Blog = () => {
         </div>
         
         {/* Categories */}
-        <div className="border-b">
+        <div className="border-b animate-fade-in [animation-delay:600ms]">
           <div className="container mx-auto px-4 md:px-6 py-6">
-            <div className="flex flex-wrap gap-2 animate-fade-in [animation-delay:400ms]">
+            <div className="flex flex-wrap gap-2">
               {categories.map((category, index) => (
                 <Button 
                   key={category} 
@@ -152,7 +152,7 @@ const Blog = () => {
                 <Card 
                   key={post.id} 
                   className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group animate-fade-in"
-                  style={{ animationDelay: `${500 + (index * 100)}ms` }}
+                  style={{ animationDelay: `${700 + (index * 100)}ms` }}
                 >
                   <div className="relative h-48 overflow-hidden">
                     <img 
@@ -186,7 +186,7 @@ const Blog = () => {
             </div>
             
             {/* Pagination */}
-            <div className="flex justify-center mt-12 animate-fade-in [animation-delay:1200ms]">
+            <div className="flex justify-center mt-12 animate-fade-in [animation-delay:1600ms]">
               <div className="inline-flex rounded-md shadow-sm">
                 <Button variant="outline" className="rounded-r-none">Previous</Button>
                 <Button variant="outline" className="rounded-none bg-brand-orange text-white border-brand-orange">1</Button>
@@ -199,9 +199,9 @@ const Blog = () => {
         </section>
         
         {/* Newsletter */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-16 bg-gray-50 animate-fade-in [animation-delay:1700ms]">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-3xl mx-auto text-center animate-fade-in">
+            <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl font-bold mb-4">Subscribe to Our Newsletter</h2>
               <p className="text-gray-600 mb-8">
                 Get the latest digital marketing insights and strategies delivered straight to your inbox.
