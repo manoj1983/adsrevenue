@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Header from '@/components/Header';
@@ -118,6 +117,138 @@ const blogPosts = {
     authorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200",
     tags: ["Google Ads", "PPC", "SEM"],
     relatedPosts: [1, 3, 7]
+  },
+  "3": {
+    id: 3,
+    title: "Building Effective Meta Ads for Higher Engagement",
+    excerpt: "Learn the best practices for creating engaging Facebook and Instagram ads that convert visitors into customers.",
+    content: `
+      <p class="text-lg mb-4">Meta Ads (formerly Facebook Ads) remain one of the most powerful platforms for reaching and engaging your target audience. Understanding how to create effective ad campaigns is crucial for achieving higher engagement and better ROI.</p>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">1. Understanding Your Target Audience</h2>
+      <p class="mb-4">The foundation of any successful Meta Ads campaign is a deep understanding of your target audience. This includes:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Demographic information</li>
+        <li>Interests and behaviors</li>
+        <li>Pain points and desires</li>
+        <li>Platform usage patterns</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">2. Creating Compelling Visuals</h2>
+      <p class="mb-4">Visual content is crucial for Meta Ads success. Focus on:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>High-quality images or videos</li>
+        <li>Brand consistency</li>
+        <li>Mobile-first design</li>
+        <li>Clear value proposition</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">3. Writing Engaging Ad Copy</h2>
+      <p class="mb-4">Your ad copy should be:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Clear and concise</li>
+        <li>Benefit-focused</li>
+        <li>Action-oriented</li>
+        <li>Emotionally resonant</li>
+      </ul>
+
+      <p class="text-lg mt-8">By implementing these strategies consistently and monitoring your results, you can create Meta Ads that drive engagement and conversions.</p>
+    `,
+    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7",
+    category: "Meta Ads",
+    date: "Apr 8, 2025",
+    author: "Sarah Johnson",
+    authorImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200",
+    tags: ["Meta Ads", "Facebook", "Instagram"],
+    relatedPosts: [1, 2, 4]
+  },
+  "4": {
+    id: 4,
+    title: "Social Media Marketing Strategies for 2025",
+    excerpt: "Stay ahead of the competition with these cutting-edge social media marketing tactics that drive engagement and conversions.",
+    content: `
+      <p class="text-lg mb-4">As we move through 2025, social media marketing continues to evolve at a rapid pace. Staying ahead of the curve with the latest strategies is essential for maintaining competitive advantage.</p>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">1. Video-First Content Strategy</h2>
+      <p class="mb-4">Short-form video content dominates social media. Key considerations include:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Platform-specific video formats</li>
+        <li>Storytelling techniques</li>
+        <li>Authentic, behind-the-scenes content</li>
+        <li>User-generated content integration</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">2. AI-Powered Personalization</h2>
+      <p class="mb-4">Leverage AI tools for:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Content recommendations</li>
+        <li>Audience segmentation</li>
+        <li>Automated engagement</li>
+        <li>Performance analysis</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">3. Social Commerce Integration</h2>
+      <p class="mb-4">Make shopping seamless with:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Shoppable posts</li>
+        <li>Live shopping events</li>
+        <li>Product catalogs</li>
+        <li>Social proof integration</li>
+      </ul>
+
+      <p class="text-lg mt-8">By embracing these strategies and staying adaptable, brands can build stronger connections with their audiences and drive better results from their social media efforts.</p>
+    `,
+    image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113",
+    category: "Social Media",
+    date: "Apr 5, 2025",
+    author: "Michael Brown",
+    authorImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200",
+    tags: ["Social Media", "Marketing", "Strategy"],
+    relatedPosts: [3, 5, 6]
+  },
+  "5": {
+    id: 5,
+    title: "The Power of Content Marketing in Digital Strategy",
+    excerpt: "Discover how content marketing can establish your brand as an authority and drive long-term customer engagement.",
+    content: `
+      <p class="text-lg mb-4">Content marketing remains a cornerstone of digital strategy, helping brands build trust, establish authority, and create lasting relationships with their audience.</p>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">1. Content Strategy Development</h2>
+      <p class="mb-4">A successful content strategy includes:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Clear goals and objectives</li>
+        <li>Audience persona development</li>
+        <li>Content calendar planning</li>
+        <li>Distribution channels</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">2. Creating Quality Content</h2>
+      <p class="mb-4">Focus on producing:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Original research and insights</li>
+        <li>Expert interviews and analysis</li>
+        <li>How-to guides and tutorials</li>
+        <li>Case studies and success stories</li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-8 mb-4">3. Content Distribution</h2>
+      <p class="mb-4">Effective distribution through:</p>
+      <ul class="list-disc pl-6 mb-6 space-y-2">
+        <li>Social media channels</li>
+        <li>Email newsletters</li>
+        <li>Industry partnerships</li>
+        <li>Content syndication</li>
+      </ul>
+
+      <p class="text-lg mt-8">By implementing a comprehensive content marketing strategy, brands can build lasting relationships with their audience and drive sustainable growth.</p>
+    `,
+    image: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5",
+    category: "Content Marketing",
+    date: "Apr 2, 2025",
+    author: "Emily Chen",
+    authorImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200",
+    tags: ["Content Marketing", "Strategy", "Copywriting"],
+    relatedPosts: [4, 6, 7]
   }
 };
 

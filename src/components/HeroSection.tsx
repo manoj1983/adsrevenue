@@ -18,7 +18,6 @@ const HeroSection = () => {
     <section className="pt-32 pb-20 md:pt-44 md:pb-32 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row items-center gap-12">
-          {/* Left Column - Content */}
           <div className="md:w-1/2 opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Maximize Your <span className="text-gradient">Ad Revenue</span> With Expert Solutions
@@ -32,7 +31,7 @@ const HeroSection = () => {
                   Get Started
                 </Button>
               </Link>
-              <Link to="/services">
+              <Link to="/about">
                 <Button variant="outline" className="border-brand-orange text-brand-orange hover:bg-brand-orange/10 px-8 py-6 text-lg opacity-0 animate-[fade-in_0.6s_ease-out_0.8s_forwards] transition-transform duration-300 hover:scale-105">
                   Learn More
                 </Button>
@@ -40,10 +39,8 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Right Column - Analytics Display */}
           <div className="md:w-1/2 opacity-0 animate-[fade-in_0.6s_ease-out_1s_forwards]">
             <div className="relative bg-white rounded-xl shadow-xl p-6 md:p-8 transform transition-transform duration-500 hover:translate-y-[-5px]">
-              {/* Analytics Header */}
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center">
                   <div className="w-12 h-12 rounded-full bg-brand-orange flex items-center justify-center">
@@ -61,7 +58,6 @@ const HeroSection = () => {
                 </div>
               </div>
 
-              {/* Chart Area with smooth animation */}
               <div className="h-64 mb-4 animate-fade-in [animation-delay:400ms]">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={revenueData}>
@@ -95,7 +91,6 @@ const HeroSection = () => {
                 </ResponsiveContainer>
               </div>
               
-              {/* Background Image */}
               <div className="absolute -z-10 opacity-5 inset-0 overflow-hidden rounded-xl">
                 <img 
                   src="https://images.unsplash.com/photo-1460925895917-afdab827c52f"
@@ -104,7 +99,6 @@ const HeroSection = () => {
                 />
               </div>
               
-              {/* Decorative Elements */}
               <div className="absolute -bottom-4 -right-4 w-72 h-72 bg-brand-orange/10 rounded-full -z-10 animate-pulse"></div>
               <div className="absolute -top-4 -left-4 w-40 h-40 bg-blue-100 rounded-full -z-10"></div>
             </div>

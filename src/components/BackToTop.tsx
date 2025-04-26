@@ -30,7 +30,7 @@ const BackToTop = () => {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 left-8 p-3 rounded-full bg-transparent border-2 border-brand-orange hover:bg-brand-orange/10 transition-colors duration-300 z-40"
+          className="fixed bottom-8 right-8 p-3 rounded-full bg-transparent border-2 border-brand-orange hover:bg-brand-orange/10 transition-colors duration-300 z-40"
           aria-label="Back to top"
         >
           <ArrowUp className="h-6 w-6 text-brand-orange" />

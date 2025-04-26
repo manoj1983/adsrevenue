@@ -14,18 +14,38 @@ import BlogSection from '@/components/BlogSection';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col animate-fade-in">
+    <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        <HeroSection />
-        <ClientsSection />
-        <AboutSection />
-        <ServicesSection />
-        <StatsSection />
-        <TestimonialsSection />
-        <BlogSection />
-        <ContactSection />
-        <CTASection />
+        <div className="space-y-0">
+          <div className="animate-fade-in [animation-delay:100ms]">
+            <HeroSection />
+          </div>
+          <div className="animate-fade-in [animation-delay:200ms]">
+            <ClientsSection />
+          </div>
+          <div className="animate-fade-in [animation-delay:300ms]">
+            <AboutSection />
+          </div>
+          <div className="animate-fade-in [animation-delay:400ms]">
+            <ServicesSection />
+          </div>
+          <div className="animate-fade-in [animation-delay:500ms]">
+            <StatsSection />
+          </div>
+          <div className="animate-fade-in [animation-delay:600ms]">
+            <TestimonialsSection />
+          </div>
+          <div className="animate-fade-in [animation-delay:700ms]">
+            <BlogSection />
+          </div>
+          <div className="animate-fade-in [animation-delay:800ms]">
+            <ContactSection />
+          </div>
+          <div className="animate-fade-in [animation-delay:900ms]">
+            <CTASection />
+          </div>
+        </div>
       </main>
       <Footer />
     </div>
