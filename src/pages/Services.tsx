@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -86,14 +87,14 @@ const Services = () => {
       <main className="flex-grow pt-20">
         <div className="bg-gray-50 py-20">
           <div className="container mx-auto px-4 md:px-6">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in [animation-delay:200ms]">Our Services</h1>
-            <p className="text-lg text-gray-600 animate-fade-in [animation-delay:300ms]">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">Our Services</h1>
+            <p className="text-lg text-gray-600 opacity-0 animate-[fade-in_0.6s_ease-out_0.4s_forwards]">
               Comprehensive advertising optimization solutions to help you maximize revenue and grow your business.
             </p>
           </div>
         </div>
         
-        <div className="animate-fade-in [animation-delay:400ms]">
+        <div className="opacity-0 animate-[fade-in_0.6s_ease-out_0.5s_forwards]">
           <ServicesSection />
         </div>
         
@@ -219,7 +220,6 @@ const Services = () => {
           <CTASection />
         </div>
       </main>
-      
       <Footer />
     </div>
   );

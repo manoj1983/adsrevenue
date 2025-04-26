@@ -33,7 +33,7 @@ const HeroSection = () => {
               </Link>
               <Link to="/about">
                 <Button variant="outline" className="border-brand-orange text-brand-orange hover:bg-brand-orange/10 px-8 py-6 text-lg opacity-0 animate-[fade-in_0.6s_ease-out_0.8s_forwards] transition-transform duration-300 hover:scale-105">
-                  Learn More
+                  Learn More About Us
                 </Button>
               </Link>
             </div>

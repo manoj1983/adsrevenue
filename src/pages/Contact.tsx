@@ -11,14 +11,14 @@ const Contact = () => {
       <main className="flex-grow pt-20">
         <div className="bg-gray-50 py-20">
           <div className="container mx-auto px-4 md:px-6">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 animate-fade-in [animation-delay:200ms]">Contact Us</h1>
-            <p className="text-lg text-gray-600 animate-fade-in [animation-delay:300ms]">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">Contact Us</h1>
+            <p className="text-lg text-gray-600 opacity-0 animate-[fade-in_0.6s_ease-out_0.4s_forwards]">
               We'd love to hear from you. Reach out to our team with any questions or inquiries.
             </p>
           </div>
         </div>
         
-        <div className="animate-fade-in [animation-delay:400ms]">
+        <div className="opacity-0 animate-[fade-in_0.6s_ease-out_0.5s_forwards]">
           <ContactSection />
         </div>
         

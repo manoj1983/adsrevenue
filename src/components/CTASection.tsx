@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -37,7 +36,7 @@ const CTASection = () => {
               </Button>
             </Link>
             <Link to="/contact">
-              <Button variant="outline" className="bg-transparent text-white hover:bg-white/10 border-white px-8 py-6 text-lg font-medium animate-scale-in [animation-delay:800ms] transition-transform duration-300 hover:scale-105">
+              <Button variant="outline" className="bg-transparent text-white hover:text-white hover:bg-white/10 border-white px-8 py-6 text-lg font-medium animate-scale-in [animation-delay:800ms] transition-transform duration-300 hover:scale-105">
                 Schedule a Demo
               </Button>
             </Link>
