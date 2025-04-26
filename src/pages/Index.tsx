@@ -7,7 +7,6 @@ import ServicesSection from '@/components/ServicesSection';
 import StatsSection from '@/components/StatsSection';
 import AboutSection from '@/components/AboutSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
-import ClientsSection from '@/components/ClientsSection';
 import ContactSection from '@/components/ContactSection';
 import CTASection from '@/components/CTASection';
 import BlogSection from '@/components/BlogSection';
@@ -20,9 +19,6 @@ const Index = () => {
         <div className="space-y-0">
           <div className="animate-fade-in [animation-delay:100ms]">
             <HeroSection />
-          </div>
-          <div className="animate-fade-in [animation-delay:200ms]">
-            <ClientsSection />
           </div>
           <div className="animate-fade-in [animation-delay:300ms]">
             <AboutSection />
