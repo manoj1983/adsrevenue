@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -15,8 +16,15 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="pt-32 pb-20 md:pt-44 md:pb-32 bg-[url('/lovable-uploads/54a31289-3d96-429d-92b6-959412139d2f.png')] bg-cover bg-center bg-no-repeat relative overflow-hidden">
-      <div className="absolute inset-0 bg-black/50"></div>
+    <section className="pt-32 pb-20 md:pt-44 md:pb-32 relative overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="https://images.unsplash.com/photo-1460925895917-afdab827c52f" 
+          alt="Digital Marketing Background"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/70"></div>
+      </div>
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2">

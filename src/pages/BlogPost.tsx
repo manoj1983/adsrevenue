@@ -58,7 +58,30 @@ const blogPosts = {
     author: "Jane Cooper",
     authorImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200",
     tags: ["SEO", "On-page SEO", "Technical SEO"],
-    relatedPosts: [2, 8, 5]
+    relatedPosts: [
+      {
+        id: 2,
+        title: "Maximizing ROI with Google Ads Campaigns",
+        date: "Apr 12, 2025",
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
+        slug: "maximizing-roi-with-google-ads-campaigns"
+      },
+      {
+        id: 8,
+        title: "Local SEO Techniques for Small Businesses",
+        date: "Mar 23, 2025",
+        image: "https://images.unsplash.com/photo-1572021335469-31706a17aaef",
+        slug: "local-seo-techniques-for-small-businesses"
+      },
+      {
+        id: 5,
+        title: "The Power of Content Marketing in Digital Strategy",
+        date: "Apr 2, 2025",
+        image: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5",
+        slug: "the-power-of-content-marketing-in-digital-strategy"
+      }
+    ],
+    slug: "10-seo-strategies-to-boost-your-website-ranking"
   },
   "2": {
     id: 2,
@@ -116,7 +139,30 @@ const blogPosts = {
     author: "Mark Wilson",
     authorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200",
     tags: ["Google Ads", "PPC", "SEM"],
-    relatedPosts: [1, 3, 7]
+    relatedPosts: [
+      {
+        id: 1,
+        title: "10 SEO Strategies to Boost Your Website Ranking",
+        date: "Apr 15, 2025",
+        image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
+        slug: "10-seo-strategies-to-boost-your-website-ranking"
+      },
+      {
+        id: 3,
+        title: "Building Effective Meta Ads for Higher Engagement",
+        date: "Apr 8, 2025",
+        image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7",
+        slug: "building-effective-meta-ads-for-higher-engagement"
+      },
+      {
+        id: 7,
+        title: "Understanding Google Analytics 4 for Better Insights",
+        date: "Mar 26, 2025",
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
+        slug: "understanding-google-analytics-4-for-better-insights"
+      }
+    ],
+    slug: "maximizing-roi-with-google-ads-campaigns"
   },
   "3": {
     id: 3,
@@ -179,7 +225,30 @@ const blogPosts = {
     author: "Sarah Johnson",
     authorImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200",
     tags: ["Meta Ads", "Facebook", "Instagram"],
-    relatedPosts: [1, 2, 4]
+    relatedPosts: [
+      {
+        id: 1,
+        title: "10 SEO Strategies to Boost Your Website Ranking",
+        date: "Apr 15, 2025",
+        image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
+        slug: "10-seo-strategies-to-boost-your-website-ranking"
+      },
+      {
+        id: 2,
+        title: "Maximizing ROI with Google Ads Campaigns",
+        date: "Apr 12, 2025",
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
+        slug: "maximizing-roi-with-google-ads-campaigns"
+      },
+      {
+        id: 4,
+        title: "Social Media Marketing Strategies for 2025",
+        date: "Apr 5, 2025",
+        image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113",
+        slug: "social-media-marketing-strategies-for-2025"
+      }
+    ],
+    slug: "building-effective-meta-ads-for-higher-engagement"
   },
   "4": {
     id: 4,
@@ -495,7 +564,7 @@ const blogPosts = {
 };
 
 const BlogPost = () => {
-  const { postId } = useParams();
+  const { postId, slug } = useParams();
   const post = blogPosts[postId as keyof typeof blogPosts];
 
   useEffect(() => {
@@ -508,17 +577,17 @@ const BlogPost = () => {
       <main className="flex-grow pt-20">
         {post ? (
           <>
-            <div className="opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">
+            <div className="relative">
               <div className="h-80 md:h-96 w-full overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60 z-10"></div>
                 <img 
                   src={post.image}
                   alt={post.title}
-                  className="w-full h-full object-cover animate-fade-in transition-transform duration-1000 hover:scale-105"
+                  className="w-full h-full object-cover"
                 />
               </div>
               <div className="container mx-auto px-4 md:px-6">
-                <div className="relative -mt-32 z-20 animate-slide-in-bottom">
+                <div className="relative -mt-32 z-20">
                   <div className="bg-white p-8 md:p-12 rounded-xl shadow-xl max-w-4xl mx-auto">
                     <Link to="/blog" className="inline-flex items-center text-gray-500 hover:text-brand-orange mb-6 transition-colors">
                       <ArrowLeft size={16} className="mr-2" /> Back to all articles
@@ -559,143 +628,141 @@ const BlogPost = () => {
               </div>
             </div>
             
-            <div className="opacity-0 animate-[fade-in_0.6s_ease-out_0.4s_forwards]">
-              <div className="container mx-auto px-4 md:px-6 py-12">
-                <div className="flex flex-col lg:flex-row gap-12">
-                  <div className="lg:w-2/3 animate-fade-in [animation-delay:300ms]">
-                    <article className="prose prose-lg max-w-none">
-                      <div dangerouslySetInnerHTML={{ __html: post.content }} />
-                    </article>
-                    
-                    {/* Tags */}
-                    <div className="mt-8 pt-8 border-t">
-                      <div className="flex flex-wrap gap-2">
-                        {post.tags.map(tag => (
-                          <span key={tag} className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm">
-                            #{tag}
-                          </span>
-                        ))}
+            <div className="container mx-auto px-4 md:px-6 py-12">
+              <div className="flex flex-col lg:flex-row gap-12">
+                <div className="lg:w-2/3">
+                  <article className="prose prose-lg max-w-none">
+                    <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                  </article>
+                  
+                  {/* Tags */}
+                  <div className="mt-8 pt-8 border-t">
+                    <div className="flex flex-wrap gap-2">
+                      {post.tags.map(tag => (
+                        <span key={tag} className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm">
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Share */}
+                  <div className="mt-8 pt-8 border-t">
+                    <h3 className="text-xl font-bold mb-4">Share this article</h3>
+                    <div className="flex gap-3">
+                      <Button variant="outline" size="icon" className="rounded-full">
+                        <Facebook size={18} />
+                      </Button>
+                      <Button variant="outline" size="icon" className="rounded-full">
+                        <Twitter size={18} />
+                      </Button>
+                      <Button variant="outline" size="icon" className="rounded-full">
+                        <Linkedin size={18} />
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  {/* Author */}
+                  <div className="mt-12 bg-gray-50 p-8 rounded-xl">
+                    <div className="flex items-center gap-6">
+                      <div className="w-20 h-20 rounded-full overflow-hidden shrink-0">
+                        <img 
+                          src={post.authorImage}
+                          alt={post.author}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold mb-2">About {post.author}</h3>
+                        <p className="text-gray-600">
+                          Digital marketing specialist with over 10 years of experience in SEO, PPC, and content strategy. 
+                          Passionate about helping businesses grow their online presence and achieve their marketing goals.
+                        </p>
                       </div>
                     </div>
-                    
-                    {/* Share */}
-                    <div className="mt-8 pt-8 border-t">
-                      <h3 className="text-xl font-bold mb-4">Share this article</h3>
-                      <div className="flex gap-3">
-                        <Button variant="outline" size="icon" className="rounded-full">
-                          <Facebook size={18} />
-                        </Button>
-                        <Button variant="outline" size="icon" className="rounded-full">
-                          <Twitter size={18} />
-                        </Button>
-                        <Button variant="outline" size="icon" className="rounded-full">
-                          <Linkedin size={18} />
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    {/* Author */}
-                    <div className="mt-12 bg-gray-50 p-8 rounded-xl animate-fade-in [animation-delay:400ms]">
-                      <div className="flex items-center gap-6">
-                        <div className="w-20 h-20 rounded-full overflow-hidden shrink-0">
-                          <img 
-                            src={post.authorImage}
-                            alt={post.author}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-bold mb-2">About {post.author}</h3>
-                          <p className="text-gray-600">
-                            Digital marketing specialist with over 10 years of experience in SEO, PPC, and content strategy. 
-                            Passionate about helping businesses grow their online presence and achieve their marketing goals.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Comments */}
-                    <div className="mt-12 animate-fade-in [animation-delay:500ms]">
-                      <h3 className="text-2xl font-bold mb-6">Comments (5)</h3>
-                      <div className="space-y-8">
-                        <div className="bg-gray-50 p-6 rounded-xl">
-                          <div className="flex items-start gap-4">
-                            <div className="w-12 h-12 rounded-full overflow-hidden shrink-0">
-                              <img 
-                                src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=200"
-                                alt="Comment author"
-                                className="w-full h-full object-cover"
-                              />
+                  </div>
+                  
+                  {/* Comments */}
+                  <div className="mt-12">
+                    <h3 className="text-2xl font-bold mb-6">Comments (5)</h3>
+                    <div className="space-y-8">
+                      <div className="bg-gray-50 p-6 rounded-xl">
+                        <div className="flex items-start gap-4">
+                          <div className="w-12 h-12 rounded-full overflow-hidden shrink-0">
+                            <img 
+                              src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=200"
+                              alt="Comment author"
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex justify-between items-center mb-2">
+                              <h4 className="font-bold">John Doe</h4>
+                              <span className="text-sm text-gray-500">3 days ago</span>
                             </div>
-                            <div className="flex-1">
-                              <div className="flex justify-between items-center mb-2">
-                                <h4 className="font-bold">John Doe</h4>
-                                <span className="text-sm text-gray-500">3 days ago</span>
-                              </div>
-                              <p className="text-gray-600 mb-3">
-                                This is exactly what I needed! I've been struggling with my SEO strategy and these tips are super helpful. 
-                                Especially the part about Core Web Vitals - I had no idea they were so important.
-                              </p>
-                              <button className="text-brand-orange hover:text-brand-orange-dark text-sm font-medium">Reply</button>
-                            </div>
+                            <p className="text-gray-600 mb-3">
+                              This is exactly what I needed! I've been struggling with my SEO strategy and these tips are super helpful. 
+                              Especially the part about Core Web Vitals - I had no idea they were so important.
+                            </p>
+                            <button className="text-brand-orange hover:text-brand-orange-dark text-sm font-medium">Reply</button>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  
-                  {/* Sidebar */}
-                  <div className="lg:w-1/3 animate-fade-in [animation-delay:600ms]">
-                    <div className="bg-gray-50 p-6 rounded-xl mb-8">
-                      <h3 className="text-xl font-bold mb-4">Related Articles</h3>
-                      <div className="space-y-6">
-                        <div className="flex items-center gap-4">
+                </div>
+                
+                {/* Sidebar */}
+                <div className="lg:w-1/3">
+                  <div className="bg-gray-50 p-6 rounded-xl mb-8">
+                    <h3 className="text-xl font-bold mb-4">Related Articles</h3>
+                    <div className="space-y-6">
+                      {post.relatedPosts && post.relatedPosts.map((relatedPost) => (
+                        <div key={relatedPost.id} className="flex items-center gap-4">
                           <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0">
                             <img 
-                              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=200"
-                              alt="Related article"
+                              src={relatedPost.image}
+                              alt={relatedPost.title}
                               className="w-full h-full object-cover"
                             />
                           </div>
                           <div>
                             <h4 className="font-bold hover:text-brand-orange transition-colors">
-                              <Link to="/blog/2">Maximizing ROI with Google Ads Campaigns</Link>
+                              <Link to={`/blog/${relatedPost.id}/${relatedPost.slug}`}>{relatedPost.title}</Link>
                             </h4>
-                            <p className="text-sm text-gray-500">Apr 12, 2025</p>
+                            <p className="text-sm text-gray-500">{relatedPost.date}</p>
                           </div>
                         </div>
-                      </div>
+                      ))}
                     </div>
-                    
-                    <div className="bg-brand-orange text-white p-6 rounded-xl mb-8">
-                      <h3 className="text-xl font-bold mb-4">Subscribe to Our Newsletter</h3>
-                      <p className="mb-4">Get the latest marketing tips and strategies delivered straight to your inbox.</p>
-                      <input 
-                        type="email" 
-                        placeholder="Your email address" 
-                        className="w-full p-3 rounded bg-white/10 border border-white/20 text-white placeholder-white/70 mb-4"
-                      />
-                      <Button className="w-full bg-white text-brand-orange hover:bg-white/90">Subscribe</Button>
-                    </div>
-                    
-                    <div className="bg-gray-50 p-6 rounded-xl">
-                      <h3 className="text-xl font-bold mb-4">Popular Tags</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {["SEO", "Google Ads", "Meta Ads", "Content Marketing", "Social Media", "Email Marketing", "Analytics", "Local SEO"].map(tag => (
-                          <span key={tag} className="bg-white border border-gray-200 px-3 py-1 rounded-full text-sm hover:border-brand-orange cursor-pointer transition-colors">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
+                  </div>
+                  
+                  <div className="bg-brand-orange text-white p-6 rounded-xl mb-8">
+                    <h3 className="text-xl font-bold mb-4">Subscribe to Our Newsletter</h3>
+                    <p className="mb-4">Get the latest marketing tips and strategies delivered straight to your inbox.</p>
+                    <input 
+                      type="email" 
+                      placeholder="Your email address" 
+                      className="w-full p-3 rounded bg-white/10 border border-white/20 text-white placeholder-white/70 mb-4"
+                    />
+                    <Button className="w-full bg-white text-brand-orange hover:bg-white/90">Subscribe</Button>
+                  </div>
+                  
+                  <div className="bg-gray-50 p-6 rounded-xl">
+                    <h3 className="text-xl font-bold mb-4">Popular Tags</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {["SEO", "Google Ads", "Meta Ads", "Content Marketing", "Social Media", "Email Marketing", "Analytics", "Local SEO"].map(tag => (
+                        <span key={tag} className="bg-white border border-gray-200 px-3 py-1 rounded-full text-sm hover:border-brand-orange cursor-pointer transition-colors">
+                          {tag}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             
-            <div className="opacity-0 animate-[fade-in_0.6s_ease-out_0.5s_forwards]">
-              <CTASection />
-            </div>
+            <CTASection />
           </>
         ) : (
           <div className="container mx-auto px-4 py-20 text-center">

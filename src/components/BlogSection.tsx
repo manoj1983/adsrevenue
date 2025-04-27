@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
@@ -11,7 +12,8 @@ const BlogSection = () => {
       excerpt: "Learn the latest on-page and off-page SEO techniques to improve your search engine visibility and drive more organic traffic.",
       image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
       category: "SEO",
-      date: "Apr 15, 2025"
+      date: "Apr 15, 2025",
+      slug: "10-seo-strategies-to-boost-your-website-ranking"
     },
     {
       id: 2,
@@ -19,7 +21,8 @@ const BlogSection = () => {
       excerpt: "Discover how to optimize your Google Ads campaigns to achieve better conversions and reduce cost per acquisition.",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
       category: "Google Ads",
-      date: "Apr 12, 2025"
+      date: "Apr 12, 2025",
+      slug: "maximizing-roi-with-google-ads-campaigns"
     },
     {
       id: 3,
@@ -27,7 +30,8 @@ const BlogSection = () => {
       excerpt: "Learn the best practices for creating engaging Facebook and Instagram ads that convert visitors into customers.",
       image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7",
       category: "Meta Ads",
-      date: "Apr 8, 2025"
+      date: "Apr 8, 2025",
+      slug: "building-effective-meta-ads-for-higher-engagement"
     }
   ];
 
@@ -64,7 +68,7 @@ const BlogSection = () => {
                   {post.title}
                 </h3>
                 <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                <Link to={`/blog/${post.id}/${post.title.toLowerCase().replace(/\s+/g, '-')}`} className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium">
+                <Link to={`/blog/${post.id}/${post.slug}`} className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium">
                   Read More <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
                 </Link>
               </CardContent>

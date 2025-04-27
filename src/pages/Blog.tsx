@@ -22,7 +22,8 @@ const Blog = () => {
       image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
       category: "SEO",
       date: "Apr 15, 2025",
-      tags: ["SEO", "On-page SEO", "Technical SEO"]
+      tags: ["SEO", "On-page SEO", "Technical SEO"],
+      slug: "10-seo-strategies-to-boost-your-website-ranking"
     },
     {
       id: 2,
@@ -31,7 +32,8 @@ const Blog = () => {
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
       category: "Google Ads",
       date: "Apr 12, 2025",
-      tags: ["Google Ads", "PPC", "SEM"]
+      tags: ["Google Ads", "PPC", "SEM"],
+      slug: "maximizing-roi-with-google-ads-campaigns"
     },
     {
       id: 3,
@@ -40,7 +42,8 @@ const Blog = () => {
       image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7",
       category: "Meta Ads",
       date: "Apr 8, 2025",
-      tags: ["Meta Ads", "Facebook", "Instagram"]
+      tags: ["Meta Ads", "Facebook", "Instagram"],
+      slug: "building-effective-meta-ads-for-higher-engagement"
     },
     {
       id: 4,
@@ -49,7 +52,8 @@ const Blog = () => {
       image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113",
       category: "Social Media",
       date: "Apr 5, 2025",
-      tags: ["Social Media", "Marketing", "Strategy"]
+      tags: ["Social Media", "Marketing", "Strategy"],
+      slug: "social-media-marketing-strategies-for-2025"
     },
     {
       id: 5,
@@ -58,7 +62,8 @@ const Blog = () => {
       image: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5",
       category: "Content Marketing",
       date: "Apr 2, 2025",
-      tags: ["Content Marketing", "Strategy", "Copywriting"]
+      tags: ["Content Marketing", "Strategy", "Copywriting"],
+      slug: "the-power-of-content-marketing-in-digital-strategy"
     },
     {
       id: 6,
@@ -67,7 +72,8 @@ const Blog = () => {
       image: "https://images.unsplash.com/photo-1596526131083-e8c633c948d2",
       category: "Email Marketing",
       date: "Mar 29, 2025",
-      tags: ["Email Marketing", "Conversions", "Automation"]
+      tags: ["Email Marketing", "Conversions", "Automation"],
+      slug: "email-marketing-campaigns-that-convert"
     },
     {
       id: 7,
@@ -76,7 +82,8 @@ const Blog = () => {
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
       category: "Analytics",
       date: "Mar 26, 2025",
-      tags: ["Google Analytics", "Data", "Insights"]
+      tags: ["Google Analytics", "Data", "Insights"],
+      slug: "understanding-google-analytics-4-for-better-insights"
     },
     {
       id: 8,
@@ -85,7 +92,8 @@ const Blog = () => {
       image: "https://images.unsplash.com/photo-1572021335469-31706a17aaef",
       category: "Local SEO",
       date: "Mar 23, 2025",
-      tags: ["Local SEO", "Small Business", "Google My Business"]
+      tags: ["Local SEO", "Small Business", "Google My Business"],
+      slug: "local-seo-techniques-for-small-businesses"
     },
   ];
 
@@ -177,7 +185,7 @@ const Blog = () => {
                         </span>
                       ))}
                     </div>
-                    <Link to={`/blog/${post.id}`} className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium">
+                    <Link to={`/blog/${post.id}/${post.slug}`} className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium">
                       Read More <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </CardContent>
