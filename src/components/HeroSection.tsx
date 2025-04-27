@@ -16,15 +16,15 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="pt-32 pb-20 md:pt-44 md:pb-32 bg-[url('https://images.unsplash.com/photo-1498050108023-c5249f4df085')] bg-cover bg-center bg-no-repeat relative overflow-hidden">
+    <section className="pt-32 pb-20 md:pt-44 md:pb-32 bg-[url('/lovable-uploads/b4c7ee97-2259-42bf-b426-81aa9d18ada6.png')] bg-cover bg-center bg-no-repeat relative overflow-hidden">
       <div className="absolute inset-0 bg-black/70"></div>
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-12">
-          <div className="md:w-1/2 opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+          <div className="md:w-1/2">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">
               Maximize Your <span className="text-brand-orange">Ad Revenue</span> With Expert Solutions
             </h1>
-            <p className="text-lg text-gray-300 mb-8 md:pr-12">
+            <p className="text-lg text-gray-300 mb-8 md:pr-12 opacity-0 animate-[fade-in_0.6s_ease-out_0.4s_forwards]">
               Take your advertising income to the next level with our innovative optimization strategies and expert guidance.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -34,7 +34,7 @@ const HeroSection = () => {
                 </Button>
               </Link>
               <Link to="/about">
-                <Button variant="outline" className="border-brand-orange text-brand-orange hover:bg-brand-orange/10 px-8 py-6 text-lg opacity-0 animate-[fade-in_0.6s_ease-out_0.8s_forwards] transition-transform duration-300 hover:scale-105">
+                <Button variant="outline" className="border-brand-orange text-brand-orange hover:bg-brand-orange/10 hover:text-white px-8 py-6 text-lg opacity-0 animate-[fade-in_0.6s_ease-out_0.8s_forwards] transition-transform duration-300 hover:scale-105">
                   Learn More About Us
                 </Button>
               </Link>
@@ -60,7 +60,7 @@ const HeroSection = () => {
                 </div>
               </div>
 
-              <div className="h-64 mb-4 animate-fade-in [animation-delay:400ms]">
+              <div className="h-64 mb-4">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={revenueData}>
                     <XAxis 

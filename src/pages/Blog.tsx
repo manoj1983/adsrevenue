@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -96,9 +97,9 @@ const Blog = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow pt-20 opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">
+      <main className="flex-grow pt-20">
         {/* Hero Section */}
-        <div className="bg-gradient-to-r from-gray-100 to-gray-50 py-16 relative overflow-hidden opacity-0 animate-[fade-in_0.6s_ease-out_0.4s_forwards]">
+        <div className="bg-gradient-to-r from-gray-100 to-gray-50 py-16 relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <img 
               src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7"
@@ -108,13 +109,13 @@ const Blog = () => {
           </div>
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 opacity-0 animate-[fade-in_0.6s_ease-out_0.4s_forwards]">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">
                 Digital Marketing Blog
               </h1>
-              <p className="text-lg text-gray-600 mb-8 opacity-0 animate-[fade-in_0.6s_ease-out_0.5s_forwards]">
+              <p className="text-lg text-gray-600 mb-8 opacity-0 animate-[fade-in_0.6s_ease-out_0.4s_forwards]">
                 Insights, strategies, and tips to help you navigate the digital marketing landscape and grow your business.
               </p>
-              <div className="relative opacity-0 animate-[fade-in_0.6s_ease-out_0.6s_forwards]">
+              <div className="relative opacity-0 animate-[fade-in_0.6s_ease-out_0.5s_forwards]">
                 <Input 
                   type="search" 
                   placeholder="Search articles..." 
@@ -127,7 +128,7 @@ const Blog = () => {
         </div>
         
         {/* Categories */}
-        <div className="border-b opacity-0 animate-[fade-in_0.6s_ease-out_0.7s_forwards]">
+        <div className="border-b opacity-0 animate-[fade-in_0.6s_ease-out_0.6s_forwards]">
           <div className="container mx-auto px-4 md:px-6 py-6">
             <div className="flex flex-wrap gap-2">
               {categories.map((category, index) => (
@@ -151,7 +152,7 @@ const Blog = () => {
                 <Card 
                   key={post.id} 
                   className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group opacity-0 animate-[fade-in_0.6s_ease-out_forwards]"
-                  style={{ animationDelay: `${400 + (index * 100)}ms` }}
+                  style={{ animationDelay: `${700 + (index * 100)}ms` }}
                 >
                   <div className="relative h-48 overflow-hidden">
                     <img 
@@ -185,7 +186,7 @@ const Blog = () => {
             </div>
             
             {/* Pagination */}
-            <div className="flex justify-center mt-12 opacity-0 animate-[fade-in_0.6s_ease-out_1.8s_forwards]">
+            <div className="flex justify-center mt-12 opacity-0 animate-[fade-in_0.6s_ease-out_1.6s_forwards]">
               <div className="inline-flex rounded-md shadow-sm">
                 <Button variant="outline" className="rounded-r-none">Previous</Button>
                 <Button variant="outline" className="rounded-none bg-brand-orange text-white border-brand-orange">1</Button>
@@ -198,7 +199,7 @@ const Blog = () => {
         </section>
         
         {/* Newsletter */}
-        <section className="py-16 bg-gray-50 opacity-0 animate-[fade-in_0.6s_ease-out_1.9s_forwards]">
+        <section className="py-16 bg-gray-50 opacity-0 animate-[fade-in_0.6s_ease-out_1.8s_forwards]">
           <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl font-bold mb-4">Subscribe to Our Newsletter</h2>
