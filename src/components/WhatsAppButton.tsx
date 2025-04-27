@@ -7,12 +7,12 @@ const WhatsAppButton = () => {
       href="https://wa.me/919555442836"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-1/2 transform translate-y-1/2 right-0 bg-brand-orange text-white p-3 rounded-full hover:bg-brand-orange-dark z-40"
+      className="fixed bottom-1/2 transform translate-y-1/2 right-0 bg-brand-orange rounded-full text-white p-3 hover:bg-brand-orange-dark z-40"
       aria-label="Chat on WhatsApp"
     >
       <svg 
         xmlns="http://www.w3.org/2000/svg" 
-        className="h-6 w-6 hover:animate-[spin_1s_ease-in-out]" 
+        className="h-6 w-6 hover:animate-[spin_0.5s_ease-in-out]" 
         viewBox="0 0 24 24" 
         fill="currentColor"
       >

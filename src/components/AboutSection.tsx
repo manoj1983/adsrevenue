@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const AboutSection = () => {
   return (
@@ -34,9 +34,11 @@ const AboutSection = () => {
                 </p>
               </div>
             </div>
-            <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white">
-              Learn More About Us
-            </Button>
+            <Link to="/about">
+              <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white">
+                Learn More About Us
+              </Button>
+            </Link>
           </div>
           
           <div className="order-1 lg:order-2 relative">
@@ -75,7 +77,6 @@ const AboutSection = () => {
                 </div>
               </div>
             </div>
-            {/* Background elements */}
             <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-brand-orange/20 rounded-full -z-10"></div>
             <div className="absolute -top-4 -right-4 w-32 h-32 bg-blue-100 rounded-full -z-10"></div>
           </div>

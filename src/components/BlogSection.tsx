@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
@@ -65,7 +64,7 @@ const BlogSection = () => {
                   {post.title}
                 </h3>
                 <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                <Link to="/blog" className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium">
+                <Link to={`/blog/${post.id}/${post.title.toLowerCase().replace(/\s+/g, '-')}`} className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium">
                   Read More <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
                 </Link>
               </CardContent>

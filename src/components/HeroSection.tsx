@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -16,8 +15,8 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="pt-32 pb-20 md:pt-44 md:pb-32 bg-[url('/lovable-uploads/b4c7ee97-2259-42bf-b426-81aa9d18ada6.png')] bg-cover bg-center bg-no-repeat relative overflow-hidden">
-      <div className="absolute inset-0 bg-black/70"></div>
+    <section className="pt-32 pb-20 md:pt-44 md:pb-32 bg-[url('/lovable-uploads/54a31289-3d96-429d-92b6-959412139d2f.png')] bg-cover bg-center bg-no-repeat relative overflow-hidden">
+      <div className="absolute inset-0 bg-black/50"></div>
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2">
@@ -34,7 +33,7 @@ const HeroSection = () => {
                 </Button>
               </Link>
               <Link to="/about">
-                <Button variant="outline" className="border-brand-orange text-brand-orange hover:bg-brand-orange/10 hover:text-white px-8 py-6 text-lg opacity-0 animate-[fade-in_0.6s_ease-out_0.8s_forwards] transition-transform duration-300 hover:scale-105">
+                <Button variant="outline" className="border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white px-8 py-6 text-lg opacity-0 animate-[fade-in_0.6s_ease-out_0.8s_forwards] transition-transform duration-300 hover:scale-105">
                   Learn More About Us
                 </Button>
               </Link>
