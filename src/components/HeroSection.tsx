@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -15,14 +16,15 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="pt-32 pb-20 md:pt-44 md:pb-32 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
-      <div className="container mx-auto px-4 md:px-6">
+    <section className="pt-32 pb-20 md:pt-44 md:pb-32 bg-[url('https://images.unsplash.com/photo-1498050108023-c5249f4df085')] bg-cover bg-center bg-no-repeat relative overflow-hidden">
+      <div className="absolute inset-0 bg-black/70"></div>
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2 opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Maximize Your <span className="text-gradient">Ad Revenue</span> With Expert Solutions
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+              Maximize Your <span className="text-brand-orange">Ad Revenue</span> With Expert Solutions
             </h1>
-            <p className="text-lg text-gray-600 mb-8 md:pr-12">
+            <p className="text-lg text-gray-300 mb-8 md:pr-12">
               Take your advertising income to the next level with our innovative optimization strategies and expert guidance.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">

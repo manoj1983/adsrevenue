@@ -1,8 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
 
 const Footer = () => {
+  const location = useLocation();
+  const reloadPage = (path: string) => {
+    if (location.pathname === path) {
+      window.location.reload();
+    }
+  };
+
   return (
     <footer className="bg-gray-900 text-white pt-16 pb-8">
       <div className="container mx-auto px-4 md:px-6">
@@ -39,11 +46,31 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link to="/" className="text-gray-300 hover:text-brand-orange">Home</Link></li>
-              <li><Link to="/about" className="text-gray-300 hover:text-brand-orange">About Us</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Services</Link></li>
-              <li><Link to="/contact" className="text-gray-300 hover:text-brand-orange">Contact Us</Link></li>
-              <li><Link to="/privacy-policy" className="text-gray-300 hover:text-brand-orange">Privacy Policy</Link></li>
+              <li>
+                <Link to="/" onClick={() => reloadPage("/")} className="text-gray-300 hover:text-brand-orange">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" onClick={() => reloadPage("/about")} className="text-gray-300 hover:text-brand-orange">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/services" onClick={() => reloadPage("/services")} className="text-gray-300 hover:text-brand-orange">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" onClick={() => reloadPage("/contact")} className="text-gray-300 hover:text-brand-orange">
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/privacy-policy" onClick={() => reloadPage("/privacy-policy")} className="text-gray-300 hover:text-brand-orange">
+                  Privacy Policy
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -51,12 +78,19 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Our Services</h3>
             <ul className="space-y-2">
-              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">SEO Services</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Google Ads</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Meta Ads</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Social Media Marketing</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Content Marketing</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-brand-orange">Email Marketing</Link></li>
+              {["SEO Services", "Google Ads", "Meta Ads", "Social Media Marketing", "Content Marketing", "Email Marketing"].map(
+                (service) => (
+                  <li key={service}>
+                    <Link 
+                      to="/services" 
+                      onClick={() => reloadPage("/services")} 
+                      className="text-gray-300 hover:text-brand-orange"
+                    >
+                      {service}
+                    </Link>
+                  </li>
+                )
+              )}
             </ul>
           </div>
 

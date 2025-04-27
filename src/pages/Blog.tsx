@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -97,9 +96,9 @@ const Blog = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow pt-20">
+      <main className="flex-grow pt-20 opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">
         {/* Hero Section */}
-        <div className="bg-gradient-to-r from-gray-100 to-gray-50 py-16 relative overflow-hidden opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">
+        <div className="bg-gradient-to-r from-gray-100 to-gray-50 py-16 relative overflow-hidden opacity-0 animate-[fade-in_0.6s_ease-out_0.4s_forwards]">
           <div className="absolute inset-0 opacity-10">
             <img 
               src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7"
@@ -151,8 +150,8 @@ const Blog = () => {
               {blogPosts.map((post, index) => (
                 <Card 
                   key={post.id} 
-                  className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group opacity-0"
-                  style={{ animationDelay: `${900 + (index * 100)}ms` }}
+                  className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group opacity-0 animate-[fade-in_0.6s_ease-out_forwards]"
+                  style={{ animationDelay: `${400 + (index * 100)}ms` }}
                 >
                   <div className="relative h-48 overflow-hidden">
                     <img 
