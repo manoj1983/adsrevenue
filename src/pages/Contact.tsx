@@ -1,14 +1,43 @@
-
 import React from 'react';
+import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ContactSection from '@/components/ContactSection';
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.3
+    }
+  }
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 10
+    }
+  }
+};
 
 const Contact = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow pt-20">
+      <motion.main 
+        className="flex-grow pt-20"
+        initial="hidden"
+        animate="show"
+        variants={container}
+      >
         <div className="bg-white py-20 relative overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img 
@@ -25,11 +54,11 @@ const Contact = () => {
           </div>
         </div>
         
-        <div className="opacity-0 animate-[fade-in_0.6s_ease-out_0.5s_forwards]">
+        <motion.div variants={item}>
           <ContactSection />
-        </div>
+        </motion.div>
         
-        <section className="py-16 bg-white">
+        <motion.section variants={item} className="py-16 bg-white">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-12 animate-fade-in [animation-delay:500ms]">
               <h2 className="text-3xl font-bold mb-4">Frequently Asked Questions</h2>
@@ -96,8 +125,8 @@ const Contact = () => {
               </div>
             </div>
           </div>
-        </section>
-      </main>
+        </motion.section>
+      </motion.main>
       <Footer />
     </div>
   );

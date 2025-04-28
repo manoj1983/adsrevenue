@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ServicesSection from '@/components/ServicesSection';
@@ -7,6 +7,30 @@ import TestimonialsSection from '@/components/TestimonialsSection';
 import CTASection from '@/components/CTASection';
 import { Card, CardContent } from '@/components/ui/card';
 import { MessageCircle } from 'lucide-react';
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.3
+    }
+  }
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 10
+    }
+  }
+};
 
 const ServiceDetail = ({ title, description, features }: { title: string; description: string; features: string[] }) => (
   <Card className="border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300">
@@ -84,7 +108,12 @@ const Services = () => {
   return (
     <div className="min-h-screen flex flex-col relative">
       <Header />
-      <main className="flex-grow pt-20">
+      <motion.main 
+        className="flex-grow pt-20"
+        initial="hidden"
+        animate="show"
+        variants={container}
+      >
         <div className="bg-white py-20 relative overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img 
@@ -101,11 +130,11 @@ const Services = () => {
           </div>
         </div>
         
-        <div className="opacity-0 animate-[fade-in_0.6s_ease-out_0.5s_forwards]">
+        <motion.div variants={item}>
           <ServicesSection />
-        </div>
+        </motion.div>
         
-        <section className="py-16 bg-white">
+        <motion.section variants={item} className="py-16 bg-white">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-16 animate-fade-in [animation-delay:500ms]">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">How We Can Help You</h2>
@@ -150,9 +179,9 @@ const Services = () => {
               ))}
             </div>
           </div>
-        </section>
+        </motion.section>
         
-        <section className="py-16 bg-gray-50">
+        <motion.section variants={item} className="py-16 bg-gray-50">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-12 animate-fade-in [animation-delay:1000ms]">
               <h2 className="text-3xl font-bold mb-4">Our Process</h2>
@@ -218,15 +247,15 @@ const Services = () => {
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
         
-        <div className="animate-fade-in [animation-delay:1100ms]">
+        <motion.div variants={item}>
           <TestimonialsSection />
-        </div>
-        <div className="animate-fade-in [animation-delay:1200ms]">
+        </motion.div>
+        <motion.div variants={item}>
           <CTASection />
-        </div>
-      </main>
+        </motion.div>
+      </motion.main>
       <Footer />
     </div>
   );

@@ -1,16 +1,45 @@
-
 import React from 'react';
+import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AboutSection from '@/components/AboutSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import CTASection from '@/components/CTASection';
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.3
+    }
+  }
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 10
+    }
+  }
+};
+
 const About = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow pt-20">
+      <motion.main 
+        className="flex-grow pt-20"
+        initial="hidden"
+        animate="show"
+        variants={container}
+      >
         <div className="bg-white py-20 relative overflow-hidden">
           <div className="absolute inset-0 z-0">
             <img 
@@ -27,11 +56,11 @@ const About = () => {
           </div>
         </div>
         
-        <div className="opacity-0 animate-[fade-in_0.6s_ease-out_0.5s_forwards]">
+        <motion.div variants={item}>
           <AboutSection />
-        </div>
+        </motion.div>
         
-        <div className="py-16 bg-white">
+        <motion.section variants={item} className="py-16 bg-white">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="animate-fade-in [animation-delay:400ms]">
@@ -107,15 +136,15 @@ const About = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.section>
         
-        <div className="opacity-0 animate-[fade-in_0.6s_ease-out_0.7s_forwards]">
+        <motion.div variants={item}>
           <TestimonialsSection />
-        </div>
-        <div className="opacity-0 animate-[fade-in_0.6s_ease-out_0.8s_forwards]">
+        </motion.div>
+        <motion.div variants={item}>
           <CTASection />
-        </div>
-      </main>
+        </motion.div>
+      </motion.main>
       <Footer />
     </div>
   );
