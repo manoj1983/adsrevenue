@@ -7,9 +7,12 @@ import {
   Linkedin, 
   Mail, 
   Share2, 
-  WhatsApp,
-  Copy
+  MessageCircle,
+  Copy,
+  Link as LinkIcon,
+  Send
 } from 'lucide-react';
+import { useToast } from "@/components/ui/use-toast";
 
 interface SocialShareProps {
   title: string;
@@ -17,6 +20,7 @@ interface SocialShareProps {
 }
 
 const SocialShare = ({ title, url }: SocialShareProps) => {
+  const { toast } = useToast();
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
 
@@ -38,7 +42,7 @@ const SocialShare = ({ title, url }: SocialShareProps) => {
     },
     {
       name: 'WhatsApp',
-      icon: <WhatsApp className="w-4 h-4" />,
+      icon: <MessageCircle className="w-4 h-4" />,
       url: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
     },
     {
@@ -46,14 +50,27 @@ const SocialShare = ({ title, url }: SocialShareProps) => {
       icon: <Mail className="w-4 h-4" />,
       url: `mailto:?subject=${encodedTitle}&body=Check%20this%20out:%20${encodedUrl}`,
     },
+    {
+      name: 'Telegram',
+      icon: <Send className="w-4 h-4" />,
+      url: `https://t.me/share/url?url=${encodedUrl}&text=${encodedTitle}`,
+    }
   ];
 
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(url);
-      // You can add a toast notification here if you want
+      toast({
+        title: "Link Copied!",
+        description: "The link has been copied to your clipboard.",
+      });
     } catch (err) {
       console.error('Failed to copy:', err);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to copy the link. Please try again.",
+      });
     }
   };
 
@@ -70,6 +87,7 @@ const SocialShare = ({ title, url }: SocialShareProps) => {
           size="sm"
           onClick={() => window.open(link.url, '_blank')}
           className="flex items-center gap-2"
+          title={`Share on ${link.name}`}
         >
           {link.icon}
         </Button>
@@ -79,6 +97,7 @@ const SocialShare = ({ title, url }: SocialShareProps) => {
         size="sm"
         onClick={copyToClipboard}
         className="flex items-center gap-2"
+        title="Copy link"
       >
         <Copy className="w-4 h-4" />
       </Button>
@@ -87,3 +106,4 @@ const SocialShare = ({ title, url }: SocialShareProps) => {
 };
 
 export default SocialShare;
+

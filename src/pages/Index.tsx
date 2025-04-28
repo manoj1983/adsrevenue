@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { motion } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import HeroSection from '@/components/HeroSection';
@@ -11,41 +12,71 @@ import ContactSection from '@/components/ContactSection';
 import CTASection from '@/components/CTASection';
 import BlogSection from '@/components/BlogSection';
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.3
+    }
+  }
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 10
+    }
+  }
+};
+
 const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow">
-        <div className="space-y-0">
-          <div className="animate-fade-in [animation-delay:100ms]">
+      <motion.main 
+        className="flex-grow"
+        initial="hidden"
+        animate="show"
+        variants={container}
+      >
+        <motion.div variants={container} className="space-y-0">
+          <motion.div variants={item}>
             <HeroSection />
-          </div>
-          <div className="animate-fade-in [animation-delay:300ms]">
+          </motion.div>
+          <motion.div variants={item}>
             <AboutSection />
-          </div>
-          <div className="animate-fade-in [animation-delay:400ms]">
+          </motion.div>
+          <motion.div variants={item}>
             <ServicesSection />
-          </div>
-          <div className="animate-fade-in [animation-delay:500ms]">
+          </motion.div>
+          <motion.div variants={item}>
             <StatsSection />
-          </div>
-          <div className="animate-fade-in [animation-delay:600ms]">
+          </motion.div>
+          <motion.div variants={item}>
             <TestimonialsSection />
-          </div>
-          <div className="animate-fade-in [animation-delay:700ms]">
+          </motion.div>
+          <motion.div variants={item}>
             <BlogSection />
-          </div>
-          <div className="animate-fade-in [animation-delay:800ms]">
+          </motion.div>
+          <motion.div variants={item}>
             <ContactSection />
-          </div>
-          <div className="animate-fade-in [animation-delay:900ms]">
+          </motion.div>
+          <motion.div variants={item}>
             <CTASection />
-          </div>
-        </div>
-      </main>
+          </motion.div>
+        </motion.div>
+      </motion.main>
       <Footer />
     </div>
   );
 };
 
 export default Index;
+
