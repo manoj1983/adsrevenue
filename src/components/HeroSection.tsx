@@ -16,13 +16,20 @@ const HeroSection = () => {
 
   return (
     <section className="pt-32 pb-20 md:pt-44 md:pb-32 relative overflow-hidden bg-white">
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="/lovable-uploads/f3a3a1b0-7d32-4e05-b431-5f958f956bf1.png"
+          alt="Digital Marketing Background"
+          className="w-full h-full object-cover opacity-20"
+        />
+      </div>
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">
-              Maximize Your <span className="text-brand-orange">Ad Revenue</span> With Expert Solutions
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-black opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">
+              <span>Maximize Your</span> <span className="text-brand-orange">Ad Revenue</span> <span>With Expert Solutions</span>
             </h1>
-            <p className="text-lg text-gray-300 mb-8 md:pr-12 opacity-0 animate-[fade-in_0.6s_ease-out_0.4s_forwards]">
+            <p className="text-lg text-black mb-8 md:pr-12 opacity-0 animate-[fade-in_0.6s_ease-out_0.4s_forwards]">
               Take your advertising income to the next level with our innovative optimization strategies and expert guidance.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">

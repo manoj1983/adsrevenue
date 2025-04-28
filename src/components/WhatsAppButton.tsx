@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { WhatsappIcon } from 'lucide-react';
 
 const WhatsAppButton = () => {
   return (
@@ -13,7 +12,7 @@ const WhatsAppButton = () => {
     >
       <svg 
         xmlns="http://www.w3.org/2000/svg" 
-        className="h-6 w-6 transition-all duration-300 transform group-hover:scale-110 group-hover:rotate-[360deg] group-hover:animate-none group-[.active]:rotate-[-360deg]" 
+        className="h-8 w-8 transition-all duration-300 transform group-hover:scale-125 group-hover:rotate-[360deg] group-hover:animate-none" 
         viewBox="0 0 24 24" 
         fill="currentColor"
       >
