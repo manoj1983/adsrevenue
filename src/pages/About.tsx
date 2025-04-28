@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -10,10 +11,17 @@ const About = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow pt-20">
-        <div className="bg-gray-50 py-20">
-          <div className="container mx-auto px-4 md:px-6">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">About Us</h1>
-            <p className="text-lg text-gray-600 opacity-0 animate-[fade-in_0.6s_ease-out_0.4s_forwards]">
+        <div className="bg-white py-20 relative overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <img 
+              src="/lovable-uploads/f3a3a1b0-7d32-4e05-b431-5f958f956bf1.png"
+              alt="Digital Marketing Background"
+              className="w-full h-full object-cover opacity-20"
+            />
+          </div>
+          <div className="container mx-auto px-4 md:px-6 relative z-10">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards] text-black">About Us</h1>
+            <p className="text-lg text-black opacity-0 animate-[fade-in_0.6s_ease-out_0.4s_forwards]">
               Learn more about Ads Revenue and our mission to maximize your advertising potential.
             </p>
           </div>
