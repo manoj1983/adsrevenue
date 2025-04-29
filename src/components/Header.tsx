@@ -1,12 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu } from 'lucide-react';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,6 +28,10 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -44,11 +49,36 @@ const Header = () => {
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-gray-800 hover:text-brand-orange font-medium">Home</Link>
-            <Link to="/about" className="text-gray-800 hover:text-brand-orange font-medium">About</Link>
-            <Link to="/services" className="text-gray-800 hover:text-brand-orange font-medium">Services</Link>
-            <Link to="/blog" className="text-gray-800 hover:text-brand-orange font-medium">Blog</Link>
-            <Link to="/contact" className="text-gray-800 hover:text-brand-orange font-medium">Contact</Link>
+            <Link 
+              to="/" 
+              className={`text-gray-800 hover:text-brand-orange relative after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-4px] after:h-0.5 after:bg-brand-orange after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center ${isActive('/') ? 'font-semibold text-brand-orange after:scale-x-100' : 'font-medium'}`}
+            >
+              Home
+            </Link>
+            <Link 
+              to="/about" 
+              className={`text-gray-800 hover:text-brand-orange relative after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-4px] after:h-0.5 after:bg-brand-orange after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center ${isActive('/about') ? 'font-semibold text-brand-orange after:scale-x-100' : 'font-medium'}`}
+            >
+              About
+            </Link>
+            <Link 
+              to="/services" 
+              className={`text-gray-800 hover:text-brand-orange relative after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-4px] after:h-0.5 after:bg-brand-orange after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center ${isActive('/services') ? 'font-semibold text-brand-orange after:scale-x-100' : 'font-medium'}`}
+            >
+              Services
+            </Link>
+            <Link 
+              to="/blog" 
+              className={`text-gray-800 hover:text-brand-orange relative after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-4px] after:h-0.5 after:bg-brand-orange after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center ${isActive('/blog') ? 'font-semibold text-brand-orange after:scale-x-100' : 'font-medium'}`}
+            >
+              Blog
+            </Link>
+            <Link 
+              to="/contact" 
+              className={`text-gray-800 hover:text-brand-orange relative after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-4px] after:h-0.5 after:bg-brand-orange after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center ${isActive('/contact') ? 'font-semibold text-brand-orange after:scale-x-100' : 'font-medium'}`}
+            >
+              Contact
+            </Link>
             <Link to="/contact">
               <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white">
                 Get Started
@@ -71,35 +101,35 @@ const Header = () => {
             <nav className="flex flex-col space-y-4">
               <Link 
                 to="/" 
-                className="text-gray-800 hover:text-brand-orange font-medium py-2"
+                className={`text-gray-800 hover:text-brand-orange font-medium py-2 relative ${isActive('/') ? 'font-semibold text-brand-orange' : ''}`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </Link>
               <Link 
                 to="/about" 
-                className="text-gray-800 hover:text-brand-orange font-medium py-2"
+                className={`text-gray-800 hover:text-brand-orange font-medium py-2 relative ${isActive('/about') ? 'font-semibold text-brand-orange' : ''}`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 About
               </Link>
               <Link 
                 to="/services" 
-                className="text-gray-800 hover:text-brand-orange font-medium py-2"
+                className={`text-gray-800 hover:text-brand-orange font-medium py-2 relative ${isActive('/services') ? 'font-semibold text-brand-orange' : ''}`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Services
               </Link>
               <Link 
                 to="/blog" 
-                className="text-gray-800 hover:text-brand-orange font-medium py-2"
+                className={`text-gray-800 hover:text-brand-orange font-medium py-2 relative ${isActive('/blog') ? 'font-semibold text-brand-orange' : ''}`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Blog
               </Link>
               <Link 
                 to="/contact" 
-                className="text-gray-800 hover:text-brand-orange font-medium py-2"
+                className={`text-gray-800 hover:text-brand-orange font-medium py-2 relative ${isActive('/contact') ? 'font-semibold text-brand-orange' : ''}`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Contact

@@ -18,7 +18,8 @@ const container = {
     opacity: 1,
     transition: {
       staggerChildren: 0.2,
-      delayChildren: 0.3
+      delayChildren: 0.3,
+      duration: 0.8
     }
   }
 };
@@ -31,7 +32,8 @@ const item = {
     transition: {
       type: "spring",
       stiffness: 100,
-      damping: 10
+      damping: 10,
+      duration: 0.6
     }
   }
 };
@@ -46,29 +48,29 @@ const Index = () => {
         animate="show"
         variants={container}
       >
-        <motion.div variants={container} className="space-y-0">
-          <motion.div variants={item}>
+        <motion.div className="space-y-0">
+          <motion.div variants={item} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <HeroSection />
           </motion.div>
-          <motion.div variants={item}>
+          <motion.div variants={item} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <AboutSection />
           </motion.div>
-          <motion.div variants={item}>
+          <motion.div variants={item} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <ServicesSection />
           </motion.div>
-          <motion.div variants={item}>
+          <motion.div variants={item} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <StatsSection />
           </motion.div>
-          <motion.div variants={item}>
+          <motion.div variants={item} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <TestimonialsSection />
           </motion.div>
-          <motion.div variants={item}>
+          <motion.div variants={item} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <BlogSection />
           </motion.div>
-          <motion.div variants={item}>
+          <motion.div variants={item} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <ContactSection />
           </motion.div>
-          <motion.div variants={item}>
+          <motion.div variants={item} initial="hidden" whileInView="show" viewport={{ once: true }}>
             <CTASection />
           </motion.div>
         </motion.div>
@@ -79,4 +81,3 @@ const Index = () => {
 };
 
 export default Index;
-

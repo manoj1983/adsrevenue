@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { motion } from "framer-motion";
 import Header from '@/components/Header';
@@ -12,7 +13,8 @@ const container = {
     opacity: 1,
     transition: {
       staggerChildren: 0.2,
-      delayChildren: 0.3
+      delayChildren: 0.3,
+      duration: 0.8
     }
   }
 };
@@ -25,7 +27,8 @@ const item = {
     transition: {
       type: "spring",
       stiffness: 100,
-      damping: 10
+      damping: 10,
+      duration: 0.6
     }
   }
 };
@@ -40,7 +43,12 @@ const About = () => {
         animate="show"
         variants={container}
       >
-        <div className="bg-white py-20 relative overflow-hidden">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="bg-white py-20 relative overflow-hidden"
+        >
           <div className="absolute inset-0 z-0">
             <img 
               src="/lovable-uploads/f3a3a1b0-7d32-4e05-b431-5f958f956bf1.png"
@@ -49,21 +57,38 @@ const About = () => {
             />
           </div>
           <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards] text-black">About Us</h1>
-            <p className="text-lg text-black opacity-0 animate-[fade-in_0.6s_ease-out_0.4s_forwards]">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="text-4xl md:text-5xl font-bold mb-6 text-black"
+            >
+              About Us
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="text-lg text-black"
+            >
               Learn more about Ads Revenue and our mission to maximize your advertising potential.
-            </p>
+            </motion.p>
           </div>
-        </div>
+        </motion.div>
         
-        <motion.div variants={item}>
+        <motion.div variants={item} initial="hidden" whileInView="show" viewport={{ once: true }}>
           <AboutSection />
         </motion.div>
         
-        <motion.section variants={item} className="py-16 bg-white">
+        <motion.section variants={item} initial="hidden" whileInView="show" viewport={{ once: true }} className="py-16 bg-white">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="animate-fade-in [animation-delay:400ms]">
+              <motion.div 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+              >
                 <h2 className="text-3xl font-bold mb-6">Our Story</h2>
                 <p className="text-lg text-gray-600 mb-6">
                   Ads Revenue was founded in 2025 with a simple mission: to help publishers maximize their advertising 
@@ -78,8 +103,14 @@ const About = () => {
                   Today, we continue to push the boundaries of what's possible in digital advertising, helping 
                   our clients stay ahead of industry trends and maximize their revenue potential.
                 </p>
-              </div>
-              <div className="bg-gray-100 p-8 rounded-lg relative overflow-hidden animate-fade-in [animation-delay:500ms]">
+              </motion.div>
+              <motion.div 
+                className="bg-gray-100 p-8 rounded-lg relative overflow-hidden"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+              >
                 <div className="absolute inset-0 opacity-10">
                   <img 
                     src="https://images.unsplash.com/photo-1460925895917-afdab827c52f"
@@ -88,7 +119,13 @@ const About = () => {
                   />
                 </div>
                 <div className="space-y-6">
-                  <div className="flex items-start">
+                  <motion.div 
+                    className="flex items-start"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1, duration: 0.6 }}
+                    viewport={{ once: true }}
+                  >
                     <div className="w-12 h-12 rounded-full bg-brand-orange flex items-center justify-center mr-4">
                       <span className="text-white font-bold">1</span>
                     </div>
@@ -98,8 +135,14 @@ const About = () => {
                         We constantly explore new technologies and strategies to stay ahead of industry trends.
                       </p>
                     </div>
-                  </div>
-                  <div className="flex items-start">
+                  </motion.div>
+                  <motion.div 
+                    className="flex items-start"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                    viewport={{ once: true }}
+                  >
                     <div className="w-12 h-12 rounded-full bg-brand-orange flex items-center justify-center mr-4">
                       <span className="text-white font-bold">2</span>
                     </div>
@@ -109,8 +152,14 @@ const About = () => {
                         We believe in clear, honest communication and full visibility into our processes.
                       </p>
                     </div>
-                  </div>
-                  <div className="flex items-start">
+                  </motion.div>
+                  <motion.div 
+                    className="flex items-start"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.6 }}
+                    viewport={{ once: true }}
+                  >
                     <div className="w-12 h-12 rounded-full bg-brand-orange flex items-center justify-center mr-4">
                       <span className="text-white font-bold">3</span>
                     </div>
@@ -120,8 +169,14 @@ const About = () => {
                         We focus on delivering measurable results and tangible business impact.
                       </p>
                     </div>
-                  </div>
-                  <div className="flex items-start">
+                  </motion.div>
+                  <motion.div 
+                    className="flex items-start"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    viewport={{ once: true }}
+                  >
                     <div className="w-12 h-12 rounded-full bg-brand-orange flex items-center justify-center mr-4">
                       <span className="text-white font-bold">4</span>
                     </div>
@@ -131,17 +186,17 @@ const About = () => {
                         We build long-term partnerships with our clients based on mutual success.
                       </p>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </motion.section>
         
-        <motion.div variants={item}>
+        <motion.div variants={item} initial="hidden" whileInView="show" viewport={{ once: true }}>
           <TestimonialsSection />
         </motion.div>
-        <motion.div variants={item}>
+        <motion.div variants={item} initial="hidden" whileInView="show" viewport={{ once: true }}>
           <CTASection />
         </motion.div>
       </motion.main>
