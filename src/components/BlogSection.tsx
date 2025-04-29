@@ -1,8 +1,33 @@
+
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2
+    }
+  }
+};
+
+const staggerItem = {
+  hidden: { opacity: 0, y: 30 },
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
 
 const BlogSection = () => {
   const blogPosts = [
@@ -36,59 +61,79 @@ const BlogSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-gray-50 dark:bg-gray-800">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-12 animate-fade-in">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Latest Insights</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <motion.div 
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 dark:text-white">Latest Insights</h2>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Stay up-to-date with the latest trends and strategies in digital marketing to stay ahead of your competition.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+        >
           {blogPosts.map((post, index) => (
-            <Card 
+            <motion.div 
               key={post.id} 
-              className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group animate-fade-in [animation-delay:200ms]"
-              style={{ animationDelay: `${(index + 1) * 100}ms` }}
+              variants={staggerItem}
+              custom={index}
             >
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute top-4 left-4 bg-brand-orange text-white px-3 py-1 rounded-full text-sm">
-                  {post.category}
+              <Card className="overflow-hidden hover:shadow-lg transition-all duration-500 h-full group card-hover dark:border-gray-700">
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute top-4 left-4 bg-brand-orange text-white px-3 py-1 rounded-full text-sm">
+                    {post.category}
+                  </div>
                 </div>
-              </div>
-              <CardContent className="p-6">
-                <div className="text-sm text-gray-500 mb-2">{post.date}</div>
-                <h3 className="text-xl font-bold mb-3 group-hover:text-brand-orange transition-colors duration-300">
-                  {post.title}
-                </h3>
-                <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                <Link 
-                  to={`/blog/${post.id}/${post.slug}`} 
-                  className="inline-block"
-                >
-                  <Button 
-                    className="bg-brand-orange hover:bg-brand-orange-dark text-white transition-all duration-300 group"
+                <CardContent className="p-6">
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">{post.date}</div>
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-brand-orange transition-colors duration-300 dark:text-white">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">{post.excerpt}</p>
+                  <Link 
+                    to={`/blog/${post.id}/${post.slug}`} 
+                    className="inline-block"
                   >
-                    Read More
-                    <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
+                    <Button 
+                      className="bg-brand-orange hover:bg-brand-orange-dark text-white transition-all duration-300 group"
+                    >
+                      Read More
+                      <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="text-center mt-12 animate-fade-in [animation-delay:500ms]">
-          <Link to="/blog" className="inline-flex items-center px-6 py-3 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-all duration-300 hover:border-brand-orange">
+        <motion.div 
+          className="text-center mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Link to="/blog" className="inline-flex items-center px-6 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition-all duration-300 hover:border-brand-orange dark:hover:border-brand-orange group">
             View All Articles <ArrowRight size={16} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -32,15 +32,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (typeof window !== 'undefined') {
       const root = window.document.documentElement;
       
-      // Add a class that will handle the transition smoothly
-      root.classList.add('transition-colors');
-      root.classList.add('duration-300');
+      // Remove transition temporarily to prevent flashing
+      root.classList.add('no-transition');
       
       // Remove old theme class and add new one
       root.classList.remove('light', 'dark');
       root.classList.add(theme);
       
       localStorage.setItem('theme', theme);
+      
+      // Re-enable transitions after a short delay
+      setTimeout(() => {
+        root.classList.remove('no-transition');
+      }, 100);
     }
   }, [theme]);
 

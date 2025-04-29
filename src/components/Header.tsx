@@ -46,38 +46,38 @@ const Header = () => {
             <img 
               src="/lovable-uploads/b4c7ee97-2259-42bf-b426-81aa9d18ada6.png" 
               alt="Ads Revenue Logo" 
-              className="h-12"
+              className={`h-12 transition-all duration-300 ${theme === 'dark' ? 'logo-dark-mode' : ''}`}
             />
           </Link>
 
           <nav className="hidden md:flex items-center space-x-8">
             <Link 
               to="/" 
-              className={`text-foreground hover:text-brand-orange transition-colors duration-300 relative after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-4px] after:h-0.5 after:bg-brand-orange after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center ${isActive('/') ? 'font-semibold text-brand-orange after:scale-x-100' : 'font-medium'}`}
+              className={`text-foreground hover:text-brand-orange transition-colors duration-300 relative nav-link ${isActive('/') ? 'font-semibold text-brand-orange' : 'font-medium'}`}
             >
               Home
             </Link>
             <Link 
               to="/about" 
-              className={`text-foreground hover:text-brand-orange transition-colors duration-300 relative after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-4px] after:h-0.5 after:bg-brand-orange after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center ${isActive('/about') ? 'font-semibold text-brand-orange after:scale-x-100' : 'font-medium'}`}
+              className={`text-foreground hover:text-brand-orange transition-colors duration-300 relative nav-link ${isActive('/about') ? 'font-semibold text-brand-orange' : 'font-medium'}`}
             >
               About
             </Link>
             <Link 
               to="/services" 
-              className={`text-foreground hover:text-brand-orange transition-colors duration-300 relative after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-4px] after:h-0.5 after:bg-brand-orange after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center ${isActive('/services') ? 'font-semibold text-brand-orange after:scale-x-100' : 'font-medium'}`}
+              className={`text-foreground hover:text-brand-orange transition-colors duration-300 relative nav-link ${isActive('/services') ? 'font-semibold text-brand-orange' : 'font-medium'}`}
             >
               Services
             </Link>
             <Link 
               to="/blog" 
-              className={`text-foreground hover:text-brand-orange transition-colors duration-300 relative after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-4px] after:h-0.5 after:bg-brand-orange after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center ${isActive('/blog') ? 'font-semibold text-brand-orange after:scale-x-100' : 'font-medium'}`}
+              className={`text-foreground hover:text-brand-orange transition-colors duration-300 relative nav-link ${isActive('/blog') ? 'font-semibold text-brand-orange' : 'font-medium'}`}
             >
               Blog
             </Link>
             <Link 
               to="/contact" 
-              className={`text-foreground hover:text-brand-orange transition-colors duration-300 relative after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-[-4px] after:h-0.5 after:bg-brand-orange after:transform after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center ${isActive('/contact') ? 'font-semibold text-brand-orange after:scale-x-100' : 'font-medium'}`}
+              className={`text-foreground hover:text-brand-orange transition-colors duration-300 relative nav-link ${isActive('/contact') ? 'font-semibold text-brand-orange' : 'font-medium'}`}
             >
               Contact
             </Link>
@@ -89,9 +89,9 @@ const Header = () => {
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? (
-                  <Moon className="h-[1.2rem] w-[1.2rem] text-foreground" />
-                ) : (
                   <Sun className="h-[1.2rem] w-[1.2rem] text-foreground" />
+                ) : (
+                  <Moon className="h-[1.2rem] w-[1.2rem] text-foreground" />
                 )}
               </button>
               
@@ -111,9 +111,9 @@ const Header = () => {
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
-                <Moon className="h-[1.2rem] w-[1.2rem] text-foreground" />
-              ) : (
                 <Sun className="h-[1.2rem] w-[1.2rem] text-foreground" />
+              ) : (
+                <Moon className="h-[1.2rem] w-[1.2rem] text-foreground" />
               )}
             </button>
             <button 
@@ -126,60 +126,68 @@ const Header = () => {
         </div>
       </div>
 
-      {isMenuOpen && (
-        <div className="md:hidden bg-background shadow-lg animate-fade-in">
-          <div className="container mx-auto px-4 py-4">
-            <nav className="flex flex-col space-y-4">
-              <Link 
-                to="/" 
-                className={`text-foreground hover:text-brand-orange transition-colors duration-300 font-medium py-2 relative ${isActive('/') ? 'font-semibold text-brand-orange' : ''}`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Home
-              </Link>
-              <Link 
-                to="/about" 
-                className={`text-foreground hover:text-brand-orange transition-colors duration-300 font-medium py-2 relative ${isActive('/about') ? 'font-semibold text-brand-orange' : ''}`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                About
-              </Link>
-              <Link 
-                to="/services" 
-                className={`text-foreground hover:text-brand-orange transition-colors duration-300 font-medium py-2 relative ${isActive('/services') ? 'font-semibold text-brand-orange' : ''}`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Services
-              </Link>
-              <Link 
-                to="/blog" 
-                className={`text-foreground hover:text-brand-orange transition-colors duration-300 font-medium py-2 relative ${isActive('/blog') ? 'font-semibold text-brand-orange' : ''}`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Blog
-              </Link>
-              <Link 
-                to="/contact" 
-                className={`text-foreground hover:text-brand-orange transition-colors duration-300 font-medium py-2 relative ${isActive('/contact') ? 'font-semibold text-brand-orange' : ''}`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contact
-              </Link>
-              <a 
-                href="tel:+919555442836"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <Button 
-                  className="bg-brand-orange hover:bg-brand-orange-dark text-white w-full flex items-center justify-center gap-2"
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            className="md:hidden bg-background shadow-lg"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="container mx-auto px-4 py-4">
+              <nav className="flex flex-col space-y-4">
+                <Link 
+                  to="/" 
+                  className={`text-foreground hover:text-brand-orange transition-colors duration-300 font-medium py-2 relative nav-link ${isActive('/') ? 'font-semibold text-brand-orange' : ''}`}
+                  onClick={() => setIsMenuOpen(false)}
                 >
-                  <Phone size={18} />
-                  <span>+91 9555442836</span>
-                </Button>
-              </a>
-            </nav>
-          </div>
-        </div>
-      )}
+                  Home
+                </Link>
+                <Link 
+                  to="/about" 
+                  className={`text-foreground hover:text-brand-orange transition-colors duration-300 font-medium py-2 relative nav-link ${isActive('/about') ? 'font-semibold text-brand-orange' : ''}`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  About
+                </Link>
+                <Link 
+                  to="/services" 
+                  className={`text-foreground hover:text-brand-orange transition-colors duration-300 font-medium py-2 relative nav-link ${isActive('/services') ? 'font-semibold text-brand-orange' : ''}`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Services
+                </Link>
+                <Link 
+                  to="/blog" 
+                  className={`text-foreground hover:text-brand-orange transition-colors duration-300 font-medium py-2 relative nav-link ${isActive('/blog') ? 'font-semibold text-brand-orange' : ''}`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Blog
+                </Link>
+                <Link 
+                  to="/contact" 
+                  className={`text-foreground hover:text-brand-orange transition-colors duration-300 font-medium py-2 relative nav-link ${isActive('/contact') ? 'font-semibold text-brand-orange' : ''}`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Contact
+                </Link>
+                <a 
+                  href="tel:+919555442836"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Button 
+                    className="bg-brand-orange hover:bg-brand-orange-dark text-white w-full flex items-center justify-center gap-2"
+                  >
+                    <Phone size={18} />
+                    <span>+91 9555442836</span>
+                  </Button>
+                </a>
+              </nav>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };
