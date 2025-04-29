@@ -1,5 +1,6 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import { motion, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Card, CardContent } from '@/components/ui/card';
@@ -7,7 +8,31 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useEffect } from 'react';
+
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 60 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { 
+      type: "spring",
+      damping: 25, 
+      stiffness: 100,
+      duration: 0.6 
+    }
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
 
 const Blog = () => {
   useEffect(() => {
@@ -103,127 +128,237 @@ const Blog = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-grow pt-20">
-        {/* Hero Section */}
-        <div className="bg-gradient-to-r from-gray-100 to-gray-50 py-16 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <img 
-              src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7"
-              alt="Digital Marketing Background"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <div className="max-w-3xl">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 opacity-0 animate-[fade-in_0.6s_ease-out_0.3s_forwards]">
-                Digital Marketing Blog
-              </h1>
-              <p className="text-lg text-gray-600 mb-8 opacity-0 animate-[fade-in_0.6s_ease-out_0.4s_forwards]">
-                Insights, strategies, and tips to help you navigate the digital marketing landscape and grow your business.
-              </p>
-              <div className="relative opacity-0 animate-[fade-in_0.6s_ease-out_0.5s_forwards]">
-                <Input 
-                  type="search" 
-                  placeholder="Search articles..." 
-                  className="py-6 pl-12 pr-4 bg-white shadow-lg rounded-lg w-full max-w-md"
+    <LazyMotion features={domAnimation}>
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <AnimatePresence mode="wait">
+          <motion.main 
+            className="flex-grow pt-20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+          >
+            {/* Hero Section */}
+            <motion.div 
+              className="bg-gradient-to-r from-gray-100 to-gray-50 py-16 relative overflow-hidden"
+              initial="hidden"
+              animate="visible"
+              variants={fadeInUp}
+            >
+              <div className="absolute inset-0 opacity-10">
+                <img 
+                  src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7"
+                  alt="Digital Marketing Background"
+                  className="w-full h-full object-cover"
                 />
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
               </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Categories */}
-        <div className="border-b opacity-0 animate-[fade-in_0.6s_ease-out_0.6s_forwards]">
-          <div className="container mx-auto px-4 md:px-6 py-6">
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category, index) => (
-                <Button 
-                  key={category} 
-                  variant={index === 0 ? "default" : "outline"}
-                  className={index === 0 ? "bg-brand-orange hover:bg-brand-orange-dark" : ""}
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
-          </div>
-        </div>
-        
-        {/* Blog Posts */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {blogPosts.map((post, index) => (
-                <Card 
-                  key={post.id} 
-                  className="overflow-hidden hover:shadow-lg transition-shadow duration-300 group opacity-0 animate-[fade-in_0.6s_ease-out_forwards]"
-                  style={{ animationDelay: `${700 + (index * 100)}ms` }}
-                >
-                  <div className="relative h-48 overflow-hidden">
-                    <img 
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              <div className="container mx-auto px-4 md:px-6 relative z-10">
+                <div className="max-w-3xl">
+                  <motion.h1 
+                    className="text-4xl md:text-5xl font-bold mb-6"
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { 
+                        opacity: 1, 
+                        y: 0, 
+                        transition: { delay: 0.1, duration: 0.6 } 
+                      }
+                    }}
+                  >
+                    Digital Marketing Blog
+                  </motion.h1>
+                  <motion.p 
+                    className="text-lg text-gray-600 mb-8"
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { 
+                        opacity: 1, 
+                        y: 0, 
+                        transition: { delay: 0.2, duration: 0.6 } 
+                      }
+                    }}
+                  >
+                    Insights, strategies, and tips to help you navigate the digital marketing landscape and grow your business.
+                  </motion.p>
+                  <motion.div 
+                    className="relative"
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { 
+                        opacity: 1, 
+                        y: 0, 
+                        transition: { delay: 0.3, duration: 0.6 } 
+                      }
+                    }}
+                  >
+                    <Input 
+                      type="search" 
+                      placeholder="Search articles..." 
+                      className="py-6 pl-12 pr-4 bg-white shadow-lg rounded-lg w-full max-w-md"
                     />
-                    <div className="absolute top-4 left-4 bg-brand-orange text-white px-3 py-1 rounded-full text-sm">
-                      {post.category}
-                    </div>
-                  </div>
-                  <CardContent className="p-6">
-                    <div className="text-sm text-gray-500 mb-2">{post.date}</div>
-                    <h3 className="text-xl font-bold mb-3 group-hover:text-brand-orange transition-colors duration-300">
-                      {post.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {post.tags.map(tag => (
-                        <span key={tag} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <Link to={`/blog/${post.id}/${post.slug}`} className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium">
-                      Read More <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                    <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
             
-            {/* Pagination */}
-            <div className="flex justify-center mt-12 opacity-0 animate-[fade-in_0.6s_ease-out_1.6s_forwards]">
-              <div className="inline-flex rounded-md shadow-sm">
-                <Button variant="outline" className="rounded-r-none">Previous</Button>
-                <Button variant="outline" className="rounded-none bg-brand-orange text-white border-brand-orange">1</Button>
-                <Button variant="outline" className="rounded-none">2</Button>
-                <Button variant="outline" className="rounded-none">3</Button>
-                <Button variant="outline" className="rounded-l-none">Next</Button>
+            {/* Categories */}
+            <motion.div 
+              className="border-b"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { 
+                  opacity: 1,
+                  transition: { delay: 0.3, duration: 0.6 }
+                }
+              }}
+            >
+              <div className="container mx-auto px-4 md:px-6 py-6">
+                <motion.div 
+                  className="flex flex-wrap gap-2"
+                  variants={staggerContainer}
+                >
+                  {categories.map((category, index) => (
+                    <motion.div
+                      key={category}
+                      variants={{
+                        hidden: { opacity: 0, y: 10 },
+                        visible: { 
+                          opacity: 1, 
+                          y: 0,
+                          transition: { delay: 0.05 * index, duration: 0.5 }
+                        }
+                      }}
+                    >
+                      <Button 
+                        variant={index === 0 ? "default" : "outline"}
+                        className={index === 0 ? "bg-brand-orange hover:bg-brand-orange-dark" : ""}
+                      >
+                        {category}
+                      </Button>
+                    </motion.div>
+                  ))}
+                </motion.div>
               </div>
-            </div>
-          </div>
-        </section>
-        
-        {/* Newsletter */}
-        <section className="py-16 bg-gray-50 opacity-0 animate-[fade-in_0.6s_ease-out_1.8s_forwards]">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl font-bold mb-4">Subscribe to Our Newsletter</h2>
-              <p className="text-gray-600 mb-8">
-                Get the latest digital marketing insights and strategies delivered straight to your inbox.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <Input placeholder="Enter your email" className="py-6" />
-                <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white">Subscribe</Button>
+            </motion.div>
+            
+            {/* Blog Posts */}
+            <section className="py-16 bg-white">
+              <div className="container mx-auto px-4 md:px-6">
+                <motion.div 
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                  initial="hidden"
+                  animate="visible"
+                  variants={staggerContainer}
+                >
+                  {blogPosts.map((post, index) => (
+                    <motion.div
+                      key={post.id}
+                      variants={{
+                        hidden: { opacity: 0, y: 50 },
+                        visible: { 
+                          opacity: 1, 
+                          y: 0,
+                          transition: { 
+                            type: "spring",
+                            damping: 15,
+                            stiffness: 70,
+                            delay: 0.1 * index,
+                            duration: 0.7
+                          }
+                        }
+                      }}
+                    >
+                      <Card className="overflow-hidden hover:shadow-lg transition-all duration-500 group h-full">
+                        <div className="relative h-48 overflow-hidden">
+                          <img 
+                            src={post.image}
+                            alt={post.title}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                          <div className="absolute top-4 left-4 bg-brand-orange text-white px-3 py-1 rounded-full text-sm">
+                            {post.category}
+                          </div>
+                        </div>
+                        <CardContent className="p-6 flex flex-col h-[calc(100%-12rem)]">
+                          <div className="text-sm text-gray-500 mb-2">{post.date}</div>
+                          <h3 className="text-xl font-bold mb-3 group-hover:text-brand-orange transition-colors duration-300">
+                            {post.title}
+                          </h3>
+                          <p className="text-gray-600 mb-4 flex-grow">{post.excerpt}</p>
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {post.tags.map(tag => (
+                              <span key={tag} className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                          <Link to={`/blog/${post.id}/${post.slug}`} className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium group">
+                            Read More <ArrowRight size={16} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+                          </Link>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </motion.div>
+                
+                {/* Pagination */}
+                <motion.div 
+                  className="flex justify-center mt-12"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8, duration: 0.5 }}
+                >
+                  <div className="inline-flex rounded-md shadow-sm">
+                    <Button variant="outline" className="rounded-r-none">Previous</Button>
+                    <Button variant="outline" className="rounded-none bg-brand-orange text-white border-brand-orange">1</Button>
+                    <Button variant="outline" className="rounded-none">2</Button>
+                    <Button variant="outline" className="rounded-none">3</Button>
+                    <Button variant="outline" className="rounded-l-none">Next</Button>
+                  </div>
+                </motion.div>
               </div>
-            </div>
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </div>
+            </section>
+            
+            {/* Newsletter */}
+            <motion.section 
+              className="py-16 bg-gray-50"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+            >
+              <div className="container mx-auto px-4 md:px-6">
+                <div className="max-w-3xl mx-auto text-center">
+                  <h2 className="text-3xl font-bold mb-4">Subscribe to Our Newsletter</h2>
+                  <p className="text-gray-600 mb-8">
+                    Get the latest digital marketing insights and strategies delivered straight to your inbox.
+                  </p>
+                  <motion.div 
+                    className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { 
+                        opacity: 1, 
+                        y: 0,
+                        transition: { delay: 0.2, duration: 0.5 }
+                      }
+                    }}
+                  >
+                    <Input placeholder="Enter your email" className="py-6" />
+                    <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white">Subscribe</Button>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.section>
+          </motion.main>
+        </AnimatePresence>
+        <Footer />
+      </div>
+    </LazyMotion>
   );
 };
 

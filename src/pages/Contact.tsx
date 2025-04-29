@@ -5,49 +5,65 @@ import { ExternalLink } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ContactSection from '@/components/ContactSection';
-import { Button } from '@/components/ui/button';
 
-// Lazy loading section wrapper component
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 60 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { 
+      type: "spring",
+      damping: 25, 
+      stiffness: 100,
+      duration: 0.6 
+    }
+  }
+};
+
+// Loading fallback with smoother animation
+const SectionLoading = () => (
+  <div className="w-full py-16 flex items-center justify-center">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-gray-200 dark:bg-gray-700 rounded-lg w-full max-w-3xl h-64"
+    />
+  </div>
+);
+
+// Lazy loading section wrapper component with smoother animations
 const LazySection = ({ children, id }: { children: React.ReactNode, id: string }) => (
   <motion.div 
     id={id}
-    initial={{ opacity: 0, y: 50 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ 
-      duration: 0.8, 
-      ease: [0.25, 0.1, 0.25, 1.0],
-      staggerChildren: 0.2
-    }}
+    initial="hidden"
+    whileInView="visible"
     viewport={{ once: true, margin: "-100px 0px" }}
+    variants={fadeInUp}
   >
     {children}
   </motion.div>
 );
 
-// Loading fallback
-const SectionLoading = () => (
-  <div className="w-full py-16 flex items-center justify-center">
-    <div className="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg w-full max-w-3xl h-64"></div>
-  </div>
-);
-
 const Contact = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <LazyMotion features={domAnimation}>
-        <AnimatePresence>
+    <LazyMotion features={domAnimation}>
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <AnimatePresence mode="wait">
           <motion.main 
             className="flex-grow pt-20"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
           >
             <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
+              initial="hidden"
+              animate="visible"
+              variants={fadeInUp}
               className="bg-background py-20 relative overflow-hidden"
             >
               <div className="absolute inset-0 z-0">
@@ -60,17 +76,27 @@ const Contact = () => {
               </div>
               <div className="container mx-auto px-4 md:px-6 relative z-10">
                 <motion.h1 
-                  initial={{ opacity: 0, y: 20 }} 
-                  animate={{ opacity: 1, y: 0 }} 
-                  transition={{ delay: 0.3, duration: 0.6 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { 
+                      opacity: 1, 
+                      y: 0, 
+                      transition: { delay: 0.3, duration: 0.6 } 
+                    }
+                  }}
                   className="text-4xl md:text-5xl font-bold mb-6 text-foreground"
                 >
                   Contact Us
                 </motion.h1>
                 <motion.p 
-                  initial={{ opacity: 0, y: 20 }} 
-                  animate={{ opacity: 1, y: 0 }} 
-                  transition={{ delay: 0.4, duration: 0.6 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { 
+                      opacity: 1, 
+                      y: 0, 
+                      transition: { delay: 0.4, duration: 0.6 } 
+                    }
+                  }}
                   className="text-lg text-foreground"
                 >
                   We'd love to hear from you. Reach out to our team with any questions or inquiries.
@@ -84,28 +110,27 @@ const Contact = () => {
               </LazySection>
             </Suspense>
 
-            {/* Office Location Section */}
+            {/* Google Maps Embed Section */}
             <Suspense fallback={<SectionLoading />}>
               <LazySection id="location">
                 <section className="py-12 bg-muted">
                   <div className="container mx-auto px-4 md:px-6">
                     <div className="text-center mb-8">
                       <h2 className="text-3xl font-bold mb-4 text-foreground">Our Office Location</h2>
-                      <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                      <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
                         Visit our office to meet with our team and discuss your needs in person.
                       </p>
-                      <div className="mt-6">
-                        <a 
-                          href="https://maps.app.goo.gl/j7uBmtADgAkmqNmC9" 
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center"
-                        >
-                          <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white flex items-center gap-2">
-                            <span>View on Google Maps</span>
-                            <ExternalLink size={16} />
-                          </Button>
-                        </a>
+                      <div className="w-full rounded-lg overflow-hidden shadow-lg">
+                        <iframe 
+                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3499.515003117422!2d77.07703487475443!3d28.704151280826157!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d07c2f97f0a23%3A0x252d1b2d16651b6!2sGraceleen%20MediaWorks%20-%20Digital%20Marketing%20Agency%20in%20Delhi%2C%20Website%20Designing%20Agency%20in%20Delhi!5e0!3m2!1sen!2sin!4v1745932949575!5m2!1sen!2sin" 
+                          width="100%" 
+                          height="450" 
+                          style={{ border: 0 }} 
+                          allowFullScreen={true} 
+                          loading="lazy" 
+                          referrerPolicy="no-referrer-when-downgrade"
+                          className="rounded-lg shadow-lg"
+                        ></iframe>
                       </div>
                     </div>
                   </div>
@@ -162,10 +187,14 @@ const Contact = () => {
                         <motion.div 
                           key={index}
                           className="bg-card p-6 rounded-lg relative overflow-hidden border border-border"
-                          initial={{ opacity: 0, y: 20 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.1 * index, duration: 0.5 }}
-                          viewport={{ once: true }}
+                          variants={{
+                            hidden: { opacity: 0, y: 20 },
+                            visible: { 
+                              opacity: 1, 
+                              y: 0,
+                              transition: { delay: 0.1 * index, duration: 0.5 }
+                            }
+                          }}
                         >
                           <h3 className="text-xl font-bold mb-2 relative z-10 text-foreground">{faq.question}</h3>
                           <p className="text-muted-foreground relative z-10">{faq.answer}</p>
@@ -178,9 +207,9 @@ const Contact = () => {
             </Suspense>
           </motion.main>
         </AnimatePresence>
-      </LazyMotion>
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </LazyMotion>
   );
 };
 

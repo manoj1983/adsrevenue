@@ -1,6 +1,6 @@
 
 import React, { Suspense } from 'react';
-import { motion, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
+import { motion, AnimatePresence, LazyMotion, domAnimation, m } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import HeroSection from '@/components/HeroSection';
@@ -12,42 +12,59 @@ import ContactSection from '@/components/ContactSection';
 import CTASection from '@/components/CTASection';
 import BlogSection from '@/components/BlogSection';
 
-// Lazy loading section wrapper component
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 60 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { 
+      type: "spring",
+      damping: 25, 
+      stiffness: 100,
+      duration: 0.6 
+    }
+  }
+};
+
+// Loading fallback with smoother animation
+const SectionLoading = () => (
+  <div className="w-full py-16 flex items-center justify-center">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-gray-200 dark:bg-gray-700 rounded-lg w-full max-w-3xl h-64"
+    />
+  </div>
+);
+
+// Lazy loading section wrapper component with smoother animations
 const LazySection = ({ children, id }: { children: React.ReactNode, id: string }) => (
   <motion.div 
     id={id}
-    initial={{ opacity: 0, y: 50 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ 
-      duration: 0.8, 
-      ease: [0.25, 0.1, 0.25, 1.0],
-      staggerChildren: 0.2
-    }}
+    initial="hidden"
+    whileInView="visible"
     viewport={{ once: true, margin: "-100px 0px" }}
+    variants={fadeInUp}
   >
     {children}
   </motion.div>
 );
 
-// Loading fallback
-const SectionLoading = () => (
-  <div className="w-full py-16 flex items-center justify-center">
-    <div className="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg w-full max-w-3xl h-64"></div>
-  </div>
-);
-
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <LazyMotion features={domAnimation}>
-        <AnimatePresence>
+    <LazyMotion features={domAnimation}>
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <AnimatePresence mode="wait">
           <motion.main 
             className="flex-grow"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
           >
             <Suspense fallback={<SectionLoading />}>
               <LazySection id="hero">
@@ -98,9 +115,9 @@ const Index = () => {
             </Suspense>
           </motion.main>
         </AnimatePresence>
-      </LazyMotion>
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </LazyMotion>
   );
 };
 

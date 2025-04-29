@@ -7,47 +7,64 @@ import AboutSection from '@/components/AboutSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import CTASection from '@/components/CTASection';
 
-// Lazy loading section wrapper component
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 60 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { 
+      type: "spring",
+      damping: 25, 
+      stiffness: 100,
+      duration: 0.6 
+    }
+  }
+};
+
+// Loading fallback with smoother animation
+const SectionLoading = () => (
+  <div className="w-full py-16 flex items-center justify-center">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-gray-200 dark:bg-gray-700 rounded-lg w-full max-w-3xl h-64"
+    />
+  </div>
+);
+
+// Lazy loading section wrapper component with smoother animations
 const LazySection = ({ children, id }: { children: React.ReactNode, id: string }) => (
   <motion.div 
     id={id}
-    initial={{ opacity: 0, y: 50 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ 
-      duration: 0.8, 
-      ease: [0.25, 0.1, 0.25, 1.0],
-      staggerChildren: 0.2
-    }}
+    initial="hidden"
+    whileInView="visible"
     viewport={{ once: true, margin: "-100px 0px" }}
+    variants={fadeInUp}
   >
     {children}
   </motion.div>
 );
 
-// Loading fallback
-const SectionLoading = () => (
-  <div className="w-full py-16 flex items-center justify-center">
-    <div className="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg w-full max-w-3xl h-64"></div>
-  </div>
-);
-
 const About = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <LazyMotion features={domAnimation}>
-        <AnimatePresence>
+    <LazyMotion features={domAnimation}>
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <AnimatePresence mode="wait">
           <motion.main 
             className="flex-grow pt-20"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
           >
             <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
+              initial="hidden"
+              animate="visible"
+              variants={fadeInUp}
               className="bg-background py-20 relative overflow-hidden"
             >
               <div className="absolute inset-0 z-0">
@@ -60,17 +77,27 @@ const About = () => {
               </div>
               <div className="container mx-auto px-4 md:px-6 relative z-10">
                 <motion.h1 
-                  initial={{ opacity: 0, y: 20 }} 
-                  animate={{ opacity: 1, y: 0 }} 
-                  transition={{ delay: 0.3, duration: 0.6 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { 
+                      opacity: 1, 
+                      y: 0, 
+                      transition: { delay: 0.3, duration: 0.6 } 
+                    }
+                  }}
                   className="text-4xl md:text-5xl font-bold mb-6 text-foreground"
                 >
                   About Us
                 </motion.h1>
                 <motion.p 
-                  initial={{ opacity: 0, y: 20 }} 
-                  animate={{ opacity: 1, y: 0 }} 
-                  transition={{ delay: 0.4, duration: 0.6 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { 
+                      opacity: 1, 
+                      y: 0, 
+                      transition: { delay: 0.4, duration: 0.6 } 
+                    }
+                  }}
                   className="text-lg text-foreground"
                 >
                   Learn more about Ads Revenue and our mission to maximize your advertising potential.
@@ -90,10 +117,14 @@ const About = () => {
                   <div className="container mx-auto px-4 md:px-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                       <motion.div 
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8 }}
-                        viewport={{ once: true }}
+                        variants={{
+                          hidden: { opacity: 0, x: -30 },
+                          visible: { 
+                            opacity: 1, 
+                            x: 0,
+                            transition: { duration: 0.8 } 
+                          }
+                        }}
                       >
                         <h2 className="text-3xl font-bold mb-6 text-foreground">Our Story</h2>
                         <p className="text-lg text-muted-foreground mb-6">
@@ -112,10 +143,14 @@ const About = () => {
                       </motion.div>
                       <motion.div 
                         className="bg-muted p-8 rounded-lg relative overflow-hidden"
-                        initial={{ opacity: 0, x: 30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8 }}
-                        viewport={{ once: true }}
+                        variants={{
+                          hidden: { opacity: 0, x: 30 },
+                          visible: { 
+                            opacity: 1, 
+                            x: 0,
+                            transition: { duration: 0.8 } 
+                          }
+                        }}
                       >
                         <div className="absolute inset-0 opacity-10">
                           <img 
@@ -128,10 +163,14 @@ const About = () => {
                         <div className="space-y-6">
                           <motion.div 
                             className="flex items-start"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1, duration: 0.6 }}
-                            viewport={{ once: true }}
+                            variants={{
+                              hidden: { opacity: 0, y: 20 },
+                              visible: { 
+                                opacity: 1, 
+                                y: 0,
+                                transition: { delay: 0.1, duration: 0.6 } 
+                              }
+                            }}
                           >
                             <div className="w-12 h-12 rounded-full bg-brand-orange flex items-center justify-center mr-4">
                               <span className="text-white font-bold">1</span>
@@ -145,10 +184,14 @@ const About = () => {
                           </motion.div>
                           <motion.div 
                             className="flex items-start"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2, duration: 0.6 }}
-                            viewport={{ once: true }}
+                            variants={{
+                              hidden: { opacity: 0, y: 20 },
+                              visible: { 
+                                opacity: 1, 
+                                y: 0,
+                                transition: { delay: 0.2, duration: 0.6 } 
+                              }
+                            }}
                           >
                             <div className="w-12 h-12 rounded-full bg-brand-orange flex items-center justify-center mr-4">
                               <span className="text-white font-bold">2</span>
@@ -162,10 +205,14 @@ const About = () => {
                           </motion.div>
                           <motion.div 
                             className="flex items-start"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3, duration: 0.6 }}
-                            viewport={{ once: true }}
+                            variants={{
+                              hidden: { opacity: 0, y: 20 },
+                              visible: { 
+                                opacity: 1, 
+                                y: 0,
+                                transition: { delay: 0.3, duration: 0.6 } 
+                              }
+                            }}
                           >
                             <div className="w-12 h-12 rounded-full bg-brand-orange flex items-center justify-center mr-4">
                               <span className="text-white font-bold">3</span>
@@ -179,10 +226,14 @@ const About = () => {
                           </motion.div>
                           <motion.div 
                             className="flex items-start"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4, duration: 0.6 }}
-                            viewport={{ once: true }}
+                            variants={{
+                              hidden: { opacity: 0, y: 20 },
+                              visible: { 
+                                opacity: 1, 
+                                y: 0,
+                                transition: { delay: 0.4, duration: 0.6 } 
+                              }
+                            }}
                           >
                             <div className="w-12 h-12 rounded-full bg-brand-orange flex items-center justify-center mr-4">
                               <span className="text-white font-bold">4</span>
@@ -215,9 +266,9 @@ const About = () => {
             </Suspense>
           </motion.main>
         </AnimatePresence>
-      </LazyMotion>
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </LazyMotion>
   );
 };
 
