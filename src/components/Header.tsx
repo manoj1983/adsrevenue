@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, Moon, Sun, Phone } from 'lucide-react';
 import { useTheme } from '@/hooks/use-theme';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
