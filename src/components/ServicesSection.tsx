@@ -1,8 +1,12 @@
 
-import React from 'react';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 
 const ServicesSection = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px 0px" });
+
   const services = [
     {
       icon: (
@@ -80,30 +84,44 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gray-50">
+    <section ref={ref} className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-fade-in">Our Services</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto animate-fade-in [animation-delay:100ms]">
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Services</h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             We offer a comprehensive range of digital marketing services to help you maximize revenue and grow your business online.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {services.map((service, index) => (
-            <Card 
-              key={index} 
-              className="border border-gray-200 hover:shadow-lg transition-all duration-300 overflow-hidden group animate-fade-in transform hover:-translate-y-2"
-              style={{ animationDelay: `${(index * 100) + 200}ms` }}
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ 
+                duration: 0.6, 
+                delay: 0.05 * index,
+                ease: [0.22, 1, 0.36, 1] 
+              }}
             >
-              <CardContent className="p-6">
-                <div className="mb-6 transform transition-transform duration-300 group-hover:scale-110">{service.icon}</div>
-                <h3 className="text-xl font-bold mb-3 group-hover:text-brand-orange transition-colors duration-300">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600">{service.description}</p>
-              </CardContent>
-            </Card>
+              <Card 
+                className="border border-gray-200 hover:shadow-lg transition-all duration-300 overflow-hidden group transform hover:-translate-y-2"
+              >
+                <CardContent className="p-6">
+                  <div className="mb-6 transform transition-transform duration-300 group-hover:scale-110">{service.icon}</div>
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-brand-orange transition-colors duration-300">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600">{service.description}</p>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>
