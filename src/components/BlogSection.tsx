@@ -7,12 +7,13 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const BlogSection = () => {
+  // Use smaller, optimized image versions
   const blogPosts = [
     {
       id: 1,
       title: "10 SEO Strategies to Boost Your Website Ranking",
       excerpt: "Learn the latest on-page and off-page SEO techniques to improve your search engine visibility and drive more organic traffic.",
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=600&q=60",
       category: "SEO",
       date: "Apr 15, 2025",
       slug: "10-seo-strategies-to-boost-your-website-ranking"
@@ -21,7 +22,7 @@ const BlogSection = () => {
       id: 2,
       title: "Maximizing ROI with Google Ads Campaigns",
       excerpt: "Discover how to optimize your Google Ads campaigns to achieve better conversions and reduce cost per acquisition.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=60",
       category: "Google Ads",
       date: "Apr 12, 2025",
       slug: "maximizing-roi-with-google-ads-campaigns"
@@ -30,7 +31,7 @@ const BlogSection = () => {
       id: 3,
       title: "Building Effective Meta Ads for Higher Engagement",
       excerpt: "Learn the best practices for creating engaging Facebook and Instagram ads that convert visitors into customers.",
-      image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7",
+      image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=600&q=60",
       category: "Meta Ads",
       date: "Apr 8, 2025",
       slug: "building-effective-meta-ads-for-higher-engagement"
@@ -69,11 +70,17 @@ const BlogSection = () => {
             >
               <Card className="overflow-hidden hover:shadow-lg transition-all duration-500 h-full group card-hover">
                 <div className="relative h-48 overflow-hidden bg-gray-200">
+                  <div className="w-full h-full bg-gray-200 animate-pulse"></div>
                   <img 
                     src={post.image}
                     alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 absolute top-0 left-0"
                     loading="lazy"
+                    onLoad={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.opacity = "1";
+                    }}
+                    style={{ opacity: 0, transition: "opacity 0.3s ease-in" }}
                   />
                   <div className="absolute top-4 left-4 bg-brand-orange text-white px-3 py-1 rounded-full text-sm">
                     {post.category}
