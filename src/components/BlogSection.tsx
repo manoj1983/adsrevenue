@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
@@ -7,6 +7,8 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const BlogSection = () => {
+  const [imagesLoaded, setImagesLoaded] = useState({});
+  
   // Use smaller, optimized image versions
   const blogPosts = [
     {
@@ -39,7 +41,11 @@ const BlogSection = () => {
   ];
 
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px 0px" });
+  const isInView = useInView(ref, { once: true, margin: "-50px 0px" });
+
+  const handleImageLoad = (id) => {
+    setImagesLoaded(prev => ({ ...prev, [id]: true }));
+  };
 
   return (
     <section ref={ref} className="py-20 bg-gray-50">
@@ -48,7 +54,7 @@ const BlogSection = () => {
           className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Latest Insights</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -63,24 +69,30 @@ const BlogSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ 
-                duration: 0.6, 
-                delay: 0.1 * index,
+                duration: 0.5, 
+                delay: Math.min(0.05 * index, 0.2),
                 ease: [0.22, 1, 0.36, 1] 
               }}
             >
               <Card className="overflow-hidden hover:shadow-lg transition-all duration-500 h-full group card-hover">
                 <div className="relative h-48 overflow-hidden bg-gray-200">
-                  <div className="w-full h-full bg-gray-200 animate-pulse"></div>
+                  <div 
+                    className="absolute inset-0 bg-gray-200 loading-shimmer"
+                    style={{ 
+                      opacity: imagesLoaded[post.id] ? 0 : 1, 
+                      transition: "opacity 0.3s ease-out" 
+                    }}
+                  ></div>
                   <img 
                     src={post.image}
                     alt={post.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 absolute top-0 left-0"
                     loading="lazy"
-                    onLoad={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.opacity = "1";
+                    onLoad={() => handleImageLoad(post.id)}
+                    style={{ 
+                      opacity: imagesLoaded[post.id] ? 1 : 0, 
+                      transition: "opacity 0.5s ease-out"
                     }}
-                    style={{ opacity: 0, transition: "opacity 0.3s ease-in" }}
                   />
                   <div className="absolute top-4 left-4 bg-brand-orange text-white px-3 py-1 rounded-full text-sm">
                     {post.category}
@@ -113,7 +125,7 @@ const BlogSection = () => {
           className="text-center mt-12"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.5, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
           <Link to="/blog" className="inline-flex items-center px-6 py-3 bg-white border border-gray-200 rounded-lg hover:shadow-md transition-all duration-300 hover:border-brand-orange group">
             View All Articles <ArrowRight size={16} className="ml-2 transition-transform duration-300 group-hover:translate-x-1" />

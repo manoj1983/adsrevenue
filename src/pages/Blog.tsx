@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from "framer-motion";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -8,11 +8,14 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const Blog = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const [imagesLoaded, setImagesLoaded] = useState({});
 
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true });
@@ -31,7 +34,7 @@ const Blog = () => {
       id: 1,
       title: "10 SEO Strategies to Boost Your Website Ranking",
       excerpt: "Learn the latest on-page and off-page SEO techniques to improve your search engine visibility and drive more organic traffic.",
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=600&q=60",
       category: "SEO",
       date: "Apr 15, 2025",
       tags: ["SEO", "On-page SEO", "Technical SEO"],
@@ -41,7 +44,7 @@ const Blog = () => {
       id: 2,
       title: "Maximizing ROI with Google Ads Campaigns",
       excerpt: "Discover how to optimize your Google Ads campaigns to achieve better conversions and reduce cost per acquisition.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
+      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=60",
       category: "Google Ads",
       date: "Apr 12, 2025",
       tags: ["Google Ads", "PPC", "SEM"],
@@ -51,7 +54,7 @@ const Blog = () => {
       id: 3,
       title: "Building Effective Meta Ads for Higher Engagement",
       excerpt: "Learn the best practices for creating engaging Facebook and Instagram ads that convert visitors into customers.",
-      image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7",
+      image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=600&q=60",
       category: "Meta Ads",
       date: "Apr 8, 2025",
       tags: ["Meta Ads", "Facebook", "Instagram"],
@@ -61,7 +64,7 @@ const Blog = () => {
       id: 4,
       title: "Social Media Marketing Strategies for 2025",
       excerpt: "Stay ahead of the competition with these cutting-edge social media marketing tactics that drive engagement and conversions.",
-      image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113",
+      image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=60",
       category: "Social Media",
       date: "Apr 5, 2025",
       tags: ["Social Media", "Marketing", "Strategy"],
@@ -71,7 +74,7 @@ const Blog = () => {
       id: 5,
       title: "The Power of Content Marketing in Digital Strategy",
       excerpt: "Discover how content marketing can establish your brand as an authority and drive long-term customer engagement.",
-      image: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5",
+      image: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=600&q=60", 
       category: "Content Marketing",
       date: "Apr 2, 2025",
       tags: ["Content Marketing", "Strategy", "Copywriting"],
@@ -81,7 +84,7 @@ const Blog = () => {
       id: 6,
       title: "Email Marketing Campaigns That Convert",
       excerpt: "Learn how to create email marketing campaigns that nurture leads and convert them into loyal customers.",
-      image: "https://images.unsplash.com/photo-1596526131083-e8c633c948d2",
+      image: "https://images.unsplash.com/photo-1596526131083-e8c633c948d2?auto=format&fit=crop&w=600&q=60",
       category: "Email Marketing",
       date: "Mar 29, 2025",
       tags: ["Email Marketing", "Conversions", "Automation"],
@@ -91,7 +94,7 @@ const Blog = () => {
       id: 7,
       title: "Understanding Google Analytics 4 for Better Insights",
       excerpt: "Master the new Google Analytics 4 platform to gather deeper insights about your website visitors and their behavior.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=60",
       category: "Analytics",
       date: "Mar 26, 2025",
       tags: ["Google Analytics", "Data", "Insights"],
@@ -101,7 +104,7 @@ const Blog = () => {
       id: 8,
       title: "Local SEO Techniques for Small Businesses",
       excerpt: "Improve your local search presence with these proven local SEO strategies designed for small and medium businesses.",
-      image: "https://images.unsplash.com/photo-1572021335469-31706a17aaef",
+      image: "https://images.unsplash.com/photo-1572021335469-31706a17aaef?auto=format&fit=crop&w=600&q=60",
       category: "Local SEO",
       date: "Mar 23, 2025",
       tags: ["Local SEO", "Small Business", "Google My Business"],
@@ -113,6 +116,10 @@ const Blog = () => {
     "All Categories", "SEO", "Google Ads", "Meta Ads", "Social Media", 
     "Content Marketing", "Email Marketing", "Analytics", "Local SEO"
   ];
+
+  const handleImageLoad = (id) => {
+    setImagesLoaded(prev => ({ ...prev, [id]: true }));
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -137,7 +144,7 @@ const Blog = () => {
                 className="text-4xl md:text-5xl font-bold mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               >
                 Digital Marketing Blog
               </motion.h1>
@@ -145,7 +152,7 @@ const Blog = () => {
                 className="text-lg text-gray-600 mb-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
               >
                 Insights, strategies, and tips to help you navigate the digital marketing landscape and grow your business.
               </motion.p>
@@ -153,7 +160,7 @@ const Blog = () => {
                 className="relative"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               >
                 <Input 
                   type="search" 
@@ -176,7 +183,7 @@ const Blog = () => {
               className="flex flex-wrap gap-2"
               initial={{ opacity: 0 }}
               animate={isCategoriesInView ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
               {categories.map((category, index) => (
                 <motion.div
@@ -184,8 +191,8 @@ const Blog = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={isCategoriesInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
                   transition={{ 
-                    duration: 0.5,
-                    delay: 0.05 * index,
+                    duration: 0.4,
+                    delay: 0.03 * index,
                     ease: [0.22, 1, 0.36, 1]
                   }}
                 >
@@ -211,21 +218,30 @@ const Blog = () => {
               {blogPosts.map((post, index) => (
                 <motion.div
                   key={post.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={isPostsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isPostsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                   transition={{ 
-                    duration: 0.6, 
-                    delay: 0.1 * index,
+                    duration: 0.5, 
+                    delay: Math.min(0.03 * index, 0.25),
                     ease: [0.22, 1, 0.36, 1]
                   }}
                 >
                   <Card className="overflow-hidden hover:shadow-lg transition-all duration-500 group h-full">
                     <div className="relative h-48 overflow-hidden bg-gray-200">
+                      {/* Show skeleton while image loads */}
+                      <div className="absolute inset-0 bg-gray-200 loading-shimmer" 
+                           style={{ opacity: imagesLoaded[post.id] ? 0 : 1, transition: "opacity 0.3s ease-out" }}>
+                      </div>
                       <img 
                         src={post.image}
                         alt={post.title}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"
+                        onLoad={() => handleImageLoad(post.id)}
+                        style={{ 
+                          opacity: imagesLoaded[post.id] ? 1 : 0, 
+                          transition: "opacity 0.5s ease-out"
+                        }}
                       />
                       <div className="absolute top-4 left-4 bg-brand-orange text-white px-3 py-1 rounded-full text-sm">
                         {post.category}
@@ -258,7 +274,7 @@ const Blog = () => {
               className="flex justify-center mt-12"
               initial={{ opacity: 0, y: 20 }}
               animate={isPostsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: 0.8, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ delay: 0.3, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="inline-flex rounded-md shadow-sm">
                 <Button variant="outline" className="rounded-r-none">Previous</Button>
@@ -282,7 +298,7 @@ const Blog = () => {
                 className="text-3xl font-bold mb-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isNewsletterInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               >
                 Subscribe to Our Newsletter
               </motion.h2>
@@ -290,7 +306,7 @@ const Blog = () => {
                 className="text-gray-600 mb-8"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isNewsletterInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
               >
                 Get the latest digital marketing insights and strategies delivered straight to your inbox.
               </motion.p>
@@ -298,7 +314,7 @@ const Blog = () => {
                 className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isNewsletterInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               >
                 <Input placeholder="Enter your email" className="py-6" />
                 <Button className="bg-brand-orange hover:bg-brand-orange-dark text-white">Subscribe</Button>
