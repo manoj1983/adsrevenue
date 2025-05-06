@@ -29,6 +29,9 @@ const BlogPost = () => {
     return <BlogPostError />;
   }
 
+  // Get the current URL for sharing
+  const currentUrl = window.location.href;
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -95,7 +98,7 @@ const BlogPost = () => {
                       </span>
                     ))}
                   </div>
-                  <SocialShare title={post.title} />
+                  <SocialShare title={post.title} url={currentUrl} />
                 </div>
               </div>
             </div>

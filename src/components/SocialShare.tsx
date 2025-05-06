@@ -9,7 +9,6 @@ import {
   Share2, 
   MessageCircle,
   Copy,
-  Link as LinkIcon,
   Send
 } from 'lucide-react';
 import { useToast } from "@/components/ui/use-toast";
@@ -106,4 +105,3 @@ const SocialShare = ({ title, url }: SocialShareProps) => {
 };
 
 export default SocialShare;
-
