@@ -17,23 +17,45 @@ interface ContactFormData {
 const ContactSection = () => {
   const { toast } = useToast();
   const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>();
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const onSubmit = async (data: ContactFormData) => {
+    setIsSubmitting(true);
     try {
-      console.log('Form submitted:', data);
-      // Here we would send the data to a backend service
-      // For now, we'll just show a success message
+      // Call the Supabase Edge Function to submit the form
+      const response = await fetch('https://kxvdamaycgeioudmjrli.supabase.co/functions/v1/submit-contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Something went wrong');
+      }
+
+      // Show success message
       toast({
         title: "Success!",
         description: "Thank you for your message. We'll get back to you soon!",
       });
+      
+      // Reset the form
       reset();
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Error submitting form:', error);
+      
+      // Show error message
       toast({
         title: "Error",
-        description: "Something went wrong. Please try again later.",
+        description: error.message || "Something went wrong. Please try again later.",
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -117,8 +139,12 @@ const ContactSection = () => {
                 )}
               </div>
 
-              <Button type="submit" className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white">
-                Send Message
+              <Button 
+                type="submit" 
+                className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </Button>
             </form>
           </div>
