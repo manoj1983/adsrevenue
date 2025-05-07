@@ -103,19 +103,42 @@ serve(async (req) => {
       );
     }
 
-    // Store in Supabase
-    const { data, error } = await supabase
+    // Check if the email already exists
+    const { data: existingContact, error: queryError } = await supabase
       .from("contact_messages")
-      .insert({
-        name: formData.name,
-        email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-      })
-      .select();
+      .select("id")
+      .eq("email", formData.email)
+      .single();
 
-    if (error) {
-      console.error("Supabase error:", error);
+    let result;
+    
+    if (existingContact) {
+      // Update existing record
+      result = await supabase
+        .from("contact_messages")
+        .update({
+          name: formData.name,
+          subject: formData.subject,
+          message: formData.message,
+          updated_at: new Date().toISOString()
+        })
+        .eq("id", existingContact.id)
+        .select();
+    } else {
+      // Insert new record
+      result = await supabase
+        .from("contact_messages")
+        .insert({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        })
+        .select();
+    }
+    
+    if (result.error) {
+      console.error("Supabase error:", result.error);
       return new Response(
         JSON.stringify({ error: "Failed to store contact message" }),
         {
@@ -136,7 +159,7 @@ serve(async (req) => {
       JSON.stringify({
         success: true,
         message: "Contact message submitted successfully",
-        data,
+        data: result.data,
       }),
       {
         status: 200,
