@@ -48,6 +48,9 @@ async function appendToGoogleSheet(data: ContactFormData): Promise<boolean> {
       return false;
     }
 
+    console.log("Using Google Sheets API key:", apiKey);
+    console.log("Attempting to append to spreadsheet:", spreadsheetId);
+
     // Append data to the Google Sheet
     const response = await fetch(
       `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=USER_ENTERED&key=${apiKey}`,
@@ -67,6 +70,7 @@ async function appendToGoogleSheet(data: ContactFormData): Promise<boolean> {
       return false;
     }
 
+    console.log("Successfully appended data to Google Sheet");
     return true;
   } catch (error) {
     console.error("Error appending to Google Sheet:", error);
