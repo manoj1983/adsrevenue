@@ -1,34 +1,8 @@
 
 project_id = "kxvdamaycgeioudmjrli"
 
-[api]
-enabled = true
-port = 54321
-schemas = ["public", "storage"]
-
-[db]
-port = 54322
-shadow_port = 54320
-major_version = 15
-
-[studio]
-enabled = true
-port = 54323
-api_url = "http://localhost"
-
-[inbucket]
-enabled = true
-port = 54324
-
-[storage]
-enabled = true
-
-[auth]
-enabled = true
-
-[realtime]
-enabled = true
-
-[functions]
 [functions.submit-contact]
+verify_jwt = false
+
+[functions.get-sheet-data]
 verify_jwt = false

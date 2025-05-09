@@ -15,6 +15,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import BackToTop from "./components/BackToTop";
 import WhatsAppButton from "./components/WhatsAppButton";
+import SheetData from "./pages/SheetData";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -42,6 +43,7 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:postId/:slug" element={<BlogPost />} />
+          <Route path="/sheet-data" element={<SheetData />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
