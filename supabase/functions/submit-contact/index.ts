@@ -51,16 +51,24 @@ async function sendToGoogleSheet(data: ContactFormData): Promise<boolean> {
       },
     });
     
+    // Check if response is OK (status in 200-299 range)
     if (!response.ok) {
       const errorText = await response.text();
       console.error("Google Apps Script error:", errorText);
       return false;
     }
     
-    const result = await response.json();
-    console.log("Google Apps Script response:", result);
-    
-    return result.success === true;
+    // Try to parse JSON response, but handle case where it's not JSON
+    try {
+      const result = await response.json();
+      console.log("Google Apps Script response:", result);
+      return result.success === true;
+    } catch (parseError) {
+      // If not JSON, check if status was OK
+      console.log("Response was not JSON, but status was:", response.status);
+      // Consider it successful if the status code was in the 2xx range
+      return response.ok;
+    }
   } catch (error) {
     console.error("Error sending to Google Sheet:", error);
     return false;

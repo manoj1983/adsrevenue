@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
 
 // Define form schema with validation
 const contactFormSchema = z.object({
@@ -53,6 +54,8 @@ const ContactForm = () => {
     setSubmissionStatus({ database: null, sheet: null });
     
     try {
+      console.log("Submitting form data:", data);
+      
       // Call the Supabase Edge Function to submit the form
       const response = await fetch('https://kxvdamaycgeioudmjrli.supabase.co/functions/v1/submit-contact', {
         method: 'POST',
@@ -63,6 +66,7 @@ const ContactForm = () => {
       });
       
       const result = await response.json();
+      console.log("Received response:", result);
       
       if (!response.ok) {
         throw new Error(result.error || 'Something went wrong');
@@ -83,7 +87,7 @@ const ContactForm = () => {
       } else {
         toast({
           title: "Partial Success",
-          description: "Your message was saved in our database, but we couldn't add it to our spreadsheet. We'll process it later.",
+          description: "Your message was saved in our database, but we couldn't add it to our spreadsheet. We'll process it manually later.",
           variant: "default",
         });
       }
@@ -177,8 +181,20 @@ const ContactForm = () => {
             className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Sending...' : 'Send Message'}
+            {isSubmitting ? (
+              <span className="flex items-center">
+                <Loader2 size={16} className="mr-2 animate-spin" />
+                Sending...
+              </span>
+            ) : 'Send Message'}
           </Button>
+          
+          {submissionStatus.sheet === false && submissionStatus.database === true && (
+            <p className="text-orange-500 text-sm mt-2">
+              Your message was saved to our database but couldn't be added to our spreadsheet. 
+              We'll process it manually.
+            </p>
+          )}
           
           {submissionStatus.database === false && (
             <p className="text-red-500 text-sm mt-2">

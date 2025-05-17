@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from "framer-motion";
 import Header from '@/components/Header';
@@ -62,53 +61,51 @@ const Blog = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow pt-20">
-        {/* Hero Section */}
+        {/* Hero Section - Updated to use the same background as other pages */}
         <div 
           ref={heroRef}
-          className="bg-gradient-to-r from-gray-100 to-gray-50 py-16 relative overflow-hidden"
+          className="bg-background py-20 relative overflow-hidden"
         >
-          <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 z-0">
             <img 
-              src="https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7"
+              src="/lovable-uploads/f3a3a1b0-7d32-4e05-b431-5f958f956bf1.png"
               alt="Digital Marketing Background"
-              className="w-full h-full object-cover"
-              loading="lazy"
+              className="w-full h-full object-cover opacity-20"
+              loading="eager"
             />
           </div>
           <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <div className="max-w-3xl">
-              <motion.h1 
-                className="text-4xl md:text-5xl font-bold mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              >
-                Digital Marketing Blog
-              </motion.h1>
-              <motion.p 
-                className="text-lg text-gray-600 mb-8"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-              >
-                Insights, strategies, and tips to help you navigate the digital marketing landscape and grow your business.
-              </motion.p>
-              <motion.div 
-                className="relative"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <Input 
-                  type="search" 
-                  placeholder="Search articles..." 
-                  className="py-6 pl-12 pr-4 bg-white shadow-lg rounded-lg w-full max-w-md"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-              </motion.div>
-            </div>
+            <motion.h1 
+              className="text-4xl md:text-5xl font-bold mb-6 text-foreground"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            >
+              Digital Marketing Blog
+            </motion.h1>
+            <motion.p 
+              className="text-lg text-foreground mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+            >
+              Insights, strategies, and tips to help you navigate the digital marketing landscape and grow your business.
+            </motion.p>
+            <motion.div 
+              className="relative"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isHeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <Input 
+                type="search" 
+                placeholder="Search articles..." 
+                className="py-6 pl-12 pr-4 bg-white shadow-lg rounded-lg w-full max-w-md"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+            </motion.div>
           </div>
         </div>
         
@@ -282,7 +279,7 @@ const Blog = () => {
           <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-3xl mx-auto text-center">
               <motion.h2 
-                className="text-3xl font-bold mb-4"
+                className="text-3xl font-bold mb-4 text-foreground"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isNewsletterInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -338,4 +335,3 @@ const Blog = () => {
 };
 
 export default Blog;
-
