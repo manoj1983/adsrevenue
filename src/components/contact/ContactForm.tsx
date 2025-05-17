@@ -29,6 +29,13 @@ type ContactFormData = z.infer<typeof contactFormSchema>;
 const ContactForm = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [submissionStatus, setSubmissionStatus] = React.useState<{
+    database: boolean | null;
+    sheet: boolean | null;
+  }>({
+    database: null,
+    sheet: null
+  });
 
   // Initialize react-hook-form with zod resolver
   const form = useForm<ContactFormData>({
@@ -43,6 +50,8 @@ const ContactForm = () => {
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
+    setSubmissionStatus({ database: null, sheet: null });
+    
     try {
       // Call the Supabase Edge Function to submit the form
       const response = await fetch('https://kxvdamaycgeioudmjrli.supabase.co/functions/v1/submit-contact', {
@@ -59,16 +68,36 @@ const ContactForm = () => {
         throw new Error(result.error || 'Something went wrong');
       }
 
-      // Show success message
-      toast({
-        title: "Success!",
-        description: "Thank you for your message. We'll get back to you soon!",
+      // Update submission status
+      setSubmissionStatus({
+        database: true,
+        sheet: result.sheetUpdated
       });
+      
+      // Show success message
+      if (result.sheetUpdated) {
+        toast({
+          title: "Success!",
+          description: "Thank you for your message. We've saved it in our database and added it to our spreadsheet.",
+        });
+      } else {
+        toast({
+          title: "Partial Success",
+          description: "Your message was saved in our database, but we couldn't add it to our spreadsheet. We'll process it later.",
+          variant: "default",
+        });
+      }
       
       // Reset the form
       form.reset();
     } catch (error: any) {
       console.error('Error submitting form:', error);
+      
+      // Update submission status
+      setSubmissionStatus({
+        database: false,
+        sheet: false
+      });
       
       // Show error message
       toast({
@@ -150,6 +179,12 @@ const ContactForm = () => {
           >
             {isSubmitting ? 'Sending...' : 'Send Message'}
           </Button>
+          
+          {submissionStatus.database === false && (
+            <p className="text-red-500 text-sm mt-2">
+              Failed to save your message. Please try again.
+            </p>
+          )}
         </form>
       </Form>
     </div>

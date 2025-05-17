@@ -27,56 +27,42 @@ interface ContactFormData {
   message: string;
 }
 
-async function appendToGoogleSheet(data: ContactFormData): Promise<boolean> {
+async function sendToGoogleSheet(data: ContactFormData): Promise<boolean> {
   try {
-    // Format row data for Google Sheets API
-    const row = [
-      data.name,
-      data.email,
-      data.subject,
-      data.message,
-      new Date().toISOString(),
-    ];
-
-    // Get the sheet ID and API key from environment variables
-    const spreadsheetId = "1geT-zigutbdFIz0EYXTmKIxwTzalS9WfKjuPIKFltng";
-    const apiKey = Deno.env.get("GOOGLE_SHEETS_API_KEY");
-    const range = "Sheet1!A:E"; // Assuming columns A-E for the data
-
-    if (!apiKey) {
-      console.error("Google Sheets API key not found");
-      return false;
-    }
-
-    console.log("Using Google Sheets API key:", apiKey);
-    console.log("Attempting to append to spreadsheet:", spreadsheetId);
-
-    // Append data to the Google Sheet
-    const response = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=USER_ENTERED&key=${apiKey}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          values: [row],
-        }),
-      }
-    );
-
-    const responseData = await response.json();
-    console.log("Google Sheets API response:", JSON.stringify(responseData));
-
+    // Your Google Apps Script web app URL
+    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbz0FaOrDcwlEEF06PeGtdO_Tvr66U-fZ1Xyio1L5Jhc0warx7SYKCMnMoezmAqkAF2R/exec";
+    
+    console.log("Sending data to Google Sheet via Apps Script:", data);
+    
+    // Format data for Google Apps Script
+    const formData = new URLSearchParams();
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+    formData.append("subject", data.subject);
+    formData.append("message", data.message);
+    formData.append("timestamp", new Date().toISOString());
+    
+    // Send data to Google Apps Script
+    const response = await fetch(googleScriptUrl, {
+      method: "POST",
+      body: formData,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
+    
     if (!response.ok) {
-      console.error("Failed to append to Google Sheets:", await response.text());
+      const errorText = await response.text();
+      console.error("Google Apps Script error:", errorText);
       return false;
     }
-
-    console.log("Successfully appended data to Google Sheet");
-    return true;
+    
+    const result = await response.json();
+    console.log("Google Apps Script response:", result);
+    
+    return result.success === true;
   } catch (error) {
-    console.error("Error appending to Google Sheet:", error);
+    console.error("Error sending to Google Sheet:", error);
     return false;
   }
 }
@@ -107,13 +93,13 @@ serve(async (req) => {
       );
     }
 
-    // First, try to append to Google Sheet
-    console.log("Attempting to append data to Google Sheet");
-    const sheetResult = await appendToGoogleSheet(formData);
+    // First, try to send to Google Sheet
+    console.log("Attempting to send data to Google Sheet");
+    const sheetResult = await sendToGoogleSheet(formData);
     if (!sheetResult) {
       console.warn("Google Sheet update failed, will still try to update database");
     } else {
-      console.log("Successfully appended data to Google Sheet");
+      console.log("Successfully sent data to Google Sheet");
     }
 
     // Then, store in Supabase
