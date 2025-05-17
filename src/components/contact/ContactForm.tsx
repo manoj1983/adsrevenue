@@ -5,18 +5,41 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-interface ContactFormData {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}
+// Define form schema with validation
+const contactFormSchema = z.object({
+  name: z.string().min(2, { message: 'Name must be at least 2 characters' }),
+  email: z.string().email({ message: 'Please enter a valid email address' }),
+  subject: z.string().min(3, { message: 'Subject is required' }),
+  message: z.string().min(10, { message: 'Message must be at least 10 characters' }),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
 
 const ContactForm = () => {
   const { toast } = useToast();
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormData>();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+
+  // Initialize react-hook-form with zod resolver
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      subject: '',
+      message: '',
+    },
+  });
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
@@ -43,7 +66,7 @@ const ContactForm = () => {
       });
       
       // Reset the form
-      reset();
+      form.reset();
     } catch (error: any) {
       console.error('Error submitting form:', error);
       
@@ -61,80 +84,74 @@ const ContactForm = () => {
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg">
       <h3 className="text-2xl font-bold mb-6">Send Us a Message</h3>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <label htmlFor="name" className="block text-gray-700 font-medium">
-              Your Name
-            </label>
-            <Input
-              id="name"
-              {...register('name', { required: 'Name is required' })}
-              className={errors.name ? 'border-red-500' : ''}
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Your Name</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm">{errors.name.message}</p>
-            )}
-          </div>
-          <div className="space-y-2">
-            <label htmlFor="email" className="block text-gray-700 font-medium">
-              Your Email
-            </label>
-            <Input
-              id="email"
-              type="email"
-              {...register('email', {
-                required: 'Email is required',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Invalid email address'
-                }
-              })}
-              className={errors.email ? 'border-red-500' : ''}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Your Email</FormLabel>
+                  <FormControl>
+                    <Input type="email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            {errors.email && (
-              <p className="text-red-500 text-sm">{errors.email.message}</p>
-            )}
           </div>
-        </div>
 
-        <div className="space-y-2">
-          <label htmlFor="subject" className="block text-gray-700 font-medium">
-            Subject
-          </label>
-          <Input
-            id="subject"
-            {...register('subject', { required: 'Subject is required' })}
-            className={errors.subject ? 'border-red-500' : ''}
+          <FormField
+            control={form.control}
+            name="subject"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Subject</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          {errors.subject && (
-            <p className="text-red-500 text-sm">{errors.subject.message}</p>
-          )}
-        </div>
 
-        <div className="space-y-2">
-          <label htmlFor="message" className="block text-gray-700 font-medium">
-            Your Message
-          </label>
-          <Textarea
-            id="message"
-            {...register('message', { required: 'Message is required' })}
-            className={errors.message ? 'border-red-500' : ''}
-            rows={5}
+          <FormField
+            control={form.control}
+            name="message"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Your Message</FormLabel>
+                <FormControl>
+                  <Textarea rows={5} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          {errors.message && (
-            <p className="text-red-500 text-sm">{errors.message.message}</p>
-          )}
-        </div>
 
-        <Button 
-          type="submit" 
-          className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? 'Sending...' : 'Send Message'}
-        </Button>
-      </form>
+          <Button 
+            type="submit" 
+            className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Sending...' : 'Send Message'}
+          </Button>
+        </form>
+      </Form>
     </div>
   );
 };

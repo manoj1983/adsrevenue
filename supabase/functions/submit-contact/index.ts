@@ -65,6 +65,9 @@ async function appendToGoogleSheet(data: ContactFormData): Promise<boolean> {
       }
     );
 
+    const responseData = await response.json();
+    console.log("Google Sheets API response:", JSON.stringify(responseData));
+
     if (!response.ok) {
       console.error("Failed to append to Google Sheets:", await response.text());
       return false;
@@ -91,6 +94,7 @@ serve(async (req) => {
   try {
     // Parse the request body
     const formData: ContactFormData = await req.json();
+    console.log("Received contact form data:", formData);
 
     // Validate required fields
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
@@ -103,29 +107,40 @@ serve(async (req) => {
       );
     }
 
-    // Check if the email already exists
+    // First, try to append to Google Sheet
+    console.log("Attempting to append data to Google Sheet");
+    const sheetResult = await appendToGoogleSheet(formData);
+    if (!sheetResult) {
+      console.warn("Google Sheet update failed, will still try to update database");
+    } else {
+      console.log("Successfully appended data to Google Sheet");
+    }
+
+    // Then, store in Supabase
+    console.log("Storing contact message in database");
     const { data: existingContact, error: queryError } = await supabase
       .from("contact_messages")
       .select("id")
       .eq("email", formData.email)
-      .single();
+      .limit(1);
 
     let result;
     
-    if (existingContact) {
+    if (existingContact && existingContact.length > 0) {
       // Update existing record
+      console.log("Updating existing contact record", existingContact[0].id);
       result = await supabase
         .from("contact_messages")
         .update({
           name: formData.name,
           subject: formData.subject,
-          message: formData.message,
-          updated_at: new Date().toISOString()
+          message: formData.message
         })
-        .eq("id", existingContact.id)
+        .eq("id", existingContact[0].id)
         .select();
     } else {
       // Insert new record
+      console.log("Inserting new contact record");
       result = await supabase
         .from("contact_messages")
         .insert({
@@ -140,18 +155,12 @@ serve(async (req) => {
     if (result.error) {
       console.error("Supabase error:", result.error);
       return new Response(
-        JSON.stringify({ error: "Failed to store contact message" }),
+        JSON.stringify({ error: "Failed to store contact message", details: result.error }),
         {
           status: 500,
           headers: { "Content-Type": "application/json", ...corsHeaders },
         }
       );
-    }
-
-    // Append to Google Sheet
-    const sheetResult = await appendToGoogleSheet(formData);
-    if (!sheetResult) {
-      console.warn("Google Sheet update failed, but database update succeeded");
     }
 
     // Return success response
@@ -160,6 +169,7 @@ serve(async (req) => {
         success: true,
         message: "Contact message submitted successfully",
         data: result.data,
+        sheetUpdated: sheetResult
       }),
       {
         status: 200,
@@ -169,7 +179,7 @@ serve(async (req) => {
   } catch (error) {
     console.error("Error processing request:", error);
     return new Response(
-      JSON.stringify({ error: "Internal server error" }),
+      JSON.stringify({ error: "Internal server error", details: String(error) }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
