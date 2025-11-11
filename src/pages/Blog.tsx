@@ -1,3 +1,6 @@
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
 import React, { useEffect, useState } from "react";
 import { getAllPosts } from "../lib/notion";
 import { Link } from "react-router-dom";
@@ -53,3 +56,12 @@ export default function Blog() {
     </div>
   );
 }
+<>
+  <Header />
+  <div className="p-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {posts.map((post) => (
+      // ...same blog code
+    ))}
+  </div>
+  <Footer />
+</>
