@@ -2,12 +2,25 @@ import React, { useEffect, useState } from "react";
 import { getAllPosts } from "../lib/notion";
 import { Link } from "react-router-dom";
 
+interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  date: string;
+  image?: string;
+}
+
 export default function Blog() {
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
     getAllPosts().then(setPosts);
   }, []);
+
+  if (!posts.length) {
+    return <p className="p-6">Loading...</p>;
+  }
 
   return (
     <div className="p-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
