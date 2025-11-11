@@ -3,8 +3,8 @@ import { getAllPosts } from "../lib/notion";
 import { useParams } from "react-router-dom";
 
 export default function BlogPost() {
-  const { slug } = useParams();
-  const [post, setPost] = useState<any | null>(null);
+  const { slug } = useParams<{ slug: string }>();
+  const [post, setPost] = useState<any>(null);
 
   useEffect(() => {
     getAllPosts().then((posts) => {
