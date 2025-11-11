@@ -10,7 +10,7 @@ const notion = new Client({
   auth: import.meta.env.VITE_NOTION_TOKEN,
 });
 
-export async function getBlogPosts() {
+export async function getAllPosts() {
   const response = await notion.databases.query({
     database_id: import.meta.env.VITE_NOTION_DATABASE_ID,
     filter: {
@@ -28,4 +28,9 @@ export async function getBlogPosts() {
     date: page.properties.Date?.date?.start,
     image: page.properties.Image?.files?.[0]?.file?.url || "",
   }));
+}
+
+export async function getPostBySlug(slug: string) {
+  const posts = await getAllPosts();
+  return posts.find((p) => p.slug === slug);
 }
