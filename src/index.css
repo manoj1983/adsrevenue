@@ -263,3 +263,67 @@ img {
 .dark .card-hover:hover {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
+/* --- BLOG STYLING --- */
+.prose {
+  color: #333;
+  line-height: 1.75;
+  font-size: 1.1rem;
+}
+
+/* Headings */
+.prose h1, .prose h2, .prose h3 {
+  color: #1a1a1a;
+  font-weight: 700;
+  scroll-margin-top: 80px;
+}
+
+/* Blockquotes */
+.prose blockquote {
+  border-left: 4px solid #FF6347;
+  background: #fff7f5;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-style: italic;
+  color: #444;
+}
+
+/* Tables */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+.prose th {
+  background: #ffede8;
+  color: #333;
+  text-align: left;
+  padding: 10px;
+}
+.prose td {
+  border: 1px solid #eee;
+  padding: 10px;
+}
+
+/* Links */
+.prose a {
+  color: #FF6347;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+/* Code block */
+.prose pre {
+  background: #1e1e1e;
+  color: #eee;
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+/* Images */
+.prose img {
+  border-radius: 10px;
+  margin: 1rem auto;
+  display: block;
+  max-width: 100%;
+}
