@@ -15,13 +15,9 @@ export const handler: Handler = async () => {
     const notion = new Client({ auth: token });
 
     const response = await notion.databases.query({
-      database_id: databaseId,
-      sorts: [{ property: "Date", direction: "descending" }],
-      filter: {
-        property: "Published",
-        checkbox: { equals: true },
-      },
-    });
+  database_id: databaseId,
+  sorts: [{ property: "Date", direction: "descending" }],
+});
 
     console.log("✅ Raw Notion DB response count:", response.results.length);
 
