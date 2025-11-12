@@ -115,7 +115,7 @@ const BlogPost = () => {
                   </span>
                 </div>
 
-                <div className="prose max-w-none">
+                <div className="prose prose-lg prose-orange max-w-none leading-relaxed">
 <ReactMarkdown
   remarkPlugins={[remarkGfm]}
   rehypePlugins={[rehypeRaw]}
