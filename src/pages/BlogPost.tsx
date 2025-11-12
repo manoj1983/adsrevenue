@@ -244,12 +244,13 @@ const BlogPost = () => {
 
                 {/* 🔹 Main article markdown (body) */}
 <div
-  className="
-    prose prose-lg md:prose-xl
+  className={`
+    prose md:prose-lg
+    text-base md:text-lg
     prose-headings:font-semibold
-    prose-h1:text-4xl prose-h1:leading-snug
-    prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
-    prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+    prose-h1:text-3xl md:prose-h1:text-4xl prose-h1:leading-snug
+    prose-h2:text-xl md:prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
+    prose-h3:text-lg md:prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
     prose-p:text-gray-800 prose-p:leading-relaxed
     prose-a:text-brand-orange hover:prose-a:text-brand-orange-dark
     prose-strong:text-gray-900
@@ -259,7 +260,7 @@ const BlogPost = () => {
     prose-img:rounded-xl prose-img:shadow-md
     prose-table:border prose-table:border-gray-200 prose-th:bg-gray-50 prose-th:text-gray-800 prose-td:border-t
     max-w-none text-gray-900
-  "
+  `}
 >
   <ReactMarkdown
     remarkPlugins={[remarkGfm]}
