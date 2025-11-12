@@ -1,59 +1,57 @@
 import type { Handler } from "@netlify/functions";
+import { Client } from "@notionhq/client";
 
-// 🔹 In-memory cache (lives for ~5 minutes)
-let cache: any = null;
-let cacheTimestamp = 0;
-
-export const handler: Handler = async (event, context) => {
-  const now = Date.now();
-
-  // ✅ Serve from cache if data is fresh (<5 min old)
-  if (cache && now - cacheTimestamp < 5 * 60 * 1000) {
-    console.log("⚡ Serving Notion data from cache");
-    return {
-      statusCode: 200,
-      body: JSON.stringify(cache),
-      headers: { "Content-Type": "application/json" },
-    };
-  }
-
-  // 🔹 Fetch fresh data from Notion
+export const handler: Handler = async () => {
   try {
-    console.log("📦 Fetching fresh data from Notion...");
-    const response = await fetch(
-      `https://api.notion.com/v1/databases/${process.env.VITE_NOTION_DATABASE_ID}/query`,
-      {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${process.env.VITE_NOTION_TOKEN}`,
-          "Content-Type": "application/json",
-          "Notion-Version": "2022-06-28",
-        },
-      }
-    );
+    // ✅ Initialize Notion client with token
+    const notion = new Client({ auth: process.env.VITE_NOTION_TOKEN });
+    const databaseId = process.env.VITE_NOTION_DATABASE_ID;
 
-    if (!response.ok) {
-      throw new Error(`Notion API error: ${response.statusText}`);
+    if (!notion || !databaseId) {
+      throw new Error("Missing Notion token or database ID in environment variables");
     }
 
-    const data = await response.json();
+    console.log("✅ Fetching Notion posts from:", databaseId);
 
-    // ✅ Save to cache
-    cache = data;
-    cacheTimestamp = now;
+    // ✅ Fetch posts
+    const response = await notion.databases.query({
+      database_id: databaseId,
+      sorts: [{ timestamp: "created_time", direction: "descending" }],
+    });
 
-    console.log("✅ Notion data cached successfully");
+    // ✅ Parse posts safely
+    const posts = response.results.map((page: any) => ({
+      id: page.id,
+      title: page.properties?.Name?.title?.[0]?.plain_text || "Untitled",
+      slug:
+        page.properties?.Slug?.rich_text?.[0]?.plain_text ||
+        page.id.slice(0, 8),
+      content:
+        page.properties?.Content?.rich_text
+          ?.map((t: any) => t.plain_text)
+          .join(" ") || "",
+      image:
+        page.properties?.Image?.files?.[0]?.file?.url ||
+        page.properties?.Image?.url ||
+        "",
+      date: page.created_time,
+    }));
 
+    // ✅ Return JSON
     return {
       statusCode: 200,
-      body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(posts),
     };
-  } catch (error) {
-    console.error("❌ Notion fetch failed:", error);
+  } catch (err: any) {
+    console.error("❌ Server error:", err);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Failed to fetch Notion data" }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        error: err.message,
+        hint: "Possible causes: Invalid token, wrong database ID, or Notion property mismatch.",
+      }),
     };
   }
 };
