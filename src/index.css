@@ -344,3 +344,91 @@ img {
   margin-right: 6px;
   opacity: 0.7;
 }
+
+/* === Professional Editorial Typography (Medium-style) === */
+
+/* General prose style */
+.prose {
+  font-family: "Inter", "system-ui", sans-serif;
+  line-height: 1.7;
+  color: #333;
+  max-width: 65ch;
+  margin: 0 auto;
+}
+
+/* Paragraphs */
+.prose p {
+  font-size: 0.95rem; /* slightly smaller, refined size */
+  color: #222;
+  margin-top: 1.2em;
+  margin-bottom: 1.2em;
+}
+
+/* Headings */
+.prose h2 {
+  font-size: 1.9rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #111;
+  letter-spacing: -0.01em;
+}
+
+.prose h3 {
+  font-size: 1.4rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: #222;
+  font-weight: 600;
+}
+
+/* Blockquotes */
+.prose blockquote {
+  border-left: 4px solid #f97316;
+  padding-left: 1rem;
+  color: #555;
+  font-style: italic;
+  background-color: #fffaf5;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+}
+
+/* Lists */
+.prose ul, .prose ol {
+  padding-left: 1.5rem;
+  margin: 1.25rem 0;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+/* Links inside content */
+.prose a {
+  color: #f97316;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(249, 115, 22, 0.3);
+  transition: all 0.2s ease;
+}
+
+.prose a:hover {
+  color: #c2410c;
+  border-bottom-color: rgba(249, 115, 22, 0.6);
+}
+
+/* Images */
+.prose img {
+  border-radius: 10px;
+  margin: 2rem 0;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .prose {
+    padding: 0 1rem;
+  }
+  .prose p {
+    font-size: 0.93rem;
+  }
+  .prose h2 {
+    font-size: 1.5rem;
+  }
+}
