@@ -208,53 +208,38 @@ const BlogPost = () => {
 
                 {/* ✅ Render TOC after intro */}
 {toc.length > 0 && (
-  <div
-    className="
-      bg-gradient-to-br from-gray-50 to-white
-      border border-gray-200 rounded-xl shadow-sm
-      px-5 py-5 mb-10
-      w-full max-w-[580px]
-      mx-auto md:mx-0
-      transition-all duration-300
-      hover:shadow-md
-    "
+  <aside
+    aria-label="Table of contents"
+    className="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl shadow-sm px-4 py-3 mb-10
+               w-full sm:w-[96%] md:w-auto md:max-w-[350px] mx-auto md:mx-0"
   >
     <h3
-      className="
-        text-base font-semibold text-gray-800
-        tracking-wide border-b border-gray-200 pb-2 mb-3
-        flex items-center gap-2
-      "
+      className="text-base font-bold mb-3 text-gray-800 tracking-wide border-b border-gray-200 pb-2
+                 line-clamp-2 overflow-hidden break-words"
+      title="Table of Contents"
     >
-      <span className="text-brand-orange text-lg">📖</span>
-      <span>Table of Contents</span>
+      📖 Table of Contents
     </h3>
 
-    <ul className="text-gray-700 text-[15px] leading-relaxed divide-y divide-gray-100">
+    <ul className="divide-y divide-gray-100 text-gray-700 text-sm leading-relaxed">
       {toc.map((item) => (
         <li
           key={item.id}
-          className={`py-2 transition-all duration-200 ${
-            item.level > 2
-              ? "pl-5 text-gray-600 text-[14px]"
-              : "text-gray-700 font-medium"
-          }`}
+          className={`py-2 transition-all duration-150 ${item.level > 2 ? "pl-5 text-gray-600" : ""}`}
         >
           <button
             onClick={() => handleScroll(item.id, item.text)}
-            className="
-              w-full text-left
-              hover:text-brand-orange
-              hover:pl-1
-              transition-all duration-200
-            "
+            title={item.text}
+            className="w-full text-left focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-orange rounded-sm
+                       hover:text-brand-orange hover:pl-1 transition-all duration-150"
+            aria-label={`Go to ${item.text}`}
           >
-            {item.text}
+            <span className="inline-block align-middle break-words">{item.text}</span>
           </button>
         </li>
       ))}
     </ul>
-  </div>
+  </aside>
 )}
 
                 {/* 🔹 Main article markdown (body) */}
