@@ -181,7 +181,7 @@ const Blog = () => {
                             transition: "opacity 0.3s ease-out",
                           }}
                         />
-                        {post.image ? (
+{post.image ? (
   <img
     src={post.image}
     alt={post.title}
@@ -196,8 +196,8 @@ const Blog = () => {
 ) : (
   <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
     No Image
-    )}
   </div>
+)}
                       <CardContent className="p-6 flex flex-col h-[calc(100%-12rem)]">
                         <div className="text-sm text-gray-500 mb-2">
                           {post.date
