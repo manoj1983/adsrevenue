@@ -32,8 +32,15 @@ export const handler: Handler = async () => {
   page.properties?.["Post Title"]?.title?.[0]?.plain_text ||
   "Untitled",
       slug:
-        page.properties?.Slug?.rich_text?.[0]?.plain_text ||
-        page.id.slice(0, 8),
+  page.properties?.Slug?.rich_text?.[0]?.plain_text ||
+  (page.properties?.Name?.title?.[0]?.plain_text ||
+   page.properties?.Title?.title?.[0]?.plain_text ||
+   page.properties?.["Post Title"]?.title?.[0]?.plain_text ||
+   page.id
+  )
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, ""),
       content:
         page.properties?.Content?.rich_text
           ?.map((t: any) => t.plain_text)
