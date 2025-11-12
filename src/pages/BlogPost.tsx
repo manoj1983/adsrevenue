@@ -116,10 +116,6 @@ const BlogPost = () => {
                 </div>
 
                 <div className="prose max-w-none">
-import remarkGfm from "remark-gfm"; // ✨ Add this at the top
-
-...
-
 <ReactMarkdown
   remarkPlugins={[remarkGfm]}
   rehypePlugins={[rehypeRaw]}
