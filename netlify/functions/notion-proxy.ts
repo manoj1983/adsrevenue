@@ -2,24 +2,28 @@ import type { Handler } from "@netlify/functions";
 import { Client } from "@notionhq/client";
 
 export const handler: Handler = async () => {
+  console.log("🔹 Netlify Function started");
+
   try {
-    // ✅ Initialize Notion client with token
-    const notion = new Client({ auth: process.env.VITE_NOTION_TOKEN });
+    const token = process.env.VITE_NOTION_TOKEN;
     const databaseId = process.env.VITE_NOTION_DATABASE_ID;
 
-    if (!notion || !databaseId) {
+    console.log("🔹 Token present:", !!token);
+    console.log("🔹 Database ID:", databaseId);
+
+    if (!token || !databaseId) {
       throw new Error("Missing Notion token or database ID in environment variables");
     }
 
-    console.log("✅ Fetching Notion posts from:", databaseId);
+    const notion = new Client({ auth: token });
 
-    // ✅ Fetch posts
     const response = await notion.databases.query({
       database_id: databaseId,
       sorts: [{ timestamp: "created_time", direction: "descending" }],
     });
 
-    // ✅ Parse posts safely
+    console.log("🔹 Notion response count:", response.results.length);
+
     const posts = response.results.map((page: any) => ({
       id: page.id,
       title: page.properties?.Name?.title?.[0]?.plain_text || "Untitled",
@@ -37,20 +41,22 @@ export const handler: Handler = async () => {
       date: page.created_time,
     }));
 
-    // ✅ Return JSON
+    console.log("✅ Posts prepared:", posts.length);
+
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(posts),
     };
   } catch (err: any) {
-    console.error("❌ Server error:", err);
+    console.error("❌ Notion Proxy Fatal Error:", err);
     return {
       statusCode: 500,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         error: err.message,
-        hint: "Possible causes: Invalid token, wrong database ID, or Notion property mismatch.",
+        hint:
+          "Likely causes: wrong Notion database ID, token missing, or integration not shared with DB.",
       }),
     };
   }
