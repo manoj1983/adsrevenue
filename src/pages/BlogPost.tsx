@@ -61,6 +61,18 @@ const BlogPost = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow pt-20">
+        <HelmetProvider>
+  <Helmet>
+    <title>{post.title} | AdsRevenue Blog</title>
+    <meta name="description" content={post.content.slice(0, 160)} />
+    <meta name="keywords" content={`${post.title}, Digital Marketing, SEO, Blogging`} />
+    <meta property="og:title" content={post.title} />
+    <meta property="og:description" content={post.content.slice(0, 160)} />
+    <meta property="og:image" content={post.image || "/og-image.png"} />
+    <meta property="og:type" content="article" />
+    <meta name="robots" content="index, follow" />
+  </Helmet>
+</HelmetProvider>
         {/* 🔹 Hero Section */}
         <div className="relative aspect-[2.5/1] overflow-hidden">
           {post.image ? (
