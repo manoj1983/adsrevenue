@@ -4,44 +4,104 @@
 @tailwind components;
 @tailwind utilities;
 
-/* --- root color tokens kept from your original file --- */
-/* (unchanged — keep your existing :root color variables above) */
-
 @layer base {
   :root {
-    /* keep all your existing --* variables here (omit from snippet for brevity) */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 16 100% 64%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 16 100% 64%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    /* keep your existing dark overrides here */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 16 100% 64%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
-/* Base resets and font defaults */
 @layer base {
   * {
     @apply border-border;
   }
 
-  /* Use Inter as the UI / body font; Merriweather for prose headings is used inside .prose below */
   body {
+    /* Inter as primary UI / body font — changed to Inter */
     font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
       Roboto, "Helvetica Neue", Arial;
     @apply bg-background text-foreground;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: "liga" 1;
-    font-size: 1rem; /* 16px base */
-    line-height: 1.6;
-    letter-spacing: -0.01em;
   }
-
+  
   .no-transition * {
     transition: none !important;
   }
 }
 
-/* text gradient & button gradient (unchanged) */
 .text-gradient {
   background: linear-gradient(90deg, #FF6347 0%, #FF8C7A 100%);
   -webkit-background-clip: text;
@@ -53,7 +113,6 @@
   background: linear-gradient(90deg, #FF6347 0%, #FF8C7A 100%);
 }
 
-/* float animation (unchanged) */
 @keyframes float {
   0% {
     transform: translatey(0px);
@@ -65,35 +124,40 @@
     transform: translatey(0px);
   }
 }
+
 .animate-float {
   animation: float 4s ease-in-out infinite;
 }
 
-/* Page transitions (unchanged) */
+/* Advanced page transitions */
 .page-transition-enter {
   opacity: 0;
   transform: translateY(15px);
 }
+
 .page-transition-enter-active {
   opacity: 1;
   transform: translateY(0);
   transition: opacity 600ms, transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
 }
+
 .page-transition-exit {
   opacity: 1;
 }
+
 .page-transition-exit-active {
   opacity: 0;
   transform: translateY(15px);
   transition: opacity 300ms, transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Content fade-in (unchanged) */
+/* Ultra smooth content transitions */
 .content-fade-in {
   opacity: 0;
   transform: translateY(30px);
   animation: contentFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
 @keyframes contentFadeIn {
   from {
     opacity: 0;
@@ -105,11 +169,11 @@
   }
 }
 
-/* Stagger */
 .stagger-item {
   opacity: 0;
   animation: staggerFadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
 @keyframes staggerFadeIn {
   from {
     opacity: 0;
@@ -121,11 +185,12 @@
   }
 }
 
-/* Improved nav underline using your brand color */
+/* Improved navigation effects */
 .nav-link {
   position: relative;
   text-decoration: none;
 }
+
 .nav-link::after {
   content: '';
   position: absolute;
@@ -133,27 +198,26 @@
   height: 2px;
   bottom: -4px;
   left: 0;
-  background-color: theme('colors.brand.orange'); /* tailwind resolves this */
+  background-color: theme('colors.brand.orange');
   transform: scaleX(0);
   transform-origin: bottom right;
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
 .nav-link:hover::after,
 .nav-link.active::after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-/* images: keep your improved handling but avoid attr() in production for aspect-ratio fallback */
+/* Enhanced image handling */
 img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+  aspect-ratio: attr(width) / attr(height);
 }
 
-/* prefers-reduced-motion (unchanged) */
+/* Optimize animations for reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *,
+  * ,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
@@ -163,7 +227,7 @@ img {
   }
 }
 
-/* loading shimmer (unchanged) */
+/* Professional loading animations */
 .loading-shimmer {
   background: linear-gradient(
     90deg,
@@ -174,6 +238,7 @@ img {
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
+
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -183,118 +248,52 @@ img {
   }
 }
 
-/* dark mode logo handling (unchanged) */
+/* Dark mode logo handling */
 .dark .logo-dark-mode {
   filter: invert(1) brightness(1.5);
 }
 
-/* card hover (unchanged) */
+/* Advanced card effects */
 .card-hover {
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), 
+              box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
 .card-hover:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
+
 .dark .card-hover:hover {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
-
-/* --- PROSE / BLOG STYLING: tuned for Medium-like readability --- */
+/* --- BLOG STYLING --- */
 .prose {
-  /* base UI font for small UI text still Inter, but prose body uses Inter with serif headings */
-  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial;
-  color: theme("colors.gray.800", #333);
+  color: #333;
   line-height: 1.75;
-  font-size: 1.0625rem; /* ~17px — comfortable reading size */
-  letter-spacing: -0.01em;
-  max-width: 72ch; /* comfortable measure like Medium */
+  font-size: 1.1rem;
+  /* Ensure body font is used for prose paragraphs (Inter) */
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+      Roboto, "Helvetica Neue", Arial;
 }
 
-/* Headings use Merriweather for a slightly editorial feel */
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4 {
+/* Headings */
+.prose h1, .prose h2, .prose h3 {
+  /* Use Merriweather for headings for a professional editorial look */
   font-family: "Merriweather", Georgia, serif;
-  color: theme("colors.gray.900", #1a1a1a);
+  color: #1a1a1a;
   font-weight: 700;
-  margin-top: 1.6em;
-  margin-bottom: 0.6em;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  scroll-margin-top: 80px;
 }
 
-/* Heading sizes — a clear scale */
-.prose h1 {
-  font-size: 2.125rem; /* ~34px */
-}
-.prose h2 {
-  font-size: 1.5rem; /* ~24px */
-}
-.prose h3 {
-  font-size: 1.25rem; /* ~20px */
-}
-.prose h4 {
-  font-size: 1.125rem; /* ~18px */
-}
-
-/* Subtle hash mark for headings preserved but softened */
-.prose h2::before,
-.prose h3::before {
-  content: "#";
-  color: #f97316; /* orange accent */
-  margin-right: 6px;
-  opacity: 0.72;
-  font-family: "Inter", system-ui, sans-serif;
-  font-weight: 700;
-}
-
-/* Paragraphs */
-.prose p {
-  margin: 0 0 1.1em 0;
-  color: theme("colors.gray.800", #333);
-}
-
-/* Blockquote: more subtle, editorial look */
+/* Blockquotes */
 .prose blockquote {
   border-left: 4px solid #FF6347;
-  background: hsla(var(--card), 0.03);
+  background: #fff7f5;
   padding: 1rem 1.5rem;
   border-radius: 8px;
   font-style: italic;
-  color: theme("colors.gray.700", #444);
-}
-
-/* Inline code & preformatted code */
-.prose code {
-  background: rgba(27,31,35,0.05);
-  padding: 0.2rem 0.35rem;
-  border-radius: 6px;
-  font-weight: 500;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New",
-    monospace;
-  font-size: 0.92em;
-}
-.prose pre {
-  background: #0f1724; /* deep neutral so code contrasts well */
-  color: #e6eef8;
-  padding: 1rem;
-  border-radius: 8px;
-  overflow-x: auto;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New",
-    monospace;
-  font-size: 0.9rem;
-}
-
-/* Links */
-.prose a {
-  color: #FF6347;
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  color: #444;
 }
 
 /* Tables */
@@ -302,18 +301,32 @@ img {
   width: 100%;
   border-collapse: collapse;
   margin: 1.5rem 0;
-  font-size: 0.95rem;
 }
 .prose th {
-  background: #fff5f2;
+  background: #ffede8;
   color: #333;
   text-align: left;
   padding: 10px;
-  font-weight: 700;
 }
 .prose td {
-  border: 1px solid rgba(0,0,0,0.06);
+  border: 1px solid #eee;
   padding: 10px;
+}
+
+/* Links */
+.prose a {
+  color: #FF6347;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+/* Code block */
+.prose pre {
+  background: #1e1e1e;
+  color: #eee;
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
 }
 
 /* Images */
@@ -324,11 +337,10 @@ img {
   max-width: 100%;
 }
 
-/* utility: slightly smaller caption style */
-.prose figcaption {
-  font-size: 0.9rem;
-  color: theme("colors.gray.600", "#666");
-  margin-top: 0.5rem;
+.prose h2::before,
+.prose h3::before {
+  content: "#";
+  color: #f97316; /* orange accent */
+  margin-right: 6px;
+  opacity: 0.7;
 }
-
-/* keep any other custom classes you had below (page transitions, animations, etc.) */
