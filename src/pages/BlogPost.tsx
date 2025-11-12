@@ -1,3 +1,5 @@
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkGfm from "remark-gfm";
 import remarkGfm from "remark-gfm";
 import React, { useEffect, useState } from "react";
