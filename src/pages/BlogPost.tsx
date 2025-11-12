@@ -208,8 +208,8 @@ const BlogPost = () => {
 
                 {/* ✅ Render TOC after intro */}
                 {toc.length > 0 && (
-  <div className="bg-gray-50 border border-gray-200 rounded-md px-4 py-3 mb-8 w-full sm:w-[95%] md:w-[90%] lg:w-[85%] xl:w-[80%] mx-auto">
-    <h3 className="text-base font-semibold mb-2 text-gray-800">
+  <div className="bg-gray-50 border border-gray-200 rounded-lg px-5 py-4 mb-8 max-w-[650px] mx-auto md:mx-0">
+    <h3 className="text-lg font-semibold mb-3 text-gray-800">
       Table of Contents
     </h3>
     <ul className="space-y-1 text-gray-700 text-[15px] leading-relaxed">
@@ -226,7 +226,6 @@ const BlogPost = () => {
     </ul>
   </div>
 )}
-
                 {/* 🔹 Main article markdown (body) */}
                 <div className="prose prose-lg prose-orange max-w-none leading-relaxed">
                   <ReactMarkdown
