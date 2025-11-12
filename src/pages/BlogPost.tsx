@@ -208,7 +208,7 @@ const BlogPost = () => {
 
                 {/* ✅ Render TOC after intro */}
                 {toc.length > 0 && (
-  <div className="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl shadow-sm px-5 py-4 mb-10 max-w-[480px] mx-auto md:mx-0">
+  <div className="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl shadow-sm px-5 py-4 mb-10 max-w-[350px] mx-auto md:mx-0">
     <h3 className="text-base font-semibold mb-3 text-gray-800 tracking-wide border-b border-gray-200 pb-2">
       📖 Table of Contents
     </h3>
