@@ -1,4 +1,5 @@
 import remarkGfm from "remark-gfm";
+import remarkGfm from "remark-gfm";
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -122,40 +123,29 @@ import remarkGfm from "remark-gfm"; // ✨ Add this at the top
   remarkPlugins={[remarkGfm]}
   rehypePlugins={[rehypeRaw]}
   components={{
-    h1: ({ node, ...props }) => <h1 className="text-3xl font-bold mb-4" {...props} />,
-    h2: ({ node, ...props }) => <h2 className="text-2xl font-semibold mt-6 mb-3" {...props} />,
-    h3: ({ node, ...props }) => <h3 className="text-xl font-semibold mt-5 mb-2" {...props} />,
-    p: ({ node, ...props }) => <p className="mb-4 leading-relaxed text-gray-700" {...props} />,
+    h2: ({ node, ...props }) => {
+      const text = String(props.children);
+      const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      return (
+        <h2 id={id} className="text-2xl font-semibold mt-6 mb-3" {...props} />
+      );
+    },
+    h3: ({ node, ...props }) => {
+      const text = String(props.children);
+      const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      return (
+        <h3 id={id} className="text-xl font-semibold mt-5 mb-2" {...props} />
+      );
+    },
     img: ({ node, ...props }) => (
       <img
-        className="rounded-lg shadow-md my-6 w-full object-cover"
+        className="rounded-lg shadow-md my-6 w-full object-cover opacity-0 transition-opacity duration-700"
+        loading="lazy"
+        onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
         alt={props.alt}
         {...props}
       />
     ),
-    blockquote: ({ node, ...props }) => (
-      <blockquote
-        className="border-l-4 border-orange-500 pl-4 italic text-gray-600 my-4"
-        {...props}
-      />
-    ),
-    table: ({ node, ...props }) => (
-      <table className="w-full border-collapse border border-gray-300 my-6" {...props} />
-    ),
-    th: ({ node, ...props }) => (
-      <th className="border border-gray-300 bg-gray-100 px-3 py-2 text-left font-semibold" {...props} />
-    ),
-    td: ({ node, ...props }) => (
-      <td className="border border-gray-300 px-3 py-2" {...props} />
-    ),
-    code: ({ node, inline, ...props }) =>
-      inline ? (
-        <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono" {...props} />
-      ) : (
-        <pre className="bg-gray-900 text-white p-4 rounded-lg overflow-x-auto my-4">
-          <code {...props} />
-        </pre>
-      ),
   }}
 >
   {post.content}
