@@ -208,22 +208,29 @@ const BlogPost = () => {
 
                 {/* ✅ Render TOC after intro */}
                 {toc.length > 0 && (
-                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-8">
-                    <h3 className="text-xl font-semibold mb-4">Table of Contents</h3>
-                    <ul className="space-y-2 text-gray-700 text-sm">
-                      {toc.map((item) => (
-                        <li key={item.id} className={item.level > 2 ? "pl-4" : ""}>
-                          <button
-                            onClick={() => handleScroll(item.id, item.text)}
-                            className="hover:text-brand-orange transition-colors text-left"
-                          >
-                            {item.text}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+  <div className="bg-white border border-gray-100 shadow-sm rounded-xl p-4 md:p-5 mb-8">
+    <h3 className="text-lg font-semibold mb-3 text-gray-800">
+      Table of Contents
+    </h3>
+    <ul className="divide-y divide-gray-100">
+      {toc.map((item) => (
+        <li
+          key={item.id}
+          className={`py-2 ${
+            item.level > 2 ? "pl-4 text-[15px]" : "text-[15px] font-medium"
+          }`}
+        >
+          <button
+            onClick={() => handleScroll(item.id, item.text)}
+            className="w-full text-left text-gray-700 hover:text-brand-orange transition-colors leading-snug"
+          >
+            {item.text}
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
 
                 {/* 🔹 Main article markdown (body) */}
                 <div className="prose prose-lg prose-orange max-w-none leading-relaxed">
