@@ -208,16 +208,21 @@ const BlogPost = () => {
 
                 {/* ✅ Render TOC after intro */}
                 {toc.length > 0 && (
-  <div className="bg-gray-50 border border-gray-200 rounded-lg px-5 py-4 mb-8 max-w-[650px] mx-auto md:mx-0">
-    <h3 className="text-lg font-semibold mb-3 text-gray-800">
-      Table of Contents
+  <div className="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl shadow-sm px-5 py-4 mb-10 max-w-[580px] mx-auto md:mx-0">
+    <h3 className="text-base font-semibold mb-3 text-gray-800 tracking-wide border-b border-gray-200 pb-2">
+      📖 Table of Contents
     </h3>
-    <ul className="space-y-1 text-gray-700 text-[15px] leading-relaxed">
+    <ul className="divide-y divide-gray-100 text-gray-700 text-sm leading-relaxed">
       {toc.map((item) => (
-        <li key={item.id} className={item.level > 2 ? "pl-4" : ""}>
+        <li
+          key={item.id}
+          className={`py-2 transition-all duration-200 ${
+            item.level > 2 ? "pl-5 text-gray-600" : ""
+          }`}
+        >
           <button
             onClick={() => handleScroll(item.id, item.text)}
-            className="hover:text-brand-orange transition-colors text-left w-full"
+            className="hover:text-brand-orange hover:pl-1 transition-all text-left w-full"
           >
             {item.text}
           </button>
