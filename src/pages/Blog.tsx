@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { ArrowRight, Loader2, Search } from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -27,29 +27,37 @@ const Blog = () => {
   useEffect(() => {
     getAllPosts()
       .then((data) => {
-        setPosts(data);
-        setLoading(false);
+        console.log("✅ Notion posts fetched:", data);
+        if (Array.isArray(data) && data.length > 0) {
+          setPosts(data);
+        } else {
+          console.warn("⚠️ No valid posts returned from Notion function");
+        }
       })
       .catch((err) => {
-        console.error("Error fetching Notion posts:", err);
+        console.error("❌ Error fetching Notion posts:", err);
+      })
+      .finally(() => {
         setLoading(false);
       });
   }, []);
 
-  // 🔹 Filter by search term
-  const filteredPosts = posts.filter((post) => {
-  const title = post?.title?.toLowerCase?.() || "";
-  const content = post?.content?.toLowerCase?.() || "";
-  const search = searchTerm.toLowerCase();
-  return title.includes(search) || content.includes(search);
-});
+  // 🔹 Filter by search term (safe version)
+  const filteredPosts = (posts || []).filter((post) => {
+    const title = (post?.title || "").toString().toLowerCase();
+    const content = (post?.content || "").toString().toLowerCase();
+    const search = searchTerm.toLowerCase();
+    return title.includes(search) || content.includes(search);
+  });
+
+  console.log("🟢 Rendered Posts:", filteredPosts);
+  console.log("🟢 Total:", filteredPosts.length);
 
   // 🔹 Animations
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true });
   const postsRef = useRef(null);
   const isPostsInView = useInView(postsRef, { once: true, margin: "-50px 0px" });
-
   const newsletterRef = useRef(null);
   const isNewsletterInView = useInView(newsletterRef, { once: true });
 
@@ -153,7 +161,7 @@ const Blog = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredPosts.map((post, index) => (
                   <motion.div
-                    key={post.id}
+                    key={post.id || index}
                     initial={{ opacity: 0, y: 30 }}
                     animate={
                       isPostsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
@@ -203,16 +211,16 @@ const Blog = () => {
                         <p className="text-gray-600 mb-4 flex-grow">
                           {post.content.slice(0, 150)}...
                         </p>
-<Link
-  to={`/${post.slug.replace(/\s+/g, "-").toLowerCase()}`}
-  className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium group"
->
-  Read More{" "}
-  <ArrowRight
-    size={16}
-    className="ml-2 transition-transform duration-300 group-hover:translate-x-1"
-  />
-</Link>
+                        <Link
+                          to={`/${post.slug.replace(/\s+/g, "-").toLowerCase()}`}
+                          className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium group"
+                        >
+                          Read More{" "}
+                          <ArrowRight
+                            size={16}
+                            className="ml-2 transition-transform duration-300 group-hover:translate-x-1"
+                          />
+                        </Link>
                       </CardContent>
                     </Card>
                   </motion.div>
