@@ -267,80 +267,77 @@ img {
 .dark .card-hover:hover {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
-/* --- BLOG STYLING --- */
+/* --- PROSE / BLOG STYLING: professional reading size --- */
 .prose {
-  color: #333;
-  line-height: 1.75;
-  font-size: 1.1rem;
-  /* Ensure body font is used for prose paragraphs (Inter) */
+  /* body font for paragraphs (Inter) */
   font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-      Roboto, "Helvetica Neue", Arial;
+    Roboto, "Helvetica Neue", Arial;
+  color: #222;
+  line-height: 1.8;            /* more comfortable line height for long reads */
+  font-size: 1.125rem;        /* 18px base — professional reading size */
+  letter-spacing: -0.01em;
+  max-width: 72ch;            /* ideal measure for readability (chars per line) */
 }
 
-/* Headings */
-.prose h1, .prose h2, .prose h3 {
-  /* Use Merriweather for headings for a professional editorial look */
+/* Headings use Merriweather for an editorial look */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
   font-family: "Merriweather", Georgia, serif;
-  color: #1a1a1a;
+  color: #111;
   font-weight: 700;
-  scroll-margin-top: 80px;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  scroll-margin-top: 88px;
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
 }
 
-/* Blockquotes */
+/* Adjust heading sizes for good hierarchy */
+.prose h1 { font-size: 2.25rem; } /* ~36px */
+.prose h2 { font-size: 1.625rem; } /* ~26px */
+.prose h3 { font-size: 1.25rem; } /* ~20px */
+.prose h4 { font-size: 1.125rem; } /* ~18px */
+
+/* Paragraph spacing */
+.prose p {
+  margin: 0 0 1.15em 0;
+  color: #222;
+  hyphens: auto;
+}
+
+/* Blockquote refined */
 .prose blockquote {
   border-left: 4px solid #FF6347;
-  background: #fff7f5;
-  padding: 1rem 1.5rem;
+  background: hsla(var(--card), 0.03);
+  padding: 1rem 1.25rem;
   border-radius: 8px;
   font-style: italic;
-  color: #444;
+  color: #3a3a3a;
 }
 
-/* Tables */
-.prose table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-}
-.prose th {
-  background: #ffede8;
-  color: #333;
-  text-align: left;
-  padding: 10px;
-}
-.prose td {
-  border: 1px solid #eee;
-  padding: 10px;
-}
-
-/* Links */
-.prose a {
-  color: #FF6347;
-  font-weight: 500;
-  text-decoration: underline;
-}
-
-/* Code block */
-.prose pre {
-  background: #1e1e1e;
-  color: #eee;
-  padding: 1rem;
+/* Code blocks */
+.prose code {
+  background: rgba(27,31,35,0.05);
+  padding: 0.18rem 0.32rem;
   border-radius: 6px;
+  font-weight: 500;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+  font-size: 0.95em;
+}
+.prose pre {
+  background: #0f1724;
+  color: #e6eef8;
+  padding: 1rem;
+  border-radius: 8px;
   overflow-x: auto;
+  font-size: 0.95rem;
 }
 
-/* Images */
-.prose img {
-  border-radius: 10px;
-  margin: 1rem auto;
-  display: block;
-  max-width: 100%;
-}
-
-.prose h2::before,
-.prose h3::before {
-  content: "#";
-  color: #f97316; /* orange accent */
-  margin-right: 6px;
-  opacity: 0.7;
-}
+/* Images, tables, links */
+.prose img { border-radius: 10px; margin: 1rem auto; display: block; max-width: 100%; }
+.prose a { color: #FF6347; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.prose table { width: 100%; margin: 1.25rem 0; border-collapse: collapse; font-size: 0.95rem; }
+.prose th { background: #fff5f2; padding: 10px; font-weight: 700; }
+.prose td { border: 1px solid rgba(0,0,0,0.06); padding: 10px; }
