@@ -19,6 +19,7 @@ export const handler: Handler = async () => {
 
     const response = await notion.databases.query({
       database_id: databaseId,
+      console.log("✅ Notion response received:", JSON.stringify(response, null, 2));
       sorts: [{ timestamp: "created_time", direction: "descending" }],
     });
 
