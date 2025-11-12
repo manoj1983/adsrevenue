@@ -160,74 +160,75 @@ const Blog = () => {
               // Show fetched posts
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredPosts.map((post, index) => (
-                  <motion.div
-                    key={post.id || index}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={
-                      isPostsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
-                    }
-                    transition={{
-                      duration: 0.5,
-                      delay: Math.min(0.03 * index, 0.25),
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                  >
-                    <Card className="overflow-hidden hover:shadow-lg transition-all duration-500 group h-full">
-                      <div className="relative h-48 overflow-hidden bg-gray-200">
-                        <div
-                          className="absolute inset-0 bg-gray-200 loading-shimmer"
-                          style={{
-                            opacity: imagesLoaded[post.id] ? 0 : 1,
-                            transition: "opacity 0.3s ease-out",
-                          }}
-                        />
-{post.image ? (
-  <img
-    src={post.image}
-    alt={post.title}
-    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-    loading="lazy"
-    onLoad={() => handleImageLoad(post.id)}
-    style={{
-      opacity: imagesLoaded[post.id] ? 1 : 0,
-      transition: "opacity 0.5s ease-out",
+  <motion.div
+    key={post.id || index}
+    initial={{ opacity: 0, y: 30 }}
+    animate={isPostsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+    transition={{
+      duration: 0.5,
+      delay: Math.min(0.03 * index, 0.25),
+      ease: [0.22, 1, 0.36, 1],
     }}
-  />
-) : (
-  <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-    No Image
-  </div>
-)}
-                      <CardContent className="p-6 flex flex-col h-[calc(100%-12rem)]">
-                        <div className="text-sm text-gray-500 mb-2">
-                          {post.date
-                            ? new Date(post.date).toLocaleDateString("en-US", {
-                                year: "numeric",
-                                month: "short",
-                                day: "numeric",
-                              })
-                            : ""}
-                        </div>
-                        <h3 className="text-xl font-bold mb-3 group-hover:text-brand-orange transition-colors duration-300">
-                          {post.title}
-                        </h3>
-                        <p className="text-gray-600 mb-4 flex-grow">
-                          {post.content.slice(0, 150)}...
-                        </p>
-                        <Link
-                          to={`/${post.slug.replace(/\s+/g, "-").toLowerCase()}`}
-                          className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium group"
-                        >
-                          Read More{" "}
-                          <ArrowRight
-                            size={16}
-                            className="ml-2 transition-transform duration-300 group-hover:translate-x-1"
-                          />
-                        </Link>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
+  >
+    <Card className="overflow-hidden hover:shadow-lg transition-all duration-500 group h-full">
+      <div className="relative h-48 overflow-hidden bg-gray-200">
+        <div
+          className="absolute inset-0 bg-gray-200 loading-shimmer"
+          style={{
+            opacity: imagesLoaded[post.id] ? 0 : 1,
+            transition: "opacity 0.3s ease-out",
+          }}
+        />
+
+        {post.image ? (
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+            onLoad={() => handleImageLoad(post.id)}
+            style={{
+              opacity: imagesLoaded[post.id] ? 1 : 0,
+              transition: "opacity 0.5s ease-out",
+            }}
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
+            No Image
+          </div>
+        )}
+      </div>
+
+      <CardContent className="p-6 flex flex-col h-[calc(100%-12rem)]">
+        <div className="text-sm text-gray-500 mb-2">
+          {post.date
+            ? new Date(post.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })
+            : ""}
+        </div>
+        <h3 className="text-xl font-bold mb-3 group-hover:text-brand-orange transition-colors duration-300">
+          {post.title}
+        </h3>
+        <p className="text-gray-600 mb-4 flex-grow">
+          {post.content.slice(0, 150)}...
+        </p>
+        <Link
+          to={`/${post.slug.replace(/\s+/g, "-").toLowerCase()}`}
+          className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium group"
+        >
+          Read More{" "}
+          <ArrowRight
+            size={16}
+            className="ml-2 transition-transform duration-300 group-hover:translate-x-1"
+          />
+        </Link>
+      </CardContent>
+    </Card>
+  </motion.div>
+))}
               </div>
             ) : (
               // No posts
