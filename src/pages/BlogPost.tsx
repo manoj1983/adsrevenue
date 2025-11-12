@@ -154,8 +154,7 @@ const BlogPost = () => {
                         rehypeAutolinkHeadings,
                         {
                           behavior: "append",
-                          properties: {
-                            className: ["anchor"],
+                          properties: {className: ["anchor"],
                           },
                         },
                       ],
