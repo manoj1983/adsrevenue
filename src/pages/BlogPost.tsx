@@ -143,40 +143,58 @@ const BlogPost = () => {
                   </span>
                 </div>
 
-                {/* ✅ Render markdown with formatting */}
-                <div className="prose prose-lg prose-orange max-w-none leading-relaxed">
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    rehypePlugins={[
-                      rehypeRaw,
-                      rehypeSlug,
-                      [
-                        rehypeAutolinkHeadings,
-                        {
-                          behavior: "append",
-                          properties: {className: ["anchor"],
-                          },
-                        },
-                      ],
-                    ]}
-                    components={{
-                      img: ({ node, ...props }) => (
-                        <img
-                          className="rounded-lg shadow-md my-6 w-full object-cover opacity-0 transition-opacity duration-700"
-                          loading="lazy"
-                          onLoad={(e) =>
-                            e.currentTarget.classList.remove("opacity-0")
-                          }
-                          alt={props.alt}
-                          {...props}
-                        />
-                      ),
-                    }}
-                  >
-                    {post.content}
-                  </ReactMarkdown>
-                </div>
+                {/* ✅ Render markdown with formatting + TOC before first heading */}
+<div className="prose prose-lg prose-orange max-w-none leading-relaxed">
+  {/* 🔹 Auto Table of Contents before first heading */}
+  {toc.length > 0 && (
+    <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-8">
+      <h3 className="text-xl font-semibold mb-4">Table of Contents</h3>
+      <ul className="space-y-2 text-gray-700 text-sm">
+        {toc.map((item) => (
+          <li key={item.id}>
+            <button
+              onClick={() => handleScroll(item.id)}
+              className="hover:text-brand-orange transition-colors"
+            >
+              {item.text}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
 
+  {/* 🔹 Main article markdown */}
+  <ReactMarkdown
+    remarkPlugins={[remarkGfm]}
+    rehypePlugins={[
+      rehypeRaw,
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: "append",
+          properties: { className: ["anchor"] },
+        },
+      ],
+    ]}
+    components={{
+      img: ({ node, ...props }) => (
+        <img
+          className="rounded-lg shadow-md my-6 w-full object-cover opacity-0 transition-opacity duration-700"
+          loading="lazy"
+          onLoad={(e) =>
+            e.currentTarget.classList.remove("opacity-0")
+          }
+          alt={props.alt}
+          {...props}
+        />
+      ),
+    }}
+  >
+    {post.content}
+  </ReactMarkdown>
+</div>
                 <Separator className="my-8" />
 
                 <div className="flex flex-wrap items-center justify-between gap-4">
@@ -189,27 +207,6 @@ const BlogPost = () => {
                 </div>
               </div>
             </div>
-
-            {/* Sidebar with TOC */}
-            <div className="w-full md:w-1/3">
-              {/* ✅ Auto Table of Contents */}
-              {toc.length > 0 && (
-                <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-                  <h3 className="text-lg font-bold mb-4">Table of Contents</h3>
-                  <ul className="space-y-2 text-gray-700 text-sm">
-                    {toc.map((item) => (
-                      <li key={item.id}>
-                        <button
-                          onClick={() => handleScroll(item.id)}
-                          className="hover:text-brand-orange transition-colors"
-                        >
-                          {item.text}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
 
               <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
                 <h3 className="text-lg font-bold mb-4">About This Article</h3>
