@@ -243,35 +243,52 @@ const BlogPost = () => {
 )}
 
                 {/* 🔹 Main article markdown (body) */}
-                <div className="prose prose-lg prose-orange max-w-none leading-relaxed">
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    rehypePlugins={[
-                      rehypeRaw,
-                      rehypeSlug,
-                      [
-                        rehypeAutolinkHeadings,
-                        {
-                          behavior: "append",
-                          properties: { className: ["anchor"] },
-                        },
-                      ],
-                    ]}
-                    components={{
-                      img: ({ node, ...props }) => (
-                        <img
-                          className="rounded-lg shadow-md my-6 w-full object-cover opacity-0 transition-opacity duration-700"
-                          loading="lazy"
-                          onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
-                          alt={props.alt}
-                          {...props}
-                        />
-                      ),
-                    }}
-                  >
-                    {body || post.content}
-                  </ReactMarkdown>
-                </div>
+<div
+  className="
+    prose prose-lg md:prose-xl
+    prose-headings:font-semibold
+    prose-h1:text-4xl prose-h1:leading-snug
+    prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
+    prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+    prose-p:text-gray-800 prose-p:leading-relaxed
+    prose-a:text-brand-orange hover:prose-a:text-brand-orange-dark
+    prose-strong:text-gray-900
+    prose-blockquote:border-l-4 prose-blockquote:border-brand-orange prose-blockquote:bg-orange-50 prose-blockquote:p-4 prose-blockquote:rounded-md
+    prose-ul:list-disc prose-ul:pl-6
+    prose-ol:list-decimal prose-ol:pl-6
+    prose-img:rounded-xl prose-img:shadow-md
+    prose-table:border prose-table:border-gray-200 prose-th:bg-gray-50 prose-th:text-gray-800 prose-td:border-t
+    max-w-none text-gray-900
+  "
+>
+  <ReactMarkdown
+    remarkPlugins={[remarkGfm]}
+    rehypePlugins={[
+      rehypeRaw,
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: "append",
+          properties: { className: ["anchor"] },
+        },
+      ],
+    ]}
+    components={{
+      img: ({ node, ...props }) => (
+        <img
+          className="rounded-lg shadow-md my-6 w-full object-cover opacity-0 transition-opacity duration-700"
+          loading="lazy"
+          onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
+          alt={props.alt}
+          {...props}
+        />
+      ),
+    }}
+  >
+    {body || post.content}
+  </ReactMarkdown>
+</div>
 
                 <Separator className="my-8" />
 
