@@ -199,7 +199,7 @@ const BlogPost = () => {
 
                 {/* Intro paragraph (rendered as markdown) */}
                 {intro && (
-                  <div className="prose prose-lg prose-orange max-w-none leading-relaxed mb-6">
+                  <div className="prose leading-relaxed">
                     <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
                       {intro}
                     </ReactMarkdown>
