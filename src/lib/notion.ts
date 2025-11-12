@@ -1,25 +1,34 @@
-export async function getAllPosts() {
-  console.log("Fetching via Netlify Function...");
-
+// /src/lib/notion.ts
+export const getAllPosts = async () => {
   try {
-    const res = await fetch("/.netlify/functions/notion-proxy");
-    const data = await res.json();
+    console.log("Fetching via Netlify Function...");
+    const response = await fetch("/.netlify/functions/notion-proxy");
 
-    if (!data.results) {
-      console.error("Invalid Notion response:", data);
+    if (!response.ok) {
+      console.error("❌ Notion proxy fetch failed:", response.status);
       return [];
     }
 
-    return data.results.map((page: any) => ({
-      id: page.id,
-      title: page.properties.Title?.title?.[0]?.plain_text ?? "Untitled",
-      slug: page.properties.Slug?.rich_text?.[0]?.plain_text ?? "",
-      content: page.properties.Content?.rich_text?.map((t: any) => t.plain_text).join("\n") || "",
-      date: page.properties.Date?.date?.start ?? "",
-      image: page.properties.Image?.files?.[0]?.file?.url ?? "",
-    }));
+    const data = await response.json();
+    console.log("✅ Raw Notion data:", data);
+
+    // ✅ Validate response
+    if (!Array.isArray(data)) {
+      console.error("❌ Invalid response: Not an array");
+      return [];
+    }
+
+    // ✅ Filter only posts with title + content
+    const validPosts = data.filter(
+      (p) => p.title && p.content && p.slug && p.title !== "Untitled"
+    );
+
+    console.log("✅ Notion posts fetched:", validPosts);
+    console.log("🟢 Total posts:", validPosts.length);
+
+    return validPosts;
   } catch (error) {
     console.error("❌ Notion proxy fetch error:", error);
     return [];
   }
-}
+};
