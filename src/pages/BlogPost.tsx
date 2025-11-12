@@ -119,6 +119,7 @@ const BlogPost = () => {
 
                 <div className="prose prose-lg prose-orange max-w-none leading-relaxed">
 <ReactMarkdown
+  rehypePlugins={[rehypeRaw, rehypeSlug, [rehypeAutolinkHeadings, { behavior: "smooth" }]]}
   remarkPlugins={[remarkGfm]}
   rehypePlugins={[rehypeRaw]}
   components={{
