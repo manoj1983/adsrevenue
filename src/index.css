@@ -413,3 +413,20 @@ img {
     font-size: 1.3rem;
   }
 }
+
+/* force consistent prose base */
+.prose {
+  font-size: 16px;            /* desktop base fallback */
+  line-height: 1.75;
+}
+
+/* tune headings if they remain too large */
+.prose h1 { font-size: 2rem; line-height: 1.05; }      /* 32px */
+@media (min-width: 768px) { 
+  .prose h1 { font-size: 2.5rem; }                    /* 40px on md+ */
+}
+.prose h2 { font-size: 1.125rem; }                    /* 18px */
+@media (min-width: 768px) {
+  .prose h2 { font-size: 1.5rem; }                    /* 24px on md+ */
+}
+
