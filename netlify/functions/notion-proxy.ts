@@ -8,53 +8,90 @@ export const handler: Handler = async () => {
     const token = process.env.VITE_NOTION_TOKEN;
     const databaseId = process.env.VITE_NOTION_DATABASE_ID;
 
-    console.log("🔹 Token present:", !!token);
-    console.log("🔹 Database ID:", databaseId);
-
     if (!token || !databaseId) {
       throw new Error("Missing Notion token or database ID in environment variables");
     }
 
     const notion = new Client({ auth: token });
 
-    // ✅ Correct syntax — console.log placed after the query
     const response = await notion.databases.query({
       database_id: databaseId,
       sorts: [{ timestamp: "created_time", direction: "descending" }],
     });
 
-    console.log("✅ Notion response received:", JSON.stringify(response, null, 2));
-    console.log("🔹 Notion response count:", response.results.length);
+    console.log("✅ Raw Notion DB response count:", response.results.length);
 
-    const posts = response.results.map((page: any) => ({
-      id: page.id,
-      title:
-        page.properties?.Name?.title?.[0]?.plain_text ||
-        page.properties?.Title?.title?.[0]?.plain_text ||
-        page.properties?.["Post Title"]?.title?.[0]?.plain_text ||
-        "Untitled",
-      slug:
-        page.properties?.Slug?.rich_text?.[0]?.plain_text ||
-        (page.properties?.Name?.title?.[0]?.plain_text ||
+    const posts = await Promise.all(
+      response.results.map(async (page: any) => {
+        const title =
+          page.properties?.Name?.title?.[0]?.plain_text ||
           page.properties?.Title?.title?.[0]?.plain_text ||
           page.properties?.["Post Title"]?.title?.[0]?.plain_text ||
-          page.id
-        )
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/(^-|-$)+/g, ""),
-      content:
-        page.properties?.Content?.rich_text
-          ?.map((t: any) => t.plain_text)
-          .join(" ") || "",
-      image:
-        page.properties?.Image?.files?.[0]?.file?.url ||
-        page.properties?.Image?.url ||
-        "",
-      date: page.created_time,
-    }));
+          "Untitled";
 
-    console.log("✅ Posts prepared:", posts.length);
+        const slug =
+          page.properties?.Slug?.rich_text?.[0]?.plain_text ||
+          title
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/(^-|-$)+/g, "");
+
+        const image =
+          page.properties?.Image?.files?.[0]?.file?.url ||
+          page.properties?.Image?.files?.[0]?.external?.url ||
+          "";
+
+        // ✅ Fetch the page content directly (not from a Notion property)
+        let content = "";
+        try {
+          const blocks = await notion.blocks.children.list({ block_id: page.id });
+          content = blocks.results
+            .map((block: any) => {
+              if (block.type === "paragraph") {
+                return block.paragraph.rich_text.map((t: any) => t.plain_text).join(" ");
+              }
+              if (block.type === "heading_2") {
+                return `## ${block.heading_2.rich_text
+                  .map((t: any) => t.plain_text)
+                  .join(" ")}`;
+              }
+              if (block.type === "heading_3") {
+                return `### ${block.heading_3.rich_text
+                  .map((t: any) => t.plain_text)
+                  .join(" ")}`;
+              }
+              if (block.type === "quote") {
+                return `> ${block.quote.rich_text.map((t: any) => t.plain_text).join(" ")}`;
+              }
+              if (block.type === "bulleted_list_item") {
+                return `- ${block.bulleted_list_item.rich_text
+                  .map((t: any) => t.plain_text)
+                  .join(" ")}`;
+              }
+              if (block.type === "image") {
+                const img =
+                  block.image.file?.url || block.image.external?.url || "";
+                return `![image](${img})`;
+              }
+              return "";
+            })
+            .join("\n\n");
+        } catch (err) {
+          console.warn(`⚠️ Could not fetch content for page: ${title}`);
+        }
+
+        return {
+          id: page.id,
+          title,
+          slug,
+          content,
+          image,
+          date: page.created_time,
+        };
+      })
+    );
+
+    console.log("✅ Prepared posts:", posts.length);
 
     return {
       statusCode: 200,
@@ -69,7 +106,7 @@ export const handler: Handler = async () => {
       body: JSON.stringify({
         error: err.message,
         hint:
-          "Likely causes: wrong Notion database ID, token missing, or integration not shared with DB.",
+          "Check Notion token/database sharing or property names (Name, Slug, Image).",
       }),
     };
   }
