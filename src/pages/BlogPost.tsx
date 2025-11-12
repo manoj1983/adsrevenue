@@ -20,7 +20,19 @@ const BlogPost = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+ // 🔹 Update SEO title and canonical link
+  useEffect(() => {
+    if (post?.title) {
+      // Page Title
+      document.title = post.title + " | AdsRevenue Blog";
 
+      // Canonical Tag
+      const link = document.querySelector("link[rel='canonical']") || document.createElement("link");
+      link.setAttribute("rel", "canonical");
+      link.setAttribute("href", window.location.href);
+      document.head.appendChild(link);
+    }
+  }, [post]);
   // 🔹 Fetch post from Notion
   useEffect(() => {
     if (!slug) return;
