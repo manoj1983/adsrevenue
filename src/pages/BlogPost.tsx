@@ -16,6 +16,7 @@ import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";  // ✅ important for tables, bold, lists, etc.
 import { getAllPosts } from "@/lib/notion"; // ✅ Notion fetcher
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
