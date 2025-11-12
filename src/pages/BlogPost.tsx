@@ -1,7 +1,3 @@
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import remarkGfm from "remark-gfm";
-import remarkGfm from "remark-gfm";
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -14,39 +10,41 @@ import { Skeleton } from "@/components/ui/skeleton";
 import SocialShare from "@/components/SocialShare";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
-import remarkGfm from "remark-gfm";  // ✅ important for tables, bold, lists, etc.
-import { getAllPosts } from "@/lib/notion"; // ✅ Notion fetcher
+import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { getAllPosts } from "@/lib/notion";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+
+// ✅ Table of contents generator
+const generateTOC = (content: string) => {
+  const headings = Array.from(content.matchAll(/^## (.*$)|^### (.*$)/gm));
+  return headings.map((match) => {
+    const text = match[1] || match[2];
+    const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+    return { text, id };
+  });
+};
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
+  const [toc, setToc] = useState<{ text: string; id: string }[]>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
- // 🔹 Update SEO title and canonical link
-  useEffect(() => {
-    if (post?.title) {
-      // Page Title
-      document.title = post.title + " | AdsRevenue Blog";
 
-      // Canonical Tag
-      const link = document.querySelector("link[rel='canonical']") || document.createElement("link");
-      link.setAttribute("rel", "canonical");
-      link.setAttribute("href", window.location.href);
-      document.head.appendChild(link);
-    }
-  }, [post]);
-  // 🔹 Fetch post from Notion
   useEffect(() => {
     if (!slug) return;
-
     getAllPosts()
       .then((posts) => {
         const found = posts.find((p) => p.slug === slug);
-        setPost(found);
+        if (found) {
+          setPost(found);
+          setToc(generateTOC(found.content));
+        }
       })
       .catch((err) => console.error("Error fetching Notion post:", err))
       .finally(() => setLoading(false));
@@ -57,22 +55,35 @@ const BlogPost = () => {
 
   const currentUrl = window.location.href;
 
+  // ✅ Smooth scrolling for TOC clicks
+  const handleScroll = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow pt-20">
         <HelmetProvider>
-  <Helmet>
-    <title>{post.title} | AdsRevenue Blog</title>
-    <meta name="description" content={post.content.slice(0, 160)} />
-    <meta name="keywords" content={`${post.title}, Digital Marketing, SEO, Blogging`} />
-    <meta property="og:title" content={post.title} />
-    <meta property="og:description" content={post.content.slice(0, 160)} />
-    <meta property="og:image" content={post.image || "/og-image.png"} />
-    <meta property="og:type" content="article" />
-    <meta name="robots" content="index, follow" />
-  </Helmet>
-</HelmetProvider>
+          <Helmet>
+            <title>{post.title} | AdsRevenue Blog</title>
+            <meta name="description" content={post.content.slice(0, 160)} />
+            <meta
+              name="keywords"
+              content={`${post.title}, Digital Marketing, SEO, Blogging`}
+            />
+            <meta property="og:title" content={post.title} />
+            <meta
+              property="og:description"
+              content={post.content.slice(0, 160)}
+            />
+            <meta property="og:image" content={post.image || "/og-image.png"} />
+            <meta property="og:type" content="article" />
+            <meta name="robots" content="index, follow" />
+          </Helmet>
+        </HelmetProvider>
+
         {/* 🔹 Hero Section */}
         <div className="relative aspect-[2.5/1] overflow-hidden">
           {post.image ? (
@@ -132,39 +143,39 @@ const BlogPost = () => {
                   </span>
                 </div>
 
+                {/* ✅ Render markdown with formatting */}
                 <div className="prose prose-lg prose-orange max-w-none leading-relaxed">
-<ReactMarkdown
-  rehypePlugins={[rehypeRaw, rehypeSlug, [rehypeAutolinkHeadings, { behavior: "smooth" }]]}
-  remarkPlugins={[remarkGfm]}
-  rehypePlugins={[rehypeRaw]}
-  components={{
-    h2: ({ node, ...props }) => {
-      const text = String(props.children);
-      const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-      return (
-        <h2 id={id} className="text-2xl font-semibold mt-6 mb-3" {...props} />
-      );
-    },
-    h3: ({ node, ...props }) => {
-      const text = String(props.children);
-      const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-      return (
-        <h3 id={id} className="text-xl font-semibold mt-5 mb-2" {...props} />
-      );
-    },
-    img: ({ node, ...props }) => (
-      <img
-        className="rounded-lg shadow-md my-6 w-full object-cover opacity-0 transition-opacity duration-700"
-        loading="lazy"
-        onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
-        alt={props.alt}
-        {...props}
-      />
-    ),
-  }}
->
-  {post.content}
-</ReactMarkdown>
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[
+                      rehypeRaw,
+                      rehypeSlug,
+                      [
+                        rehypeAutolinkHeadings,
+                        {
+                          behavior: "append",
+                          properties: {
+                            className: ["anchor"],
+                          },
+                        },
+                      ],
+                    ]}
+                    components={{
+                      img: ({ node, ...props }) => (
+                        <img
+                          className="rounded-lg shadow-md my-6 w-full object-cover opacity-0 transition-opacity duration-700"
+                          loading="lazy"
+                          onLoad={(e) =>
+                            e.currentTarget.classList.remove("opacity-0")
+                          }
+                          alt={props.alt}
+                          {...props}
+                        />
+                      ),
+                    }}
+                  >
+                    {post.content}
+                  </ReactMarkdown>
                 </div>
 
                 <Separator className="my-8" />
@@ -180,16 +191,33 @@ const BlogPost = () => {
               </div>
             </div>
 
-            {/* Sidebar */}
+            {/* Sidebar with TOC */}
             <div className="w-full md:w-1/3">
+              {/* ✅ Auto Table of Contents */}
+              {toc.length > 0 && (
+                <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+                  <h3 className="text-lg font-bold mb-4">Table of Contents</h3>
+                  <ul className="space-y-2 text-gray-700 text-sm">
+                    {toc.map((item) => (
+                      <li key={item.id}>
+                        <button
+                          onClick={() => handleScroll(item.id)}
+                          className="hover:text-brand-orange transition-colors"
+                        >
+                          {item.text}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
                 <h3 className="text-lg font-bold mb-4">About This Article</h3>
                 <p className="text-gray-600 mb-4">
                   {post.content.slice(0, 160)}...
                 </p>
-
                 <Separator className="my-4" />
-
                 <div className="flex flex-col gap-2">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Published:</span>
