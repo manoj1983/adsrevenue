@@ -1,45 +1,59 @@
-import { Handler } from "@netlify/functions";
-import fetch from "node-fetch";
+import type { Handler } from "@netlify/functions";
 
-const handler: Handler = async (event) => {
-  const { VITE_NOTION_TOKEN, VITE_NOTION_DATABASE_ID } = process.env;
+// 🔹 In-memory cache (lives for ~5 minutes)
+let cache: any = null;
+let cacheTimestamp = 0;
 
+export const handler: Handler = async (event, context) => {
+  const now = Date.now();
+
+  // ✅ Serve from cache if data is fresh (<5 min old)
+  if (cache && now - cacheTimestamp < 5 * 60 * 1000) {
+    console.log("⚡ Serving Notion data from cache");
+    return {
+      statusCode: 200,
+      body: JSON.stringify(cache),
+      headers: { "Content-Type": "application/json" },
+    };
+  }
+
+  // 🔹 Fetch fresh data from Notion
   try {
-    const res = await fetch(
-      `https://api.notion.com/v1/databases/${VITE_NOTION_DATABASE_ID}/query`,
+    console.log("📦 Fetching fresh data from Notion...");
+    const response = await fetch(
+      `https://api.notion.com/v1/databases/${process.env.VITE_NOTION_DATABASE_ID}/query`,
       {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${VITE_NOTION_TOKEN}`,
-          "Notion-Version": "2022-06-28",
+          "Authorization": `Bearer ${process.env.VITE_NOTION_TOKEN}`,
           "Content-Type": "application/json",
+          "Notion-Version": "2022-06-28",
         },
-        body: JSON.stringify({
-          filter: {
-            property: "Published",
-            checkbox: { equals: true },
-          },
-          sorts: [{ property: "Date", direction: "descending" }],
-        }),
       }
     );
 
-    const data = await res.json();
+    if (!response.ok) {
+      throw new Error(`Notion API error: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    // ✅ Save to cache
+    cache = data;
+    cacheTimestamp = now;
+
+    console.log("✅ Notion data cached successfully");
 
     return {
       statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-      },
       body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
     };
-  } catch (err) {
+  } catch (error) {
+    console.error("❌ Notion fetch failed:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: (err as Error).message }),
+      body: JSON.stringify({ error: "Failed to fetch Notion data" }),
     };
   }
 };
-
-export { handler };
