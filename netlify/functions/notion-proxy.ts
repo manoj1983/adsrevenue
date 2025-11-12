@@ -26,7 +26,11 @@ export const handler: Handler = async () => {
 
     const posts = response.results.map((page: any) => ({
       id: page.id,
-      title: page.properties?.Name?.title?.[0]?.plain_text || "Untitled",
+      title:
+  page.properties?.Name?.title?.[0]?.plain_text ||
+  page.properties?.Title?.title?.[0]?.plain_text ||
+  page.properties?.["Post Title"]?.title?.[0]?.plain_text ||
+  "Untitled",
       slug:
         page.properties?.Slug?.rich_text?.[0]?.plain_text ||
         page.id.slice(0, 8),
