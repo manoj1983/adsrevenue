@@ -17,31 +17,32 @@ export const handler: Handler = async () => {
 
     const notion = new Client({ auth: token });
 
+    // ✅ Correct syntax — console.log placed after the query
     const response = await notion.databases.query({
       database_id: databaseId,
-      console.log("✅ Notion response received:", JSON.stringify(response, null, 2));
       sorts: [{ timestamp: "created_time", direction: "descending" }],
     });
 
+    console.log("✅ Notion response received:", JSON.stringify(response, null, 2));
     console.log("🔹 Notion response count:", response.results.length);
 
     const posts = response.results.map((page: any) => ({
       id: page.id,
       title:
-  page.properties?.Name?.title?.[0]?.plain_text ||
-  page.properties?.Title?.title?.[0]?.plain_text ||
-  page.properties?.["Post Title"]?.title?.[0]?.plain_text ||
-  "Untitled",
+        page.properties?.Name?.title?.[0]?.plain_text ||
+        page.properties?.Title?.title?.[0]?.plain_text ||
+        page.properties?.["Post Title"]?.title?.[0]?.plain_text ||
+        "Untitled",
       slug:
-  page.properties?.Slug?.rich_text?.[0]?.plain_text ||
-  (page.properties?.Name?.title?.[0]?.plain_text ||
-   page.properties?.Title?.title?.[0]?.plain_text ||
-   page.properties?.["Post Title"]?.title?.[0]?.plain_text ||
-   page.id
-  )
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)+/g, ""),
+        page.properties?.Slug?.rich_text?.[0]?.plain_text ||
+        (page.properties?.Name?.title?.[0]?.plain_text ||
+          page.properties?.Title?.title?.[0]?.plain_text ||
+          page.properties?.["Post Title"]?.title?.[0]?.plain_text ||
+          page.id
+        )
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)+/g, ""),
       content:
         page.properties?.Content?.rich_text
           ?.map((t: any) => t.plain_text)
