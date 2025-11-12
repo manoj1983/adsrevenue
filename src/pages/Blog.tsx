@@ -37,11 +37,12 @@ const Blog = () => {
   }, []);
 
   // 🔹 Filter by search term
-  const filteredPosts = posts.filter(
-    (post) =>
-      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      post.content.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredPosts = posts.filter((post) => {
+  const title = post?.title?.toLowerCase?.() || "";
+  const content = post?.content?.toLowerCase?.() || "";
+  const search = searchTerm.toLowerCase();
+  return title.includes(search) || content.includes(search);
+});
 
   // 🔹 Animations
   const heroRef = useRef(null);
@@ -203,7 +204,7 @@ const Blog = () => {
                           {post.content.slice(0, 150)}...
                         </p>
 <Link
-  to={`/${post.slug}`}
+  to={`/${post.slug.replace(/\s+/g, "-").toLowerCase()}`}
   className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium group"
 >
   Read More{" "}
