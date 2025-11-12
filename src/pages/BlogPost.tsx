@@ -12,6 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import SocialShare from "@/components/SocialShare";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";  // ✅ important for tables, bold, lists, etc.
 import { getAllPosts } from "@/lib/notion"; // ✅ Notion fetcher
 
 const BlogPost = () => {
