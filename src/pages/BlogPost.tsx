@@ -331,9 +331,7 @@ const BlogPost = () => {
             <div className="w-full md:w-1/3 flex flex-col gap-6">
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h3 className="text-lg font-bold mb-4">About This Article</h3>
-                <p className="text-gray-600 mb-4">
-                  {(post.content || "").slice(0, 160)}...
-                </p>
+                <p className="text-gray-600 mb-4">{post.excerpt || '...'}</p>
                 <Separator className="my-4" />
                 <div className="flex flex-col gap-2">
                   <div className="flex justify-between">
