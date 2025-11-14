@@ -1,184 +1,90 @@
-import React, { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
-import { ArrowRight, Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { getAllPosts } from "@/lib/notion"; // ✅ Our Notion fetcher
+// netlify/functions/notion-proxy.ts
+import type { Handler } from "@netlify/functions";
+import { Client } from "@notionhq/client";
 
-const Blog = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+// Define the structure of a post object (Metadata only)
+interface PostMetadata {
+  id: string;
+  title: string;
+  slug: string;
+  image: string;
+  date: string;
+  excerpt: string; // 💡 1. Ise add karein
+}
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [email, setEmail] = useState("");
-  const [imagesLoaded, setImagesLoaded] = useState<{ [key: string]: boolean }>(
-    {}
-  );
-  const [posts, setPosts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+export const handler: Handler = async () => {
+  console.log("🔹 Netlify Function (Metadata List) started");
 
-  // 🔹 Fetch posts from Notion
-  useEffect(() => {
-    getAllPosts()
-      .then((data) => {
-        console.log("✅ Notion posts fetched:", data);
-        if (Array.isArray(data) && data.length > 0) {
-          setPosts(data);
-        } else {
-          console.warn("⚠️ No valid posts returned from Notion function");
-        }
-      })
-      .catch((err) => {
-        console.error("❌ Error fetching Notion posts:", err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  try {
+    const token = process.env.VITE_NOTION_TOKEN;
+    const databaseId = process.env.VITE_NOTION_DATABASE_ID;
 
-  // 💡 FIX #1: Search filter updated to only search titles
-  const filteredPosts = (posts || []).filter((post) => {
-    const title = (post?.title || "").toString().toLowerCase();
-    const search = searchTerm.toLowerCase();
-    // Content is no longer available on this page, so we only search the title
-    return title.includes(search);
-  });
+    if (!token || !databaseId) {
+      throw new Error("Missing Notion token or database ID");
+    }
 
-  console.log("🟢 Rendered Posts:", filteredPosts);
-  console.log("🟢 Total:", filteredPosts.length);
+    const notion = new Client({ auth: token });
 
-  // ... (Animations and handlers remain the same)
-  const heroRef = useRef(null);
-  const isHeroInView = useInView(heroRef, { once: true });
-  const postsRef = useRef(null);
-  const isPostsInView = useInView(postsRef, { once: true, margin: "-50px 0px" });
-  const newsletterRef = useRef(null);
-  const isNewsletterInView = useInView(newsletterRef, { once: true });
+    const response = await notion.databases.query({
+      database_id: databaseId,
+      sorts: [
+        {
+          property: "Date",
+          direction: "descending",
+        },
+      ],
+      // ... (filter)
+    });
 
-  const handleImageLoad = (id: string) => {
-    setImagesLoaded((prev) => ({ ...prev, [id]: true }));
-  };
+    console.log("✅ Raw Notion DB response count:", response.results.length);
 
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    alert("Newsletter feature is currently inactive in demo mode.");
-    setEmail("");
-  };
+    const posts: PostMetadata[] = response.results.map((page: any) => {
+      const title =
+        page.properties?.Title?.title?.[0]?.plain_text || "Untitled";
 
+      const slug =
+        page.properties?.Slug?.rich_text?.[0]?.plain_text ||
+        title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)+/g, "");
 
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-grow pt-20">
-        {/* 🔹 Hero Section (No changes) */}
-        <div ref={heroRef} className="bg-background py-20 relative overflow-hidden">
-          {/* ... (Hero JSX remains the same) */}
-        </div>
+      const image =
+        page.properties?.Image?.files?.[0]?.file?.url ||
+        page.properties?.Image?.files?.[0]?.external?.url ||
+        "";
 
-        {/* 🔹 Blog Posts */}
-        <section ref={postsRef} className="py-16 bg-white">
-          <div className="container mx-auto px-4 md:px-6">
-            {loading ? (
-              // Loading skeleton (No changes)
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {/* ... (Skeleton JSX remains the same) */}
-              </div>
-            ) : filteredPosts.length > 0 ? (
-              // Show fetched posts
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredPosts.map((post, index) => (
-                  <motion.div
-                    key={post.id || index}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isPostsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                    transition={{
-                      duration: 0.5,
-                      delay: Math.min(0.03 * index, 0.25),
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                  >
-                    <Card className="overflow-hidden hover:shadow-lg transition-all duration-500 group h-full">
-                      <div className="relative h-48 overflow-hidden bg-gray-200">
-                        {/* ... (Image loading JSX remains the same) */}
-                        {post.image ? (
-                          <img
-                            src={post.image}
-                            alt={post.title}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            loading="lazy"
-                            onLoad={() => handleImageLoad(post.id)}
-                            style={{
-                              opacity: imagesLoaded[post.id] ? 1 : 0,
-                              transition: "opacity 0.5s ease-out",
-                            }}
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400 text-sm">
-                            No Image
-                          </div>
-                        )}
-                      </div>
+      const date = page.properties?.Date?.date?.start || page.created_time;
 
-                      <CardContent className="p-6 flex flex-col h-[calc(100%-12rem)]">
-                        <div className="text-sm text-gray-500 mb-2">
-                          {/* ... (Date JSX remains the same) */}
-                          {post.date
-                            ? new Date(post.date).toLocaleDateString("en-US", {
-                                year: "numeric",
-                                month: "short",
-                                day: "numeric",
-                              })
-                            : ""}
-                        </div>
-                        <h3 className="text-xl font-bold mb-3 group-hover:text-brand-orange transition-colors duration-300">
-                          {post.title}
-                        </h3>
-                        
-                        {/* 💡 FIX #2: Made the slice "safe" by using (post.content || "") */}
-                        <p className="text-gray-600 mb-4 flex-grow">
-                          {/* This will now show "..." which is safe */}
-                          {(post.content || "").slice(0, 150)}...
-                        </p>
-                        
-                        {/* ✅ सही लिंक (Blog.tsx - Line ~233) */}
-                        <Link
-                          to={`/${post.slug}`}
-                           className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium group"
-                            >
-                              Read More{" "}
-                             <ArrowRight
-                             size={16}
-                             className="ml-2 transition-transform duration-300 group-hover:translate-x-1"
-                              />
-                           </Link>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-            ) : (
-              // No posts (No changes)
-              <div className="text-center py-16">
-                 {/* ... (No posts JSX remains the same) */}
-              </div>
-            )}
-          </div>
-        </section>
+      // 💡 2. Yeh naya code add karein (Excerpt property ko fetch karne ke liye)
+      const excerpt =
+        page.properties?.Excerpt?.rich_text
+          ?.map((t: any) => t.plain_text)
+          .join(" ") || "";
 
-        {/* 🔹 Newsletter Section (No changes) */}
-        <section ref={newsletterRef} className="py-16 bg-gray-50">
-          {/* ... (Newsletter JSX remains the same) */}
-        </section>
-      </main>
-      <Footer />
-    </div>
-  );
+      return {
+        id: page.id,
+        title,
+        slug,
+        image,
+        date,
+        excerpt, // 💡 3. Ise return object mein add karein
+      };
+    });
+
+    console.log("✅ Prepared posts (metadata only):", posts.length);
+
+    return {
+      statusCode: 200,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(posts),
+    };
+  } catch (err: any) {
+    console.error("❌ Notion Proxy (Metadata) Error:", err);
+    return {
+      statusCode: 500,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ error: err.message }),
+    };
+  }
 };
-
-export default Blog;
