@@ -351,7 +351,7 @@ const BlogPost = () => {
             </div>
 
             {/* Sidebar (Excerpt fix) */}
-            <div className="w-full md:w-1/5 flex flex-col gap-6">
+            <div className="w-full md:w-1/4 flex flex-col gap-6">
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h3 className="text-lg font-bold mb-4">About This Article</h3>
                 <p className="text-gray-600 mb-4">{post.excerpt || '...'}</p>
