@@ -1,9 +1,19 @@
+# netlify.toml
 
 [build]
   command = "npm run build"
   publish = "dist"
   functions = "netlify/functions"
 
+# 💡 YEH NAYA SECTION HAI JO IMAGES KO ALLOW KAREGA
+[images]
+  # Notion ke in do servers ko allow karein
+  remote_images = [
+    "s3.us-west-2.amazonaws.com",
+    "prod-files-secure.s3.us-west-2.amazonaws.com"
+  ]
+
+# Yeh aapki purani setting hai, jo page refresh ko handle karti hai
 [[redirects]]
   from = "/*"
   to = "/index.html"
