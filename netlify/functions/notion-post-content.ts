@@ -5,39 +5,31 @@ import { NotionToMarkdown } from "notion-to-md";
 
 export const handler: Handler = async (event) => {
     const postId = event.queryStringParameters?.id; 
-    console.log(`--- NAYA LOG: Function Shuru hui, Post ID: ${postId}`);
+    console.log(`--- LOG: Function Shuru hui, Post ID: ${postId}`);
 
     if (!postId) {
-        console.error("--- NAYA LOG: Error, Post ID nahi mila");
         return { statusCode: 400, body: JSON.stringify({ error: "Missing post ID" })};
     }
 
     try {
         const token = process.env.VITE_NOTION_TOKEN;
         if (!token) {
-            console.error("--- NAYA LOG: Error, Notion Token nahi mila");
             throw new Error("Missing Notion token");
         }
 
         const notion = new Client({ auth: token });
         const n2m = new NotionToMarkdown({ notionClient: notion }); 
 
-        console.log(`--- NAYA LOG: pageToMarkdown ko call kar raha hoon ${postId} ke liye`);
         const mdblocks = await n2m.pageToMarkdown(postId); 
+        console.log(`--- LOG: pageToMarkdown se ${mdblocks.length} blocks mile`);
         
-        // Check karein kitne blocks mile
-        console.log(`--- NAYA LOG: pageToMarkdown se ${mdblocks.length} blocks mile`);
-        
-        const mdStringObject = n2m.toMarkdownString(mdblocks);
-        
-        // Check karein ki 'parent' mein kya aaya
-        console.log(`--- NAYA LOG: toMarkdownString ne 'parent' mein yeh diya: ${mdStringObject.parent}`);
-        
-        const content = mdStringObject.parent; // Yeh null hoga agar khaali hai, ya string hoga agar content hai
+        // 💡 FIX: Hum 'toMarkdownString' ka 'parent' istemaal nahi karenge.
+        // Hum seedhe har block ke 'parent' string ko join karenge.
+        // Yeh tables aur doosre complex blocks ko sahi se handle karta hai.
+        const content = mdblocks.map(block => block.parent).join('\n\n');
 
-        console.log(`--- NAYA LOG: Final content jo bhej raha hoon: ${content}`);
+        console.log(`--- LOG: Final content bhej raha hoon: ${content ? content.slice(0, 50) + '...' : 'null'}`);
 
-        // Yeh hamesha {"content":null} ya {"content":"..."} bhejega
         return {
             statusCode: 200,
             headers: { "Content-Type": "application/json" },
@@ -45,7 +37,7 @@ export const handler: Handler = async (event) => {
         };
 
     } catch (err: any) {
-        console.error("--- NAYA LOG: FATAL ERROR, try block fail ho gaya:", err);
+        console.error("--- LOG: FATAL ERROR:", err);
         return {
             statusCode: 500,
             headers: { "Content-Type": "application/json" },
