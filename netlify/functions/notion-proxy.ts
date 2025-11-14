@@ -9,7 +9,7 @@ interface PostMetadata {
   slug: string;
   image: string;
   date: string;
-  excerpt: string; // 💡 1. Ise add karein
+  excerpt: string; // Excerpt ko yahaan define karein
 }
 
 export const handler: Handler = async () => {
@@ -33,7 +33,6 @@ export const handler: Handler = async () => {
           direction: "descending",
         },
       ],
-      // ... (filter)
     });
 
     console.log("✅ Raw Notion DB response count:", response.results.length);
@@ -56,11 +55,14 @@ export const handler: Handler = async () => {
 
       const date = page.properties?.Date?.date?.start || page.created_time;
 
-      // 💡 2. Yeh naya code add karein (Excerpt property ko fetch karne ke liye)
-      const excerpt =
-        page.properties?.Excerpt?.rich_text
-          ?.map((t: any) => t.plain_text)
-          .join(" ") || "";
+      // 💡 START: YEH RAHA SAHI, SAFE CODE (CRASH NAHI HOGA)
+      let excerpt = "";
+      // Check karein ki property 'Rich Text' type ki hai
+      const excerptRichText = page.properties?.Excerpt?.rich_text;
+      if (excerptRichText && Array.isArray(excerptRichText)) {
+        excerpt = excerptRichText.map((t: any) => t.plain_text).join(" ");
+      } 
+      // 💡 END: SAHI CODE
 
       return {
         id: page.id,
@@ -68,7 +70,7 @@ export const handler: Handler = async () => {
         slug,
         image,
         date,
-        excerpt, // 💡 3. Ise return object mein add karein
+        excerpt, // Excerpt ko yahaan return karein
       };
     });
 
@@ -84,7 +86,7 @@ export const handler: Handler = async () => {
     return {
       statusCode: 500,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ error: err.message }),
+      body: JSON.stringify({ error: err.message, hint: "Check Notion property names or types (Title, Slug, Image, Date, Excerpt)." }),
     };
   }
 };
