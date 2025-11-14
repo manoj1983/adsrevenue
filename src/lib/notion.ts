@@ -18,9 +18,11 @@ export const getAllPosts = async () => {
       return [];
     }
 
-    // ✅ Filter only posts with title + content
+    // 💡 FIX: Removed 'p.content' from the filter.
+    // This function now only fetches metadata for the list page.
+    // The content itself is fetched inside BlogPost.tsx.
     const validPosts = data.filter(
-      (p) => p.title && p.content && p.slug && p.title !== "Untitled"
+      (p) => p.title && p.slug && p.title !== "Untitled"
     );
 
     console.log("✅ Notion posts fetched:", validPosts);
