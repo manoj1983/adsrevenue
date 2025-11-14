@@ -489,7 +489,7 @@ const BlogPostError = () => (
           <Link to="/blog">
             <ArrowLeft className="mr-2" size={16} />
             Back to Blog
-          </S>
+          </link>
         </Button>
       </div>
     </main>
