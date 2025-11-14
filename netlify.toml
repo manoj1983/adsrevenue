@@ -1,24 +1,25 @@
 # netlify.toml
 
+# Standard build settings
 [build]
   command = "npm run build"
   publish = "dist"
   functions = "netlify/functions"
 
-# 💡 YEH NAYA SECTION HAI JO IMAGES KO ALLOW KAREGA
+# 💡 Image Optimization (Notion images ko allow karne ke liye)
 [images]
-  # Notion ke in do servers ko allow karein
   remote_images = [
     "s3.us-west-2.amazonaws.com",
     "prod-files-secure.s3.us-west-2.amazonaws.com"
   ]
+        
+# 💡 Edge Function Caching (Aapki file ko notion-proxy se jodne ke liye)
+[[edge_functions]]
+  path = "/.netlify/functions/notion-proxy"
+  function = "notion-cache"
 
-# Yeh aapki purani setting hai, jo page refresh ko handle karti hai
+# React Router (SPA) redirect
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-  [[edge_functions]]
-  path = "/.netlify/functions/notion-proxy"
-  function = "notion-cache"
