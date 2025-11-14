@@ -191,7 +191,7 @@ const BlogPost = () => {
         </div>
 
         {/* 🔹 Content Section */}
-        <div className="container mx-auto px-4 md:px-6 py-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
           <div className="flex flex-col md:flex-row gap-8">
             {/* Main Content (left) */}
             <div className="w-full md:w-2/3">
@@ -404,7 +404,7 @@ const BlogPostSkeleton = () => (
     <Header />
     <main className="flex-grow pt-20">
       <div className="relative aspect-[2.5/1] overflow-hidden bg-gray-300 animate-pulse"></div>
-      <div className="container mx-auto px-4 md:px-6 py-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
         <div className="flex flex-col md:flex-row gap-8">
           <div className="w-full md:w-2/3">
             <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
