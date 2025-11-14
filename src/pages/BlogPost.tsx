@@ -208,12 +208,25 @@ const BlogPost = () => {
                 {/* Intro paragraph (rendered as markdown) */}
                 {intro && (
                   <div className="prose leading-relaxed">
+                    
+                    {/* ✅ YEH NAYA, FIX KIYA HUA CODE HAI */}
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       rehypePlugins={[rehypeRaw]}
+                      components={{
+                        a: ({ node, ...props }) => (
+                          <a 
+                            {...props} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="text-brand-orange hover:underline" 
+                          />
+                        ),
+                      }}
                     >
                       {intro}
                     </ReactMarkdown>
+
                   </div>
                 )}
 
