@@ -1,74 +1,79 @@
-// @ts-nocheck
-
 import type { Handler } from "@netlify/functions";
-
-// CommonJS style fix for Netlify
-const { Client } = require("@notionhq/client");
-const { NotionToMarkdown } = require("notion-to-md");
+import { Client } from "@notionhq/client";
 
 export const handler: Handler = async () => {
+  console.log("🔹 Netlify Function started");
+
   try {
     const token = process.env.VITE_NOTION_TOKEN;
     const databaseId = process.env.VITE_NOTION_DATABASE_ID;
 
     if (!token || !databaseId) {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: "Notion token/DB ID missing" }),
-      };
+      throw new Error("Missing Notion token or database ID in environment variables");
     }
 
     const notion = new Client({ auth: token });
-    const n2m = new NotionToMarkdown({ notionClient: notion });
 
-    // Query Notion database
     const response = await notion.databases.query({
       database_id: databaseId,
-      sorts: [{ property: "Date", direction: "descending" }],
+      sorts: [
+        { property: "Date", direction: "descending" }
+      ],
     });
 
-    const posts = [];
+    console.log("✅ Raw Notion DB response count:", response.results.length);
 
-    for (const page of response.results) {
+    const posts = response.results.map((page: any) => {
       const title =
         page.properties?.Title?.title?.[0]?.plain_text || "Untitled";
 
       const slug =
         page.properties?.Slug?.rich_text?.[0]?.plain_text ||
-        title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+        title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)+/g, "");
+
+      // ⭐ FIXED: raw text extracted (Markdown + links preserved)
+      const content =
+        page.properties?.Content?.rich_text
+          ?.map((t: any) => t.text?.content)
+          .join("") || "";
 
       const image =
         page.properties?.Image?.files?.[0]?.file?.url ||
         page.properties?.Image?.files?.[0]?.external?.url ||
         "";
 
-      const date =
-        page.properties?.Date?.date?.start || page.created_time;
+      const date = page.properties?.Date?.date?.start || page.created_time;
 
-      // Convert page → markdown
-      const mdBlocks = await n2m.pageToMarkdown(page.id);
-      const markdown = n2m.toMarkdownString(mdBlocks);
-
-      posts.push({
+      return {
         id: page.id,
         title,
         slug,
-        content: markdown,
+        content,
         image,
         date,
-      });
-    }
+      };
+    });
+
+    console.log("✅ Prepared posts:", posts.length);
 
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(posts),
     };
-  } catch (err) {
-    console.error("❌ Function error:", err);
+  } catch (err: any) {
+    console.error("❌ Notion Proxy Fatal Error:", err);
+
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: err.message }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        error: err.message,
+        hint: "Check Notion token/database sharing or property names (Title, Slug, Date, Content, Image, Published).",
+      }),
     };
   }
 };
