@@ -149,34 +149,25 @@ const BlogPost = () => {
       <Header />
       <main className="flex-grow pt-20">
         
-        {/* 💡 START: YEH RAHA SAHI SEO SECTION */}
+        {/* SEO Section */}
         <HelmetProvider>
            <Helmet>
              <title>{post.title} | AdsRevenue Blog</title>
-             
-             {/* ✅ FIX: 'post.excerpt' ka istemaal karein */}
              <meta name="description" content={post.excerpt || 'Read this article on AdsRevenue Blog'} />
-             
              <meta
                name="keywords"
                content={`${post.title}, Digital Marketing, SEO, Blogging`}
              />
              <meta property="og:title" content={post.title} />
-             
-             {/* ✅ FIX: Yahaan bhi 'post.excerpt' ka istemaal karein */}
              <meta
                property="og:description"
                content={post.excerpt || 'Read this article on AdsRevenue Blog'}
              />
-             
              <meta property="og:image" content={post.image || "/og-image.png"} />
              <meta property="og:type" content="article" />
              <meta name="robots" content="index, follow" />
-             
-             {/* ✅ FIX: '/>' aakhir mein add kar diya gaya hai */}
              <link rel="canonical" href={`https://adsrevenue.netlify.app/${post.slug}`} />
 
-             {/* ✅ Naya Schema Data */}
              <script type="application/ld+json">
                {JSON.stringify({
                  "@context": "https://schema.org",
@@ -195,14 +186,13 @@ const BlogPost = () => {
                    "name": "AdsRevenue",
                    "logo": {
                      "@type": "ImageObject",
-                     "url": "https://adsrevenue.netlify.app/logo.png" // 💡 Apna logo path yahaan daalein
+                     "url": "https://adsrevenue.netlify.app/logo.png" 
                    }
                  }
                })}
              </script>
            </Helmet>
         </HelmetProvider>
-        {/* 💡 END: SEO SECTION */}
 
         {/* 🔹 Hero Section */}
         <div className="relative aspect-[2.5/1] overflow-hidden">
@@ -235,11 +225,9 @@ const BlogPost = () => {
         </div>
 
         {/* 🔹 Content Section */}
-        {/* Layout fix: container ko max-w-7xl se badla gaya hai */}
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
           <div className="flex flex-col md:flex-row gap-8">
             {/* Main Content (left) */}
-            {/* Layout fix: md:w-2/3 ko md:w-3/4 se badla gaya hai */}
             <div className="w-full md:w-3/4">
               <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
                 <Link
@@ -397,7 +385,6 @@ const BlogPost = () => {
             </div>
 
             {/* Sidebar (right) */}
-            {/* Layout fix: md:w-1/4 */}
             <div className="w-full md:w-1/4 flex flex-col gap-6">
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h3 className="text-lg font-bold mb-4">About This Article</h3>
@@ -449,10 +436,8 @@ const BlogPostSkeleton = () => (
     <Header />
     <main className="flex-grow pt-20">
       <div className="relative aspect-[2.5/1] overflow-hidden bg-gray-300 animate-pulse"></div>
-      {/* Layout fix: container ko max-w-7xl se badla gaya hai */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
         <div className="flex flex-col md:flex-row gap-8">
-          {/* Layout fix: md:w-2/3 ko md:w-3/4 se badla gaya hai */}
           <div className="w-full md:w-3/4">
             <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
               <Skeleton className="h-6 w-32 mb-6" />
@@ -461,7 +446,6 @@ const BlogPostSkeleton = () => (
               <Skeleton className="h-24 w-full mb-4" />
             </div>
           </div>
-          {/* Layout fix: md:w-1/4 */}
           <div className="w-full md:w-1/4 flex flex-col gap-6">
             <Skeleton className="h-6 w-32 mb-4" />
             <Skeleton className="h-16 w-full mb-4" />
@@ -489,7 +473,7 @@ const BlogPostError = () => (
           <Link to="/blog">
             <ArrowLeft className="mr-2" size={16} />
             Back to Blog
-          </link>
+          </Link> {/* 💡 YEH RAHA FIX: </S> ko </Link> se badal diya gaya hai */}
         </Button>
       </div>
     </main>
