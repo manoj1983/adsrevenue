@@ -9,7 +9,10 @@ import { ArrowRight, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getAllPosts } from "@/lib/notion"; 
+import { getAllPosts } from "@/lib/notion"; // ✅ Hamaara fetcher
+
+// 💡 1. 'useQuery' ko import karein
+import { useQuery } from "@tanstack/react-query"; 
 
 const Blog = () => {
   useEffect(() => {
@@ -21,29 +24,18 @@ const Blog = () => {
   const [imagesLoaded, setImagesLoaded] = useState<{ [key: string]: boolean }>(
     {}
   );
-  const [posts, setPosts] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  
+  // 💡 2. 'useState' aur 'useEffect' ko 'useQuery' se replace karein
+  const { 
+    data: posts,      // 'posts' ab 'data' se aa raha hai
+    isLoading,   // 'loading' ki jagah 'isLoading'
+    isError,     // Error state
+  } = useQuery({
+    queryKey: ['blogPosts'], // 👈 Yeh cache (memory) ka naam hai
+    queryFn: getAllPosts,   // 👈 Yeh hamaara data laane waala function hai
+  });
 
-  // 🔹 Fetch posts from Notion
-  useEffect(() => {
-    getAllPosts()
-      .then((data) => {
-        console.log("✅ Notion posts fetched:", data);
-        if (Array.isArray(data) && data.length > 0) {
-          setPosts(data);
-        } else {
-          console.warn("⚠️ No valid posts returned from Notion function");
-        }
-      })
-      .catch((err) => {
-        console.error("❌ Error fetching Notion posts:", err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  // 💡 Search filter (No changes needed here)
+  // 💡 3. Search filter ab 'posts' (jo 'data' hai) par kaam karega
   const filteredPosts = (posts || []).filter((post) => {
     const title = (post?.title || "").toString().toLowerCase();
     const search = searchTerm.toLowerCase();
@@ -53,7 +45,7 @@ const Blog = () => {
   console.log("🟢 Rendered Posts:", filteredPosts);
   console.log("🟢 Total:", filteredPosts.length);
 
-  // ... (Animations and handlers remain the same)
+  // ... (Animations and handlers baaki sab waisa hi rahega)
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true });
   const postsRef = useRef(null);
@@ -84,20 +76,30 @@ const Blog = () => {
         {/* 🔹 Blog Posts */}
         <section ref={postsRef} className="py-16 bg-white">
           <div className="container mx-auto px-4 md:px-6">
-            {loading ? (
-              // Loading skeleton (No changes)
+            
+            {/* 💡 4. 'loading' ki jagah 'isLoading' ka istemaal karein */}
+            {isLoading ? (
+              // Loading skeleton
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                 {Array.from({ length: 6 }).map((_, index) => (
-                    <Card key={index} className="overflow-hidden h-full">
-                      <Skeleton className="h-48 w-full" />
-                      <CardContent className="p-6">
-                        <Skeleton className="h-4 w-1/4 mb-2" />
-                        <Skeleton className="h-6 w-3/4 mb-3" />
-                        <Skeleton className="h-4 w-full mb-2" />
-                        <Skeleton className="h-4 w-3/4 mb-4" />
-                      </CardContent>
-                    </Card>
-                  ))}
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <Card key={index} className="overflow-hidden h-full">
+                    <Skeleton className="h-48 w-full" />
+                    <CardContent className="p-6">
+                      <Skeleton className="h-4 w-1/4 mb-2" />
+                      <Skeleton className="h-6 w-3/4 mb-3" />
+                      <Skeleton className="h-4 w-full mb-2" />
+                      <Skeleton className="h-4 w-3/4 mb-4" />
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : isError ? (
+              // 💡 5. Agar error aaye toh message dikhayein
+              <div className="text-center py-16 text-red-600">
+                <h3 className="text-xl font-medium mb-2">Error loading posts</h3>
+                <p className="text-gray-500">
+                  Could not fetch data from Notion. Please try again later.
+                </p>
               </div>
             ) : filteredPosts.length > 0 ? (
               // Show fetched posts
@@ -109,7 +111,7 @@ const Blog = () => {
                   >
                     <Card className="overflow-hidden hover:shadow-lg transition-all duration-500 group h-full">
                       <div className="relative h-48 overflow-hidden bg-gray-200">
-                        {/* ... (Image loading JSX remains the same) */}
+                        {/* ... (Image loading JSX) */}
                         {post.image ? (
                           <img
                             src={post.image}
@@ -130,8 +132,8 @@ const Blog = () => {
                       </div>
 
                       <CardContent className="p-6 flex flex-col h-[calc(100%-12rem)]">
+                        {/* ... (Date, Title) ... */}
                         <div className="text-sm text-gray-500 mb-2">
-                          {/* ... (Date JSX remains the same) */}
                           {post.date
                             ? new Date(post.date).toLocaleDateString("en-US", {
                                 year: "numeric",
@@ -144,19 +146,14 @@ const Blog = () => {
                           {post.title}
                         </h3>
                         
-                        {/* 💡 Yahaan badlaav karein */}
+                        {/* Excerpt */}
                         <p className="text-gray-600 mb-4 flex-grow">
-                          {/* ❌ Purana Code:
-                          {(post.content || "").slice(0, 150)}...
-                          */}
-                          
-                          {/* ✅ Naya Code: */}
-                          {post.excerpt || '...'} {/* Agar excerpt khaali ho toh '...' dikhayein */}
+                          {post.excerpt || '...'}
                         </p>
                         
+                        {/* Link (State pass-through ke saath) */}
                         <Link
-                          to={`/${post.slug}`} // Assuming /post-slug structure
-                          // 💡 ID ko state mein pass karein
+                          to={`/${post.slug}`}
                           state={{ postId: post.id, excerpt: post.excerpt, title: post.title, date: post.date, image: post.image }}
                           className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium group"
                         >
@@ -172,7 +169,7 @@ const Blog = () => {
                 ))}
               </div>
             ) : (
-              // No posts (No changes)
+              // No posts
               <div className="text-center py-16">
                  <h3 className="text-xl font-medium mb-2">No blog posts found</h3>
                  <p className="text-gray-500">
