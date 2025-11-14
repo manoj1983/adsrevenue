@@ -194,7 +194,7 @@ const BlogPost = () => {
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
           <div className="flex flex-col md:flex-row gap-8">
             {/* Main Content (left) */}
-            <div className="w-full md:w-2/3">
+            <div className="w-full md:w-3/4">
               <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
                 <Link
                   to="/blog"
@@ -406,7 +406,7 @@ const BlogPostSkeleton = () => (
       <div className="relative aspect-[2.5/1] overflow-hidden bg-gray-300 animate-pulse"></div>
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
         <div className="flex flex-col md:flex-row gap-8">
-          <div className="w-full md:w-2/3">
+          <div className="w-full md:w-3/4">
             <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
               <Skeleton className="h-6 w-32 mb-6" />
               <Skeleton className="h-6 w-24 mb-2" />
