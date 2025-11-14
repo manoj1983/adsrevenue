@@ -376,7 +376,7 @@ const BlogPost = () => {
                 <p className="text-gray-600 mb-4">
                   Our team of digital marketing experts can help you implement
                   these strategies for your business.
-                </D>
+                </p>
                 <Button className="w-full bg-brand-orange hover:bg-brand-orange-dark">
                   Contact Us
                 </Button>
