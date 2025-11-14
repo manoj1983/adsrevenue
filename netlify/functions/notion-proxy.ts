@@ -9,6 +9,7 @@ interface PostMetadata {
   slug: string;
   image: string;
   date: string;
+  excerpt: string; // 💡 1. Ise add karein
 }
 
 export const handler: Handler = async () => {
@@ -32,13 +33,7 @@ export const handler: Handler = async () => {
           direction: "descending",
         },
       ],
-      // Optional: Add a filter to only fetch published posts
-      // filter: {
-      //   property: "Published", // Assuming you have a checkbox property named "Published"
-      //   checkbox: {
-      //     equals: true,
-      //   },
-      // },
+      // ... (filter)
     });
 
     console.log("✅ Raw Notion DB response count:", response.results.length);
@@ -61,13 +56,19 @@ export const handler: Handler = async () => {
 
       const date = page.properties?.Date?.date?.start || page.created_time;
 
+      // 💡 2. Yeh naya code add karein (Excerpt property ko fetch karne ke liye)
+      const excerpt =
+        page.properties?.Excerpt?.rich_text
+          ?.map((t: any) => t.plain_text)
+          .join(" ") || "";
+
       return {
-        id: page.id, // 👈 ID भेजना बहुत ज़रूरी है
+        id: page.id,
         title,
         slug,
         image,
         date,
-        // ⚠️ ध्यान दें: हम यहाँ 'content' नहीं भेज रहे हैं
+        excerpt, // 💡 3. Ise return object mein add karein
       };
     });
 
