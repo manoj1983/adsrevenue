@@ -156,6 +156,8 @@ const Blog = () => {
                         
                         <Link
                           to={`/${post.slug}`} // Assuming /post-slug structure
+                          // 💡 ID ko state mein pass karein
+                          state={{ postId: post.id, excerpt: post.excerpt, title: post.title, date: post.date, image: post.image }}
                           className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium group"
                         >
                           Read More{" "}
