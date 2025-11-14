@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// 💡 1. 'useLocation' ko import karein
+// 💡 'useLocation' ko import karein
 import { useParams, Link, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
@@ -19,7 +19,6 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 
 // ✅ Table of contents generator (captures heading text)
 const generateTOC = (content: string) => {
-  // ... (Aapka code - koi badlaav nahi)
   const headings = Array.from(content.matchAll(/^(##+)\s+(.*)$/gm));
   return headings.map((match) => {
     const level = match[1].length;
@@ -34,7 +33,6 @@ const generateTOC = (content: string) => {
 
 // helper: split intro (everything before first H2/H3) and body
 const splitIntroAndBody = (content: string) => {
-  // ... (Aapka code - koi badlaav nahi)
   const match = content.search(/^(##+)\s+/m);
   if (match === -1) {
     return { intro: content, body: "" };
@@ -49,10 +47,10 @@ const splitIntroAndBody = (content: string) => {
 // ==========================================================
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  // 💡 2. 'useLocation' ko call karein
+  // 💡 'useLocation' ko call karein
   const location = useLocation();
 
-  // 💡 3. State ko location state se seedha set karein (taaki title turant dikhe)
+  // 💡 State ko location state se seedha set karein (taaki title turant dikhe)
   const [post, setPost] = useState<any | null>(location.state || null);
   const [loading, setLoading] = useState(true); // Content ke liye loading true rakhein
   const [toc, setToc] = useState<{ text: string; id: string; level: number }[]>(
@@ -63,7 +61,7 @@ const BlogPost = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // 💡 4. START: Poora useEffect logic update karein
+  // 💡 START: Poora useEffect logic update karein
   useEffect(() => {
     if (!slug) return;
 
@@ -127,7 +125,7 @@ const BlogPost = () => {
           setLoading(false);
         });
     }
-  }, [slug, location.state]); // 💡 5. 'location.state' ko dependency mein add karein
+  }, [slug, location.state]); // 💡 'location.state' ko dependency mein add karein
   // ⚠️ END: अपडेटेड useEffect लॉजिक
 
   if (loading) return <BlogPostSkeleton />;
@@ -137,14 +135,13 @@ const BlogPost = () => {
   const { intro, body } = splitIntroAndBody(post.content || "");
 
   // ==========================================================
-  // 🔹 JSX (Koi Badlaav Nahi)
+  // 🔹 JSX
   // ==========================================================
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow pt-20">
         <HelmetProvider>
-          {/* ... (Aapka Helmet code - koi badlaav nahi) ... */}
            <Helmet>
              <title>{post.title} | AdsRevenue Blog</title>
              <meta name="description" content={(post.content || "").slice(0, 160)} />
@@ -165,7 +162,6 @@ const BlogPost = () => {
 
         {/* 🔹 Hero Section */}
         <div className="relative aspect-[2.5/1] overflow-hidden">
-          {/* ... (Aapka Hero code - koi badlaav nahi) ... */}
           {post.image ? (
             <img
               loading="lazy"
@@ -200,7 +196,6 @@ const BlogPost = () => {
             {/* Main Content (left) */}
             <div className="w-full md:w-2/3">
               <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
-                {/* ... (Back to Blog, Date, etc - koi badlaav nahi) ... */}
                 <Link
                   to="/blog"
                   className="inline-flex items-center text-gray-600 hover:text-brand-orange mb-6 transition-colors"
@@ -223,7 +218,7 @@ const BlogPost = () => {
                   </span>
                 </div>
 
-                {/* Intro paragraph (Aapka link fix yahaan pehle se hai) */}
+                {/* Intro paragraph (Link fix) */}
                 {intro && (
                   <div className="prose leading-relaxed">
                     <ReactMarkdown
@@ -245,14 +240,13 @@ const BlogPost = () => {
                   </div>
                 )}
 
-                {/* TOC (koi badlaav nahi) */}
+                {/* TOC */}
                 {toc.length > 0 && (
                   <aside
                     aria-label="Table of contents"
                     className="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl shadow-sm px-4 py-3 mb-10
                       w-full sm:w-[96%] md:w-auto md:max-w-[350px] mx-auto md:mx-0"
                   >
-                   {/* ... (Aapka TOC code - koi badlaav nahi) ... */}
                    <h3
                       className="text-base font-bold mb-3 text-gray-800 tracking-wide border-b border-gray-200 pb-2
                             line-clamp-2 overflow-hidden break-words"
@@ -285,11 +279,23 @@ const BlogPost = () => {
                   </aside>
                 )}
 
-                {/* Main article markdown (Aapka link fix yahaan pehle se hai) */}
+                {/* Main article markdown (Link fix) */}
                 <div
                   className={`
                     prose md:prose-lg
-                    ... (Aapki saari prose styling)
+                    text-base md:text-lg
+                    prose-headings:font-semibold
+                    prose-h1:text-3xl md:prose-h1:text-4xl prose-h1:leading-snug
+                    prose-h2:text-xl md:prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
+                    prose-h3:text-lg md:prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
+                    prose-p:text-gray-800 prose-p:leading-relaxed
+                    prose-a:text-brand-orange hover:prose-a:text-brand-orange-dark
+                    prose-strong:text-gray-900
+                    prose-blockquote:border-l-4 prose-blockquote:border-brand-orange prose-blockquote:bg-orange-50 prose-blockquote:p-4 prose-blockquote:rounded-md
+                    prose-ul:list-disc prose-ul:pl-6
+                    prose-ol:list-decimal prose-ol:pl-6
+                    prose-img:rounded-xl prose-img:shadow-md
+                    prose-table:border prose-table:border-gray-200 prose-th:bg-gray-50 prose-th:text-gray-800 prose-td:border-t
                     max-w-none text-gray-900
                   `}
                 >
@@ -332,7 +338,6 @@ const BlogPost = () => {
                   </ReactMarkdown>
                 </div>
 
-                {/* ... (Separator, SocialShare - koi badlaav nahi) ... */}
                 <Separator className="my-8" />
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div className="flex flex-wrap gap-2">
@@ -345,13 +350,12 @@ const BlogPost = () => {
               </div>
             </div>
 
-            {/* Sidebar (Aapka excerpt fix yahaan pehle se hai) */}
-            <div className="w-full md:w-1/3 flex flex-col gap-6">
+            {/* Sidebar (Excerpt fix) */}
+            <div className="w-full md:w-1D/3 flex flex-col gap-6">
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h3 className="text-lg font-bold mb-4">About This Article</h3>
                 <p className="text-gray-600 mb-4">{post.excerpt || '...'}</p>
                 <Separator className="my-4" />
-                {/* ... (Published, Category - koi badlaav nahi) ... */}
                 <div className="flex flex-col gap-2">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Published:</span>
@@ -370,13 +374,14 @@ const BlogPost = () => {
                 </div>
               </div>
 
-              {/* ... (Need Help? - koi badlaav nahi) ... */}
+              {/* Need Help? Section */}
               <div className="bg-gray-50 rounded-lg shadow-sm p-6">
                 <h3 className="text-lg font-bold mb-4">Need Help?</h3>
                 <p className="text-gray-600 mb-4">
                   Our team of digital marketing experts can help you implement
                   these strategies for your business.
-                </p>
+                </p> 
+                {/* 💡 YEH RAHA FIX: </D> ko </p> se badal diya gaya hai */}
                 <Button className="w-full bg-brand-orange hover:bg-brand-orange-dark">
                   Contact Us
                 </Button>
@@ -391,10 +396,9 @@ const BlogPost = () => {
 };
 
 // ==========================================================
-// 🔹 SKELETON COMPONENT (Koi Badlaav Nahi)
+// 🔹 SKELETON COMPONENT
 // ==========================================================
 const BlogPostSkeleton = () => (
-  // ... (Aapka code - koi badlaav nahi)
   <div className="min-h-screen flex flex-col">
     <Header />
     <main className="flex-grow pt-20">
@@ -405,7 +409,7 @@ const BlogPostSkeleton = () => (
             <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
               <Skeleton className="h-6 w-32 mb-6" />
               <Skeleton className="h-6 w-24 mb-2" />
-              <Skeleton className="h-6 w-3/C4 mb-4" />
+              <Skeleton className="h-6 w-3/4 mb-4" /> 
               <Skeleton className="h-24 w-full mb-4" />
             </div>
           </div>
@@ -421,10 +425,9 @@ const BlogPostSkeleton = () => (
 );
 
 // ==========================================================
-// 🔹 ERROR COMPONENT (Koi Badlaav Nahi)
+// 🔹 ERROR COMPONENT
 // ==========================================================
 const BlogPostError = () => (
-  // ... (Aapka code - koi badlaav nahi)
   <div className="min-h-screen flex flex-col">
     <Header />
     <main className="flex-grow pt-20">
