@@ -146,7 +146,7 @@ const Blog = () => {
                           {(post.content || "").slice(0, 150)}...
                         </p>
                         
-                        // ✅ सही लिंक (Blog.tsx - Line ~233)
+                        {/* ✅ सही लिंक (Blog.tsx - Line ~233) */}
 <Link
   to={`/blog/${post.slug.replace(/\s+/g, "-").toLowerCase()}`} 
   className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium group"
