@@ -1,8 +1,7 @@
-import type { Handler } from "@netlify/functions";
-import { Client } from "@notionhq/client";
-import { NotionToMarkdown } from "notion-to-md";
+const { Client } = require("@notionhq/client");
+const { NotionToMarkdown } = require("notion-to-md");
 
-export const handler: Handler = async () => {
+exports.handler = async () => {
   try {
     const token = process.env.VITE_NOTION_TOKEN;
     const databaseId = process.env.VITE_NOTION_DATABASE_ID;
@@ -46,7 +45,7 @@ export const handler: Handler = async () => {
         id: page.id,
         title,
         slug,
-        content: markdown, // <-- REAL MARKDOWN HERE
+        content: markdown,
         image,
         date,
       });
@@ -57,11 +56,13 @@ export const handler: Handler = async () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(posts),
     };
-  } catch (err: any) {
+  } catch (err) {
     return {
       statusCode: 500,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ error: err.message }),
+      body: JSON.stringify({
+        error: err.message,
+      }),
     };
   }
 };
