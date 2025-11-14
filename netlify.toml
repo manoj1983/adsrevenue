@@ -12,11 +12,6 @@
     "s3.us-west-2.amazonaws.com",
     "prod-files-secure.s3.us-west-2.amazonaws.com"
   ]
-        
-# 💡 Edge Function Caching (Aapki file ko notion-proxy se jodne ke liye)
-[[edge_functions]]
-  path = "/.netlify/functions/notion-proxy"
-  function = "notion-cache"
 
 # React Router (SPA) redirect
 [[redirects]]
