@@ -149,25 +149,32 @@ const BlogPost = () => {
       <Header />
       <main className="flex-grow pt-20">
         
-        {/* SEO Section */}
+        {/* 💡 START: YEH RAHA SAHI SEO SECTION */}
         <HelmetProvider>
            <Helmet>
              <title>{post.title} | AdsRevenue Blog</title>
+             
              <meta name="description" content={post.excerpt || 'Read this article on AdsRevenue Blog'} />
+             
              <meta
                name="keywords"
                content={`${post.title}, Digital Marketing, SEO, Blogging`}
              />
              <meta property="og:title" content={post.title} />
+             
              <meta
                property="og:description"
                content={post.excerpt || 'Read this article on AdsRevenue Blog'}
              />
+             
              <meta property="og:image" content={post.image || "/og-image.png"} />
              <meta property="og:type" content="article" />
              <meta name="robots" content="index, follow" />
+             
+             {/* ✅ FIX: '/>' aakhir mein add kar diya gaya hai */}
              <link rel="canonical" href={`https://adsrevenue.netlify.app/${post.slug}`} />
 
+             {/* ✅ Naya Schema Data */}
              <script type="application/ld+json">
                {JSON.stringify({
                  "@context": "https://schema.org",
@@ -186,13 +193,14 @@ const BlogPost = () => {
                    "name": "AdsRevenue",
                    "logo": {
                      "@type": "ImageObject",
-                     "url": "https://adsrevenue.netlify.app/logo.png" 
+                     "url": "https://adsrevenue.netlify.app/logo.png" // 💡 Apna logo path yahaan daalein
                    }
                  }
                })}
              </script>
            </Helmet>
         </HelmetProvider>
+        {/* 💡 END: SEO SECTION */}
 
         {/* 🔹 Hero Section */}
         <div className="relative aspect-[2.5/1] overflow-hidden">
@@ -200,10 +208,7 @@ const BlogPost = () => {
             <img
               loading="lazy"
               decoding="async"
-              // ✅ IMAGE OPTIMIZATION FIX
-              src={`/.netlify/images?url=${encodeURIComponent(
-                post.image
-              )}&w=1200&fm=webp&q=80`}
+              src={`/.netlify/images?url=${encodeURIComponent(post.image)}&w=1200&fm=webp&q=80`}
               alt={post.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
@@ -287,7 +292,7 @@ const BlogPost = () => {
                    <h3
                       className="text-base font-bold mb-3 text-gray-800 tracking-wide border-b border-gray-200 pb-2
                             line-clamp-2 overflow-hidden break-words"
-                      title="Table ofContents"
+                      title="Table of Contents"
                     >
                       📖 Table of Contents
                     </h3>
@@ -434,3 +439,54 @@ const BlogPost = () => {
 // ==========================================================
 // 🔹 SKELETON COMPONENT
 // ==========================================================
+const BlogPostSkeleton = () => (
+  <div className="min-h-screen flex flex-col">
+    <Header />
+    <main className="flex-grow pt-20">
+      <div className="relative aspect-[2.5/1] overflow-hidden bg-gray-300 animate-pulse"></div>
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="w-full md:w-3/4">
+            <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
+              <Skeleton className="h-6 w-32 mb-6" />
+              <Skeleton className="h-6 w-24 mb-2" />
+              <Skeleton className="h-6 w-3/4 mb-4" /> 
+              <Skeleton className="h-24 w-full mb-4" />
+            </div>
+          </div>
+          <div className="w-full md:w-1/4 flex flex-col gap-6">
+            <Skeleton className="h-6 w-32 mb-4" />
+            <Skeleton className="h-16 w-full mb-4" />
+          </div>
+        </div>
+      </div>
+    </main>
+    <Footer />
+  </div>
+);
+
+// ==========================================================
+// 🔹 ERROR COMPONENT
+// ==========================================================
+const BlogPostError = () => (
+  <div className="min-h-screen flex flex-col">
+    <Header />
+    <main className="flex-grow pt-20">
+      <div className="container mx-auto px-4 py-16 text-center">
+        <h2 className="text-3xl font-bold mb-4">Article Not Found</h2>
+        <p className="text-gray-600 mb-8">
+          Sorry, we couldn't find the blog post you're looking for.
+        </p>
+        <Button asChild>
+          <Link to="/blog">
+            <ArrowLeft className="mr-2" size={16} />
+            Back to Blog
+          </Link> {/* ✅ FIX: </S> ko </Link> se badal diya gaya hai */}
+        </Button>
+      </div>
+    </main>
+    <Footer />
+  </div>
+);
+
+export default BlogPost;
