@@ -383,7 +383,9 @@ const BlogPost = () => {
                 </p> 
                 {/* 💡 YEH RAHA FIX: </D> ko </p> se badal diya gaya hai */}
                 <Button className="w-full bg-brand-orange hover:bg-brand-orange-dark">
-                  Contact Us
+                  <a href="https://adsrevenue.netlify.app/contact" target="_blank" rel="noopener noreferrer">
+  Contact Us
+</a>
                 </Button>
               </div>
             </div>
