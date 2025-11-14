@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// 💡 'useLocation' ko import karein
+// 'useLocation' ko import karein
 import { useParams, Link, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
@@ -14,10 +14,10 @@ import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { getAllPosts } from "@/lib/notion"; // 👈 यह import ज़रूरी है
+import { getAllPosts } from "@/lib/notion"; 
 import { Helmet, HelmetProvider } from "react-helmet-async";
 
-// ✅ Table of contents generator (captures heading text)
+// ✅ Table of contents generator
 const generateTOC = (content: string) => {
   const headings = Array.from(content.matchAll(/^(##+)\s+(.*)$/gm));
   return headings.map((match) => {
@@ -31,7 +31,7 @@ const generateTOC = (content: string) => {
   });
 };
 
-// helper: split intro (everything before first H2/H3) and body
+// helper: split intro and body
 const splitIntroAndBody = (content: string) => {
   const match = content.search(/^(##+)\s+/m);
   if (match === -1) {
@@ -43,16 +43,13 @@ const splitIntroAndBody = (content: string) => {
 };
 
 // ==========================================================
-// 🔹 कंपोनेंट लॉजिक
+// 🔹 Component Logic
 // ==========================================================
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  // 💡 'useLocation' ko call karein
   const location = useLocation();
-
-  // 💡 State ko location state se seedha set karein (taaki title turant dikhe)
   const [post, setPost] = useState<any | null>(location.state || null);
-  const [loading, setLoading] = useState(true); // Content ke liye loading true rakhein
+  const [loading, setLoading] = useState(true);
   const [toc, setToc] = useState<{ text: string; id: string; level: number }[]>(
     []
   );
@@ -61,19 +58,16 @@ const BlogPost = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // 💡 START: Poora useEffect logic update karein
+  // Updated useEffect logic for 'Fast Path'
   useEffect(() => {
     if (!slug) return;
 
-    // Helper function jo content fetch karegi
     const fetchFullPost = async (postId: string, metadata: any) => {
-      // Pehle se metadata set karein (taaki title, image dikhe)
       if (metadata) {
         setPost(metadata);
       }
       
       try {
-        // --- Step 2: Content Fetch karein ---
         const contentResponse = await fetch(
           `/.netlify/functions/notion-post-content?id=${postId}`
         );
@@ -83,37 +77,32 @@ const BlogPost = () => {
         }
         const contentData = await contentResponse.json();
 
-        // --- Step 3: Content ko milayein ---
         setPost((prevPost: any) => ({
-          ...(prevPost || metadata), // Purana metadata + naya content
+          ...(prevPost || metadata),
           content: contentData.content,
         }));
 
         setToc(generateTOC(contentData.content || ""));
       } catch (err) {
         console.error("Error during post content fetch:", err);
-        setPost(null); // Error hone par post ko null karein
+        setPost(null);
       } finally {
-        setLoading(false); // Content aane ke baad hi loading band karein
+        setLoading(false);
       }
     };
 
-    // --- NAYA ROUTING LOGIC ---
     if (location.state?.postId) {
       // --- FAST PATH ---
-      // Agar user ne list page se click kiya hai
       console.log("Fast Path: Using ID from location state");
       fetchFullPost(location.state.postId, location.state);
     } else {
       // --- SLOW PATH ---
-      // Agar user ne seedha URL type kiya hai (e.g., /my-post-slug)
       console.log("Slow Path: No location state, calling getAllPosts()");
-      setLoading(true); // Yahaan loading ko dobara true karein
+      setLoading(true);
       getAllPosts()
         .then((posts) => {
           const found = posts.find((p) => p.slug === slug);
           if (found) {
-            // ID milne ke baad content fetch karein
             fetchFullPost(found.id, found);
           } else {
             throw new Error("Post not found");
@@ -125,11 +114,29 @@ const BlogPost = () => {
           setLoading(false);
         });
     }
-  }, [slug, location.state]); // 💡 'location.state' ko dependency mein add karein
-  // ⚠️ END: अपडेटेड useEffect लॉजिक
+  }, [slug, location.state]);
 
   if (loading) return <BlogPostSkeleton />;
   if (!post) return <BlogPostError />;
+
+  const handleScroll = (id: string, text?: string) => {
+    const headerOffset = 80;
+    let el = document.getElementById(id || "");
+    if (!el && text) {
+      const headings = Array.from(document.querySelectorAll("h2, h3"));
+      el = headings.find(
+        (h) => h.textContent && h.textContent.trim().replace(/¶$/, "") === text
+      ) as HTMLElement | undefined;
+    }
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      const top = window.scrollY + rect.top - headerOffset;
+      window.scrollTo({ top, behavior: "smooth" });
+      history.replaceState(null, "", `#${el.id || id}`);
+    } else {
+      console.warn("TOC target not found for", { id, text });
+    }
+  };
 
   const currentUrl = window.location.href;
   const { intro, body } = splitIntroAndBody(post.content || "");
@@ -141,58 +148,61 @@ const BlogPost = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow pt-20">
+        
+        {/* 💡 START: YEH RAHA SAHI SEO SECTION */}
         <HelmetProvider>
-           <HelmetProvider>
-  <Helmet>
-    <title>{post.title} | AdsRevenue Blog</title>
-    
-    {/* ✅ FIX: Yahaan 'post.excerpt' ka istemaal karein */}
-    <meta name="description" content={post.excerpt || 'Read this article on AdsRevenue Blog'} />
-    
-    <meta
-      name="keywords"
-      content={`${post.title}, Digital Marketing, SEO, Blogging`}
-    />
-    <meta property="og:title" content={post.title} />
-    
-    {/* ✅ FIX: Yahaan bhi 'post.excerpt' ka istemaal karein */}
-    <meta
-      property="og:description"
-      content={post.excerpt || 'Read this article on AdsRevenue Blog'}
-    />
-    
-    <meta property="og:image" content={post.image || "/og-image.png"} />
-    <meta property="og:type" content="article" />
-    <meta name="robots" content="index, follow" />
-    
-    {/* 💡 EXTRA: Canonical URL add karein (duplicate content se bachta hai) */}
-    <link rel="canonical" href={`https://adsrevenue.netlify.app/${post.slug}`}
-      {/* ✅ Naya Schema Data */}
-<script type="application/ld+json">
-  {JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": post.title,
-    "name": post.title,
-    "description": post.excerpt || 'Read this article on AdsRevenue Blog',
-    "image": post.image || "/og-image.png",
-    "datePublished": post.date ? new Date(post.date).toISOString() : new Date().toISOString(),
-    "author": {
-      "@type": "Organization",
-      "name": "AdsRevenue"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "AdsRevenue",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://adsrevenue.netlify.app/logo.png" // 💡 Apna logo path yahaan daalein
-      }
-    }
-  })}
-</script>
-  </Helmet>
-</HelmetProvider>
+           <Helmet>
+             <title>{post.title} | AdsRevenue Blog</title>
+             
+             {/* ✅ FIX: 'post.excerpt' ka istemaal karein */}
+             <meta name="description" content={post.excerpt || 'Read this article on AdsRevenue Blog'} />
+             
+             <meta
+               name="keywords"
+               content={`${post.title}, Digital Marketing, SEO, Blogging`}
+             />
+             <meta property="og:title" content={post.title} />
+             
+             {/* ✅ FIX: Yahaan bhi 'post.excerpt' ka istemaal karein */}
+             <meta
+               property="og:description"
+               content={post.excerpt || 'Read this article on AdsRevenue Blog'}
+             />
+             
+             <meta property="og:image" content={post.image || "/og-image.png"} />
+             <meta property="og:type" content="article" />
+             <meta name="robots" content="index, follow" />
+             
+             {/* ✅ FIX: '/>' aakhir mein add kar diya gaya hai */}
+             <link rel="canonical" href={`https://adsrevenue.netlify.app/${post.slug}`} />
+
+             {/* ✅ Naya Schema Data */}
+             <script type="application/ld+json">
+               {JSON.stringify({
+                 "@context": "https://schema.org",
+                 "@type": "BlogPosting",
+                 "headline": post.title,
+                 "name": post.title,
+                 "description": post.excerpt || 'Read this article on AdsRevenue Blog',
+                 "image": post.image || "/og-image.png",
+                 "datePublished": post.date ? new Date(post.date).toISOString() : new Date().toISOString(),
+                 "author": {
+                   "@type": "Organization",
+                   "name": "AdsRevenue"
+                 },
+                 "publisher": {
+                   "@type": "Organization",
+                   "name": "AdsRevenue",
+                   "logo": {
+                     "@type": "ImageObject",
+                     "url": "https://adsrevenue.netlify.app/logo.png" // 💡 Apna logo path yahaan daalein
+                   }
+                 }
+               })}
+             </script>
+           </Helmet>
+        </HelmetProvider>
+        {/* 💡 END: SEO SECTION */}
 
         {/* 🔹 Hero Section */}
         <div className="relative aspect-[2.5/1] overflow-hidden">
@@ -225,9 +235,11 @@ const BlogPost = () => {
         </div>
 
         {/* 🔹 Content Section */}
+        {/* Layout fix: container ko max-w-7xl se badla gaya hai */}
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
           <div className="flex flex-col md:flex-row gap-8">
             {/* Main Content (left) */}
+            {/* Layout fix: md:w-2/3 ko md:w-3/4 se badla gaya hai */}
             <div className="w-full md:w-3/4">
               <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
                 <Link
@@ -384,7 +396,8 @@ const BlogPost = () => {
               </div>
             </div>
 
-            {/* Sidebar (Excerpt fix) */}
+            {/* Sidebar (right) */}
+            {/* Layout fix: md:w-1/4 */}
             <div className="w-full md:w-1/4 flex flex-col gap-6">
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h3 className="text-lg font-bold mb-4">About This Article</h3>
@@ -415,11 +428,9 @@ const BlogPost = () => {
                   Our team of digital marketing experts can help you implement
                   these strategies for your business.
                 </p> 
-                {/* 💡 YEH RAHA FIX: </D> ko </p> se badal diya gaya hai */}
-                <a href="https://adsrevenue.netlify.app/contact" target="_blank" rel="noopener noreferrer"><Button className="w-full bg-brand-orange hover:bg-brand-orange-dark">
+                <Button className="w-full bg-brand-orange hover:bg-brand-orange-dark">
                   Contact Us
                 </Button>
-                  </a>
               </div>
             </div>
           </div>
@@ -438,8 +449,10 @@ const BlogPostSkeleton = () => (
     <Header />
     <main className="flex-grow pt-20">
       <div className="relative aspect-[2.5/1] overflow-hidden bg-gray-300 animate-pulse"></div>
+      {/* Layout fix: container ko max-w-7xl se badla gaya hai */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
         <div className="flex flex-col md:flex-row gap-8">
+          {/* Layout fix: md:w-2/3 ko md:w-3/4 se badla gaya hai */}
           <div className="w-full md:w-3/4">
             <div className="bg-white rounded-lg shadow-sm p-6 md:p-8">
               <Skeleton className="h-6 w-32 mb-6" />
@@ -448,7 +461,8 @@ const BlogPostSkeleton = () => (
               <Skeleton className="h-24 w-full mb-4" />
             </div>
           </div>
-          <div className="w-full md:w-1/3 flex flex-col gap-6">
+          {/* Layout fix: md:w-1/4 */}
+          <div className="w-full md:w-1/4 flex flex-col gap-6">
             <Skeleton className="h-6 w-32 mb-4" />
             <Skeleton className="h-16 w-full mb-4" />
           </div>
@@ -475,7 +489,7 @@ const BlogPostError = () => (
           <Link to="/blog">
             <ArrowLeft className="mr-2" size={16} />
             Back to Blog
-          </Link>
+          </S>
         </Button>
       </div>
     </main>
