@@ -147,16 +147,16 @@ const Blog = () => {
                         </p>
                         
                         {/* ✅ सही लिंक (Blog.tsx - Line ~233) */}
-<Link
-  to={`/blog/${post.slug.replace(/\s+/g, "-").toLowerCase()}`} 
-  className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium group"
->
-  Read More{" "}
-  <ArrowRight
-    size={16}
-    className="ml-2 transition-transform duration-300 group-hover:translate-x-1"
-  />
-</Link>
+                        <Link
+                          to={`/${post.slug.replace(/\s+/g, "-").toLowerCase()}`}
+                          className="inline-flex items-center text-brand-orange hover:text-brand-orange-dark font-medium group"
+                        >
+                          Read More{" "}
+                          <ArrowRight
+                            size={16}
+                            className="ml-2 transition-transform duration-300 group-hover:translate-x-1"
+                          />
+                        </Link>
                       </CardContent>
                     </Card>
                   </motion.div>
