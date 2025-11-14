@@ -423,7 +423,7 @@ const BlogPost = () => {
                   Our team of digital marketing experts can help you implement
                   these strategies for your business.
                 </p> 
-                <a href="https://adsrevenue.netlify.app/contact/"> <Button className="w-full bg-brand-orange hover:bg-brand-orange-dark">
+                <a href="https://adsrevenue.netlify.app/contact/" target="_blank"> <Button className="w-full bg-brand-orange hover:bg-brand-orange-dark">
                   Contact Us
                 </Button>
                 </a>
