@@ -1,0 +1,102 @@
+import type { Handler } from "@netlify/functions";
+import { Client } from "@notionhq/client";
+
+// Define the structure of a post object for better type safety
+interface Post {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  image: string;
+  date: string;
+}
+
+export const handler: Handler = async () => {
+  console.log("🔹 Netlify Function started");
+
+  try {
+    // Get the Notion token and database ID from environment variables
+    const token = process.env.VITE_NOTION_TOKEN;
+    const databaseId = process.env.VITE_NOTION_DATABASE_ID;
+
+    // Check if the token and database ID exist, throw an error if missing
+    if (!token || !databaseId) {
+      throw new Error("Missing Notion token or database ID in environment variables");
+    }
+
+    // Initialize the Notion client with the token
+    const notion = new Client({ auth: token });
+
+    // Query the Notion database for posts, sorted by Date in descending order
+    const response = await notion.databases.query({
+      database_id: databaseId,
+      sorts: [
+        {
+          property: "Date",
+          direction: "descending",
+        },
+      ],
+    });
+
+    console.log("✅ Raw Notion DB response count:", response.results.length);
+
+    // Map the results from Notion into the posts format
+    const posts: Post[] = response.results.map((page: any) => {
+      const title =
+        page.properties?.Title?.title?.[0]?.plain_text || "Untitled"; // Default to "Untitled" if no title exists
+
+      // Generate a slug from the title or fall back to a sanitized version of the title
+      const slug =
+        page.properties?.Slug?.rich_text?.[0]?.plain_text ||
+        title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/(^-|-$)+/g, "");
+
+      // Combine content from the "Content" field, if available
+      const content =
+        page.properties?.Content?.rich_text
+          ?.map((t: any) => t.plain_text)
+          .join(" ") || "";
+
+      // Extract image URL, either from a file or an external source
+      const image =
+        page.properties?.Image?.files?.[0]?.file?.url ||
+        page.properties?.Image?.files?.[0]?.external?.url ||
+        "";
+
+      // Get the date of the post, using created_time as a fallback
+      const date = page.properties?.Date?.date?.start || page.created_time;
+
+      return {
+        id: page.id,
+        title,
+        slug,
+        content,
+        image,
+        date,
+      };
+    });
+
+    console.log("✅ Prepared posts:", posts.length);
+
+    // Return the posts as a JSON response
+    return {
+      statusCode: 200,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(posts),
+    };
+  } catch (err: any) {
+    // Log the error and provide a hint in the response
+    console.error("❌ Notion Proxy Fatal Error:", err);
+
+    return {
+      statusCode: 500,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        error: err.message,
+        hint: "Check Notion token/database sharing or property names (Title, Slug, Date, Content, Image, Published).",
+      }),
+    };
+  }
+};
