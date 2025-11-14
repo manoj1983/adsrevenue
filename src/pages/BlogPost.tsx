@@ -263,32 +263,35 @@ const BlogPost = () => {
   `}
 >
   <ReactMarkdown
-    remarkPlugins={[remarkGfm]}
-    rehypePlugins={[
-      rehypeRaw,
-      rehypeSlug,
-      [
-        rehypeAutolinkHeadings,
-        {
-          behavior: "append",
-          properties: { className: ["anchor"] },
-        },
-      ],
-    ]}
-    components={{
-      img: ({ node, ...props }) => (
-        <img
-          className="rounded-lg shadow-md my-6 w-full object-cover opacity-0 transition-opacity duration-700"
-          loading="lazy"
-          onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
-          alt={props.alt}
-          {...props}
-        />
-      ),
-    }}
-  >
-    {body || post.content}
-  </ReactMarkdown>
+  remarkPlugins={[remarkGfm]}
+  rehypePlugins={[
+    rehypeRaw,
+    rehypeSlug,
+    [
+      rehypeAutolinkHeadings,
+      {
+        behavior: "append",
+        properties: { className: ["anchor"] },
+      },
+    ],
+  ]}
+  components={{
+    a: ({ node, ...props }) => (
+      <a {...props} className="text-brand-orange hover:underline" />
+    ),
+    img: ({ node, ...props }) => (
+      <img
+        className="rounded-lg shadow-md my-6 w-full object-cover opacity-0 transition-opacity duration-700"
+        loading="lazy"
+        onLoad={(e) => e.currentTarget.classList.remove("opacity-0")}
+        alt={props.alt}
+        {...props}
+      />
+    ),
+  }}
+>
+  {body || post.content}
+</ReactMarkdown>
 </div>
 
                 <Separator className="my-8" />
