@@ -166,7 +166,31 @@ const BlogPost = () => {
     <meta name="robots" content="index, follow" />
     
     {/* 💡 EXTRA: Canonical URL add karein (duplicate content se bachta hai) */}
-    <link rel="canonical" href={`https://adsrevenue.netlify.app/${post.slug}`} />
+    <link rel="canonical" href={`https://adsrevenue.netlify.app/${post.slug}`}
+      {/* ✅ Naya Schema Data */}
+<script type="application/ld+json">
+  {JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "name": post.title,
+    "description": post.excerpt || 'Read this article on AdsRevenue Blog',
+    "image": post.image || "/og-image.png",
+    "datePublished": post.date ? new Date(post.date).toISOString() : new Date().toISOString(),
+    "author": {
+      "@type": "Organization",
+      "name": "AdsRevenue"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AdsRevenue",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://adsrevenue.netlify.app/logo.png" // 💡 Apna logo path yahaan daalein
+      }
+    }
+  })}
+</script>
   </Helmet>
 </HelmetProvider>
 
