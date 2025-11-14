@@ -426,7 +426,7 @@ const BlogPost = () => {
                 <a href="https://adsrevenue.netlify.app/contact/"> <Button className="w-full bg-brand-orange hover:bg-brand-orange-dark">
                   Contact Us
                 </Button>
-                </a>>
+                </a>
               </div>
             </div>
           </div>
