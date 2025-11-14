@@ -292,11 +292,13 @@ const BlogPost = () => {
                     ]}
                     components={{
                       a: ({ node, ...props }) => (
-                        <a
-                          {...props}
-                          className="text-brand-orange hover:underline"
-                        />
-                      ),
+        <a 
+          {...props} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="text-brand-orange hover:underline" 
+        />
+      ),
                       img: ({ node, ...props }) => (
                         <img
                           className="rounded-lg shadow-md my-6 w-full object-cover opacity-0 transition-opacity duration-700"
